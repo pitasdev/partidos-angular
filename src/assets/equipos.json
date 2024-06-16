@@ -1,0 +1,58 @@
+[
+    {
+        "equipo": "Sant Cugat",
+        "escudo": "sant_cugat.png"
+    },
+    {
+        "equipo": "Fenix Sabadell",
+        "escudo": "fenix_sabadell.png"
+    },
+    {
+        "equipo": "Atico",
+        "escudo": "atico.png"
+    },
+    {
+        "equipo": "Base Montcada",
+        "escudo": "base_montcada.png"
+    },
+    {
+        "equipo": "Castellar",
+        "escudo": "castellar.png"
+    },
+    {
+        "equipo": "Les Saveurs",
+        "escudo": "les_saveurs.png"
+    },
+    {
+        "equipo": "Llinars",
+        "escudo": "llinars.png"
+    },
+    {
+        "equipo": "Ripollet",
+        "escudo": "ripollet.png"
+    },
+    {
+        "equipo": "Rubi",
+        "escudo": "rubi.png"
+    },
+    {
+        "equipo": "Sabadell Femeni",
+        "escudo": "sabadell_femeni.png"
+    },
+    {
+        "equipo": "Sant Quirze",
+        "escudo": "sant_quirze.png"
+    },
+    {
+        "equipo": "Savall",
+        "escudo": "savall.png"
+    },
+    {
+        "equipo": "Vilamajor",
+        "escudo": "vilamajor.png"
+    },
+    {
+        "equipo": "Vilobi",
+        "escudo": "vilobi.png"
+    }
+]

@@ -1,13 +1,180 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { ControlesEquipoComponent } from './components/controles-equipo/controles-equipo.component';
+import { TiempoComponent } from './components/tiempo/tiempo.component';
+import { ResultadoComponent } from './components/resultado/resultado.component';
+import { FaltasComponent } from './components/faltas/faltas.component';
+import { ConfigurarPartidoComponent } from './components/configurar-partido/configurar-partido.component';
+import { InfoComponent } from './components/info/info.component';
+import { TipoEquipo } from './components/interfaces/TipoEquipo';
+import { ModalSumarComponent } from './components/modal-sumar/modal-sumar.component';
+import { Gol } from './components/interfaces/Gol';
+import { Tarjeta } from './components/interfaces/Tarjeta';
+import { CommonModule } from '@angular/common';
+import { Datos } from './components/interfaces/Datos';
+import { ModalRestarComponent } from './components/modal-restar/modal-restar.component';
+import { TipoDato } from './components/interfaces/TipoDato';
+import { Estado } from './components/interfaces/Estado';
+import { EstadoService } from './services/estado.service';
+import { ModalConfirmacionComponent } from './components/modal-confirmacion/modal-confirmacion.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [ControlesEquipoComponent, TiempoComponent, ResultadoComponent, FaltasComponent, ConfigurarPartidoComponent, InfoComponent, ModalSumarComponent, ModalRestarComponent, ModalConfirmacionComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
-  title = 'partidos-angular';
+export class AppComponent implements OnInit {
+  // Datos app
+  estado!: Estado;
+  equipoLocal: string = 'Local';
+  equipoVisitante: string = 'Visitante';
+  escudoLocal: string = '';
+  escudoVisitante: string = '';
+  golesLocal: number = 0;
+  golesVisitante: number = 0;
+  faltasLocal: number = 0;
+  faltasVisitante: number = 0;
+  listaGolesLocal: Gol[] = [];
+  listaTarjetasLocal: Tarjeta[] = [];
+  listGolesVisitante: Gol[] = [];
+  listaTarjetasVisitante: Tarjeta[] = [];
+  // Datos modal
+  modalTipoEquipo!: TipoEquipo;
+  modalTipoDato!: TipoDato;
+  modalListaDatos!: any[];
+  openModalSumar: boolean = false;
+  openModalRestar: boolean = false;
+  // Servicios
+  estadoService = inject(EstadoService);
+  title = inject(Title);
+
+  ngOnInit(): void {
+    this.estadoService.estadoActual.subscribe(estadoActual => { this.estado = estadoActual; });
+  }
+
+  sumarGol(event: TipoEquipo): void {
+    if (event == 'local') {
+      if (this.golesLocal == 99) return;
+      this.openModalSumar = true;
+      this.modalTipoEquipo = 'local';
+      this.modalTipoDato = 'gol';
+    } else if (event == 'visitante') {
+      if (this.golesVisitante == 99) return;
+      this.openModalSumar = true;
+      this.modalTipoEquipo = 'visitante';
+      this.modalTipoDato = 'gol';
+    }
+  }
+
+  restarGol(event: TipoEquipo): void {
+    if (event == 'local') {
+      if (this.golesLocal == 0) return;
+      this.openModalRestar = true;
+      this.modalTipoEquipo = 'local';
+      this.modalTipoDato = 'gol';
+      this.modalListaDatos = this.listaGolesLocal;
+    } else if (event == 'visitante') {
+      if (this.golesVisitante == 0) return;
+      this.openModalRestar = true;
+      this.modalTipoEquipo = 'visitante';
+      this.modalTipoDato = 'gol';
+      this.modalListaDatos = this.listGolesVisitante;
+    }
+  }
+
+  sumarFalta(event: TipoEquipo): void {
+    if (event == 'local') {
+      if (this.faltasLocal == 5) return;
+      this.faltasLocal++;
+    } else if (event == 'visitante') {
+      if (this.faltasVisitante == 5) return;
+      this.faltasVisitante++;
+    }
+  }
+
+  restarFalta(event: TipoEquipo): void {
+    if (event == 'local') {
+      if (this.faltasLocal == 0) return;
+      this.faltasLocal--;
+    } else if (event == 'visitante') {
+      if (this.faltasVisitante == 0) return;
+      this.faltasVisitante--;
+    }
+  }
+
+  anadirTarjeta(event: TipoEquipo): void {
+    this.openModalSumar = true;
+    this.modalTipoEquipo = event;
+    this.modalTipoDato = 'tarjeta';
+  }
+
+  reiniciar(): void {
+    this.equipoLocal = 'Local';
+    this.equipoVisitante = 'Visitante';
+    this.escudoLocal = '';
+    this.escudoVisitante = '';
+    this.golesLocal = 0;
+    this.golesVisitante = 0;
+    this.faltasLocal = -1;
+    this.faltasVisitante = -1;
+    this.listaGolesLocal = [];
+    this.listaTarjetasLocal = [];
+    this.listGolesVisitante = [];
+    this.listaTarjetasVisitante = [];
+    this.title.setTitle('Partido');
+
+    setTimeout(() => {
+      this.faltasLocal = 0;
+      this.faltasVisitante = 0;
+    }, 0)
+  }
+
+  guardarDatos(event: Datos | null): void {
+    if (event?.tipoEquipo == 'local' && event.tipoDato == 'gol') {
+      this.listaGolesLocal.push({ id: event.id, dorsal: event.dorsal, minuto: event.minuto });
+      this.golesLocal++;
+    } else if (event?.tipoEquipo == 'local' && event.tipoDato == 'tarjeta') {
+      this.listaTarjetasLocal.push({ id: event.id, dorsal: event.dorsal, minuto: event.minuto, color: event.tarjeta! });
+    } else if (event?.tipoEquipo == 'visitante' && event.tipoDato == 'gol') {
+      this.listGolesVisitante.push({ id: event.id, dorsal: event.dorsal, minuto: event.minuto });
+      this.golesVisitante++;
+    } else if (event?.tipoEquipo == 'visitante' && event.tipoDato == 'tarjeta') {
+      this.listaTarjetasVisitante.push({ id: event.id, dorsal: event.dorsal, minuto: event.minuto, color: event.tarjeta! });
+    }
+
+    this.openModalSumar = false;
+    this.title.setTitle(`${this.equipoLocal} ${this.golesLocal} - ${this.golesVisitante} ${this.equipoVisitante}`);
+  }
+
+  eliminarDatos(event: string | null): void {
+    if (event) {
+      const i: number = this.modalListaDatos.findIndex(dato => dato.id == event);
+
+      if (i != -1) {
+        this.modalListaDatos.splice(i, 1);
+        const splitID = event.split('-');
+
+        if (splitID[0] == 'local' && splitID[1] == 'gol') this.golesLocal--;
+        else if (splitID[0] == 'visitante' && splitID[1] == 'gol') this.golesVisitante--;
+      }
+    }
+
+    this.openModalRestar = false;
+    this.title.setTitle(`${this.equipoLocal} ${this.golesLocal} - ${this.golesVisitante} ${this.equipoVisitante}`);
+  }
+
+  configurarEquipos(event: any): void {
+    this.equipoLocal = event.equipoLocal;
+    this.equipoVisitante = event.equipoVisitante;
+    this.escudoLocal = event.escudoLocal;
+    this.escudoVisitante = event.escudoVisitante;
+
+    this.title.setTitle(`${this.equipoLocal} ${this.golesLocal} - ${this.golesVisitante} ${this.equipoVisitante}`);
+  }
+
+  confirmarAccion(event: boolean): boolean {
+    return event;
+  }
 }

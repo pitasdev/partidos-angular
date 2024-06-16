@@ -1,0 +1,56 @@
+<div class="fixed top-0 left-0 w-screen h-screen bg-[#00000050]">
+
+    <div class="fixed top-1/4 left-1/2 -translate-x-1/2 w-96 flex flex-col gap-4 items-center p-4 bg-white rounded-md">
+
+        <h2 class="text-3xl text-center mb-4">Configurar partido</h2>
+
+        <div class="text-xl flex gap-2">
+            <label for="local" class="w-36">Equipo local</label>
+            <input type="text" id="local" class="w-40 border rounded-md px-1" [(ngModel)]="equipoLocal">
+            <div (click)="modalSelecEquipo('local')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24">
+                    <path fill="#22c55e" d="M14 12v7.88c.04.3-.06.62-.29.83a.996.996 0 0 1-1.41 0l-2.01-2.01a.99.99 0 0 1-.29-.83V12h-.03L4.21 4.62a1 1 0 0 1 .17-1.4c.19-.14.4-.22.62-.22h14c.22 0 .43.08.62.22a1 1 0 0 1 .17 1.4L14.03 12z"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="text-xl flex gap-2">
+            <label for="visitante" class="w-36">Equipo visitante</label>
+            <input type="text" id="visitante" class="w-40 border rounded-md px-1" [(ngModel)]="equipoVisitante">
+            <div (click)="modalSelecEquipo('visitante')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24">
+                    <path fill="#22c55e" d="M14 12v7.88c.04.3-.06.62-.29.83a.996.996 0 0 1-1.41 0l-2.01-2.01a.99.99 0 0 1-.29-.83V12h-.03L4.21 4.62a1 1 0 0 1 .17-1.4c.19-.14.4-.22.62-.22h14c.22 0 .43.08.62.22a1 1 0 0 1 .17 1.4L14.03 12z"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="flex gap-6">
+            <button class="text-xl font-medium bg-gray-300 px-5 py-2 rounded-md mt-5 mb-2" (click)="cancelar()">Cancelar</button>
+            <button class="text-xl font-medium bg-green-500 px-5 py-2 rounded-md mt-5 mb-2" (click)="guardar()">Guardar</button>
+        </div>
+
+    </div>
+
+    @if (selecEquipo) {
+        <div class="fixed top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-white rounded-md">
+            <input type="text" placeholder="Buscar" #selecEquipo class="text-xl w-40 flex mx-auto border rounded-md px-1 my-4" [(ngModel)]="buscarEquipo" (keyup)="filtrar()">
+            
+            <div class="h-60 overflow-x-auto">
+                @for (equipo of listaEquiposFiltrada; track equipo) {
+                    <div class="text-xl flex justify-center gap-4 py-2">
+                        <span class="w-60">{{equipo.equipo}}</span>
+                        <div class="cursor-pointer" (click)="seleccionarEquipo(equipo)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24">
+                                <path fill="#22c55e" d="m9.55 15.15l8.475-8.475q.3-.3.7-.3t.7.3t.3.713t-.3.712l-9.175 9.2q-.3.3-.7.3t-.7-.3L4.55 13q-.3-.3-.288-.712t.313-.713t.713-.3t.712.3z"/>
+                            </svg>
+                        </div>
+                    </div>
+                }
+            </div>
+    
+            <button class="text-xl font-medium flex bg-gray-300 px-5 py-2 rounded-md mt-5 mb-2 mx-auto" (click)="cancelarSelecEquipo()">Cancelar</button>
+    
+        </div>
+    }
+
+</div>

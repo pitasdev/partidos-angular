@@ -1,0 +1,43 @@
+<div class="w-60 flex flex-col gap-3 items-center py-2">
+
+    <div>
+
+        <span class="text-xl flex justify-center pt-2 pb-1">Goles</span>
+
+        <div class="flex gap-4">
+            <div class="cursor-pointer" clickAnimation (click)="restarGol()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48px" height="48px" viewBox="0 0 24 24">
+                    <path fill="rgb(59 130 246)" d="M5 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm12 10H7v-2h10z"/>
+                </svg>
+            </div>
+
+            <div class="cursor-pointer" clickAnimation (click)="sumarGol()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48px" height="48px" viewBox="0 0 24 24">
+                    <path fill="rgb(59 130 246)" d="M5 21h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2m2-10h4V7h2v4h4v2h-4v4h-2v-4H7z"/>
+                </svg>
+            </div>
+        </div>
+
+    </div>
+
+    <div>
+
+        <span class="text-xl flex justify-center pb-1">Faltas</span>
+
+        <div class="flex gap-4">
+            <div class="cursor-pointer" clickAnimation (click)="restarFalta()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48px" height="48px" viewBox="0 0 24 24">
+                    <path fill="rgb(34 197 94)" d="M5 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm12 10H7v-2h10z"/>
+                </svg>
+            </div>
+
+            <div class="cursor-pointer" clickAnimation (click)="sumarFalta()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48px" height="48px" viewBox="0 0 24 24">
+                    <path fill="rgb(34 197 94)" d="M5 21h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2m2-10h4V7h2v4h4v2h-4v4h-2v-4H7z"/>
+                </svg>
+            </div>
+        </div>
+
+    </div>
+
+</div>
