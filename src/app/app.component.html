@@ -31,16 +31,18 @@
     [escudoVisitante]="escudoVisitante"
     [resultadoLocal]="golesLocal"
     [resultadoVisitante]="golesVisitante"
+    [parte]="parte"
+    (eventoCambiarParte)="cambiarParte($event)"
   />
 
-  <section class="flex justify-between p-4">
+  <section class="flex justify-between px-4 py-2">
 
     <app-faltas 
       [tipoEquipo]="'local'"
-      [numFaltas]="faltasLocal"
+      [numFaltas]="parte == 1 ? faltasLocalParte1 : faltasLocalParte2"
     />
 
-    @if (estado == 'reset') {
+    @if (estado == 'fullReset') {
       <app-configurar-partido 
         (eventoConfigurar)="configurarEquipos($event)"
       />
@@ -48,7 +50,7 @@
 
     <app-faltas 
       [tipoEquipo]="'visitante'"
-      [numFaltas]="faltasVisitante"
+      [numFaltas]="parte == 1 ? faltasVisitanteParte1 : faltasVisitanteParte2"
     />
 
   </section>

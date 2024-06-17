@@ -1,23 +1,40 @@
-<section id="resultado" class="flex justify-between p-4">
+<section id="resultado" class="flex justify-between px-4 py-2">
 
-    <div class="w-60 flex flex-col items-center text-center">
+    <div class="w-60 flex flex-col items-center text-center justify-end">
         <div class="w-32 h-32">
-            <img class="w-full h-full object-cover" src="/assets/img/{{escudoLocal}}" alt="Escudo {{escudoLocal}}" />
+            <img class="w-full h-full object-cover" src="assets/img/{{escudoLocal}}" alt="Escudo {{escudoLocal}}" />
         </div>
-        <div class="text-3xl pt-3">{{equipoLocal}}</div>
+        <div class="font-semibold h-20 text-3xl pt-3 overflow-auto">{{equipoLocal}}</div>
     </div>
 
-    <div class="w-60 h-32 text-7xl flex justify-center items-center tabular-nums">
-        <span>{{resultadoLocal}}</span>
-        <span>&nbsp;-&nbsp;</span>
-        <span>{{resultadoVisitante}}</span>
+    <div>
+
+        <div class="w-60 h-32 text-7xl flex justify-center items-center tabular-nums">
+            <span>{{resultadoLocal}}</span>
+            <span>&nbsp;-&nbsp;</span>
+            <span>{{resultadoVisitante}}</span>
+        </div>
+    
+        <div class="text-xl flex flex-col items-center">
+            <label for="parte">Parte</label>
+            @if (estado == 'reset' || estado == 'fullReset') {
+                <select name="parte" id="parte" class="w-10 h-7 bg-white" [(ngModel)]="parte" (change)="cambiarParte()">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            }
+            @else {
+                <span class="h-7">{{parte}}</span>
+            }
+        </div>
+
     </div>
 
-    <div class="w-60 flex flex-col items-center text-center">
+    <div class="w-60 flex flex-col items-center text-center justify-end">
         <div class="w-32 h-32">
-            <img class="w-full h-full object-cover" src="/assets/img/{{escudoVisitante}}" alt="Escudo {{escudoVisitante}}" />
+            <img class="w-full h-full object-cover" src="assets/img/{{escudoVisitante}}" alt="Escudo {{escudoVisitante}}" />
         </div>
-        <div class="text-3xl pt-3">{{equipoVisitante}}</div>
+        <div class="font-semibold h-20 text-3xl pt-3 overflow-auto">{{equipoVisitante}}</div>
     </div>
     
 </section>

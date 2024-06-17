@@ -1,10 +1,11 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, Renderer2, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { TipoEquipo } from '../interfaces/TipoEquipo';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-faltas',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './faltas.component.html',
   styleUrl: './faltas.component.css'
 })
@@ -28,39 +29,47 @@ export class FaltasComponent implements AfterViewInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['numFaltas'] && this.componenteCargado) {
       switch (this.numFaltas) {
-        case -1:
+        case 0:
           this.renderer.removeClass(this.falta1.nativeElement, 'bg-red-600');
           this.renderer.removeClass(this.falta2.nativeElement, 'bg-red-600');
           this.renderer.removeClass(this.falta3.nativeElement, 'bg-red-600');
           this.renderer.removeClass(this.falta4.nativeElement, 'bg-red-600');
           this.renderer.removeClass(this.falta5.nativeElement, 'bg-red-600');
-          break;
-        case 0:
-          this.renderer.removeClass(this.falta1.nativeElement, 'bg-red-600');
           break;
         case 1:
           this.renderer.addClass(this.falta1.nativeElement, 'bg-red-600');
-          this.renderer.addClass(this.falta1.nativeElement, 'bg-blue-600');
           this.renderer.removeClass(this.falta2.nativeElement, 'bg-red-600');
+          this.renderer.removeClass(this.falta3.nativeElement, 'bg-red-600');
+          this.renderer.removeClass(this.falta4.nativeElement, 'bg-red-600');
+          this.renderer.removeClass(this.falta5.nativeElement, 'bg-red-600');
           break;
         case 2:
+          this.renderer.addClass(this.falta1.nativeElement, 'bg-red-600');
           this.renderer.addClass(this.falta2.nativeElement, 'bg-red-600');
-          this.renderer.addClass(this.falta2.nativeElement, 'bg-blue-600');
           this.renderer.removeClass(this.falta3.nativeElement, 'bg-red-600');
+          this.renderer.removeClass(this.falta4.nativeElement, 'bg-red-600');
+          this.renderer.removeClass(this.falta5.nativeElement, 'bg-red-600');
           break;
         case 3:
+          this.renderer.addClass(this.falta1.nativeElement, 'bg-red-600');
+          this.renderer.addClass(this.falta2.nativeElement, 'bg-red-600');
           this.renderer.addClass(this.falta3.nativeElement, 'bg-red-600');
-          this.renderer.addClass(this.falta3.nativeElement, 'bg-blue-600');
           this.renderer.removeClass(this.falta4.nativeElement, 'bg-red-600');
+          this.renderer.removeClass(this.falta5.nativeElement, 'bg-red-600');
           break;
         case 4:
+          this.renderer.addClass(this.falta1.nativeElement, 'bg-red-600');
+          this.renderer.addClass(this.falta2.nativeElement, 'bg-red-600');
+          this.renderer.addClass(this.falta3.nativeElement, 'bg-red-600');
           this.renderer.addClass(this.falta4.nativeElement, 'bg-red-600');
-          this.renderer.addClass(this.falta4.nativeElement, 'bg-blue-600');
           this.renderer.removeClass(this.falta5.nativeElement, 'bg-red-600');
           break;
         case 5:
+          this.renderer.addClass(this.falta1.nativeElement, 'bg-red-600');
+          this.renderer.addClass(this.falta2.nativeElement, 'bg-red-600');
+          this.renderer.addClass(this.falta3.nativeElement, 'bg-red-600');
+          this.renderer.addClass(this.falta4.nativeElement, 'bg-red-600');
           this.renderer.addClass(this.falta5.nativeElement, 'bg-red-600');
-          this.renderer.addClass(this.falta5.nativeElement, 'bg-blue-600');
           break;
       }
     }

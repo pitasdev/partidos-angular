@@ -6,7 +6,7 @@ import { Estado } from '../components/interfaces/Estado';
   providedIn: 'root'
 })
 export class EstadoService {
-  private estado: BehaviorSubject<Estado> = new BehaviorSubject<Estado>('reset');
+  private estado: BehaviorSubject<Estado> = new BehaviorSubject<Estado>('fullReset');
   estadoActual = this.estado.asObservable();
 
   actualizarEstado(nuevoEstado: Estado): void {

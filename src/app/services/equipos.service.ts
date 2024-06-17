@@ -10,6 +10,6 @@ export class EquiposService {
   http: HttpClient = inject(HttpClient);
 
   getEquipos(): Observable<Equipo[]> {
-    return this.http.get<Equipo[]>('/assets/equipos.json');
+    return this.http.get<Equipo[]>('assets/equipos.json');
   }
 }

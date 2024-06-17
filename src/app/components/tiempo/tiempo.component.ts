@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { Estado } from '../interfaces/Estado';
 import { EstadoService } from '../../services/estado.service';
 import { ModalConfirmacionComponent } from '../modal-confirmacion/modal-confirmacion.component';
@@ -71,13 +71,14 @@ export class TiempoComponent implements OnInit {
     if (this.estado == 'play') return;
 
     this.tiempo = '00:00';
+    this.estadoService.actualizarEstado('reset');
   }
 
   reiniciarTodo(): void {
     if (this.estado == 'play') return;
 
     this.tiempo = '00:00';
-    this.estadoService.actualizarEstado('reset');
+    this.estadoService.actualizarEstado('fullReset');
 
     this.eventoReiniciar.emit();
   }

@@ -9,7 +9,6 @@ import { TipoEquipo } from './components/interfaces/TipoEquipo';
 import { ModalSumarComponent } from './components/modal-sumar/modal-sumar.component';
 import { Gol } from './components/interfaces/Gol';
 import { Tarjeta } from './components/interfaces/Tarjeta';
-import { CommonModule } from '@angular/common';
 import { Datos } from './components/interfaces/Datos';
 import { ModalRestarComponent } from './components/modal-restar/modal-restar.component';
 import { TipoDato } from './components/interfaces/TipoDato';
@@ -21,7 +20,7 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ControlesEquipoComponent, TiempoComponent, ResultadoComponent, FaltasComponent, ConfigurarPartidoComponent, InfoComponent, ModalSumarComponent, ModalRestarComponent, ModalConfirmacionComponent, CommonModule],
+  imports: [ControlesEquipoComponent, TiempoComponent, ResultadoComponent, FaltasComponent, ConfigurarPartidoComponent, InfoComponent, ModalSumarComponent, ModalRestarComponent, ModalConfirmacionComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -34,8 +33,11 @@ export class AppComponent implements OnInit {
   escudoVisitante: string = '';
   golesLocal: number = 0;
   golesVisitante: number = 0;
-  faltasLocal: number = 0;
-  faltasVisitante: number = 0;
+  parte: number = 1;
+  faltasLocalParte1: number = 0;
+  faltasVisitanteParte1: number = 0;
+  faltasLocalParte2: number = 0;
+  faltasVisitanteParte2: number = 0;
   listaGolesLocal: Gol[] = [];
   listaTarjetasLocal: Tarjeta[] = [];
   listGolesVisitante: Gol[] = [];
@@ -85,22 +87,34 @@ export class AppComponent implements OnInit {
   }
 
   sumarFalta(event: TipoEquipo): void {
-    if (event == 'local') {
-      if (this.faltasLocal == 5) return;
-      this.faltasLocal++;
-    } else if (event == 'visitante') {
-      if (this.faltasVisitante == 5) return;
-      this.faltasVisitante++;
+    if (event == 'local' && this.parte == 1) {
+      if (this.faltasLocalParte1 == 5) return;
+      this.faltasLocalParte1++;
+    } else if (event == 'local' && this.parte == 2) {
+      if (this.faltasLocalParte2 == 5) return;
+      this.faltasLocalParte2++;
+    } else if (event == 'visitante' && this.parte == 1) {
+      if (this.faltasVisitanteParte1 == 5) return;
+      this.faltasVisitanteParte1++;
+    } else if (event == 'visitante' && this.parte == 2) {
+      if (this.faltasVisitanteParte2 == 5) return;
+      this.faltasVisitanteParte2++;
     }
   }
 
   restarFalta(event: TipoEquipo): void {
-    if (event == 'local') {
-      if (this.faltasLocal == 0) return;
-      this.faltasLocal--;
-    } else if (event == 'visitante') {
-      if (this.faltasVisitante == 0) return;
-      this.faltasVisitante--;
+    if (event == 'local' && this.parte == 1) {
+      if (this.faltasLocalParte1 == 0) return;
+      this.faltasLocalParte1--;
+    } else if (event == 'local' && this.parte == 2) { 
+      if (this.faltasLocalParte2 == 0) return;
+      this.faltasLocalParte2--;
+    } else if (event == 'visitante' && this.parte == 1) {
+      if (this.faltasVisitanteParte1 == 0) return;
+      this.faltasVisitanteParte1--;
+    } else if (event == 'visitante' && this.parte == 2) { 
+      if (this.faltasVisitanteParte2 == 0) return;
+      this.faltasVisitanteParte2--;
     }
   }
 
@@ -117,18 +131,16 @@ export class AppComponent implements OnInit {
     this.escudoVisitante = '';
     this.golesLocal = 0;
     this.golesVisitante = 0;
-    this.faltasLocal = -1;
-    this.faltasVisitante = -1;
+    this.parte = 1;
+    this.faltasLocalParte1 = 0;
+    this.faltasVisitanteParte1 = 0;
+    this.faltasLocalParte2 = 0;
+    this.faltasVisitanteParte2 = 0;
     this.listaGolesLocal = [];
     this.listaTarjetasLocal = [];
     this.listGolesVisitante = [];
     this.listaTarjetasVisitante = [];
     this.title.setTitle('Partido');
-
-    setTimeout(() => {
-      this.faltasLocal = 0;
-      this.faltasVisitante = 0;
-    }, 0)
   }
 
   guardarDatos(event: Datos | null): void {
@@ -174,7 +186,7 @@ export class AppComponent implements OnInit {
     this.title.setTitle(`${this.equipoLocal} ${this.golesLocal} - ${this.golesVisitante} ${this.equipoVisitante}`);
   }
 
-  confirmarAccion(event: boolean): boolean {
-    return event;
+  cambiarParte(event: number): void {
+    this.parte = event;
   }
 }

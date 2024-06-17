@@ -1,1 +1,1 @@
-export type Estado = 'play' | 'stop' | 'reset';
+export type Estado = 'play' | 'stop' | 'reset' | 'fullReset';

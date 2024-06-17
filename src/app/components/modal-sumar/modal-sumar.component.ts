@@ -22,9 +22,9 @@ export class ModalSumarComponent {
   @Output() eventoGuardar = new EventEmitter<Datos | null>();
 
   guardar(): void {
-    if (!this.minuto) return;
-    
     if (this.tipoDato == 'gol') {
+      if (!this.minuto) return;
+
       const datos: Datos = {
         id: `${this.tipoEquipo}-${this.tipoDato}-${this.minuto}-${this.dorsal}`,
         tipoEquipo: this.tipoEquipo,
@@ -35,6 +35,8 @@ export class ModalSumarComponent {
   
       this.eventoGuardar.emit(datos);
     } else if (this.tipoDato == 'tarjeta') {
+      if (!this.minuto || !this.dorsal) return;
+
       const datos: Datos = {
         id: `${this.tipoEquipo}-${this.tipoDato}-${this.minuto}-${this.dorsal}-${this.tarjeta}`,
         tipoEquipo: this.tipoEquipo,
