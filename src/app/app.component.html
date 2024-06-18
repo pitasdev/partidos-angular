@@ -1,6 +1,6 @@
-<main class="w-[820px] rounded-lg m-auto select-none">
+<main class="w-[820px] pb-8 m-auto select-none sm:w-[420px]">
 
-  <section class="flex justify-between p-4">
+  <section class="flex justify-between p-4 sm:grid sm:grid-cols-2">
     
     <app-controles-equipo 
       [tipoEquipo]="'local'"
@@ -10,11 +10,11 @@
       (eventoRestarFalta)="restarFalta($event)"
     />
 
-    <app-tiempo 
+    <app-tiempo class="sm:col-span-2"
       (eventoReiniciar)="reiniciar()"
     />
 
-    <app-controles-equipo 
+    <app-controles-equipo class="sm:col-start-2 sm:row-start-1"
       [tipoEquipo]="'visitante'"
       (eventoSumarGol)="sumarGol($event)"
       (eventoRestarGol)="restarGol($event)"
@@ -35,7 +35,7 @@
     (eventoCambiarParte)="cambiarParte($event)"
   />
 
-  <section class="flex justify-between px-4 py-2">
+  <section class="flex justify-between px-4 py-2 sm:grid sm:grid-cols-2">
 
     <app-faltas 
       [tipoEquipo]="'local'"
@@ -43,33 +43,45 @@
     />
 
     @if (estado == 'fullReset') {
-      <app-configurar-partido 
+      <app-configurar-partido class="sm:col-span-2 sm:mx-auto sm:mt-5 sm:mb-1"
         (eventoConfigurar)="configurarEquipos($event)"
       />
     }
 
-    <app-faltas 
+    <app-faltas class="sm:col-start-2 sm:row-start-1"
       [tipoEquipo]="'visitante'"
       [numFaltas]="parte == 1 ? faltasVisitanteParte1 : faltasVisitanteParte2"
     />
 
   </section>
 
-  <section class="flex justify-between p-4">
+  <section class="flex justify-between p-4 sm:flex-col sm:items-center sm:gap-5">
 
-    <app-info 
-      [tipoEquipo]="'local'"
-      [goles]="listaGolesLocal"
-      [tarjetas]="listaTarjetasLocal"
-      (eventoAnadirTarjeta)="anadirTarjeta($event)"
-    />
+    <div class="flex flex-col">
 
-    <app-info 
-      [tipoEquipo]="'visitante'"
-      [goles]="listGolesVisitante"
-      [tarjetas]="listaTarjetasVisitante"
-      (eventoAnadirTarjeta)="anadirTarjeta($event)"
-    />
+      <h2 class="hidden text-2xl font-semibold text-center pb-2 sm:block">{{equipoLocal}}</h2>
+
+      <app-info 
+        [tipoEquipo]="'local'"
+        [goles]="listaGolesLocal"
+        [tarjetas]="listaTarjetasLocal"
+        (eventoAnadirTarjeta)="anadirTarjeta($event)"
+      />
+
+    </div>
+
+    <div>
+
+      <h2 class="hidden text-2xl font-semibold text-center pb-2 sm:block">{{equipoVisitante}}</h2>
+
+      <app-info 
+        [tipoEquipo]="'visitante'"
+        [goles]="listGolesVisitante"
+        [tarjetas]="listaTarjetasVisitante"
+        (eventoAnadirTarjeta)="anadirTarjeta($event)"
+      />
+
+    </div>
 
   </section>
 

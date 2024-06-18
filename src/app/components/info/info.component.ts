@@ -31,7 +31,7 @@ export class InfoComponent {
     this.eliminarTarjetaID = (event.currentTarget as HTMLElement).id;
     
     const splitID: string[] = this.eliminarTarjetaID.split('-');
-    this.mensajeConfirmacion = `eliminar la <b>${splitID[1]} ${splitID[4]}</b> del equipo <b>${splitID[0]}</b> en el minuto <b>${splitID[2]}</b> del jugador número <b>${splitID[3]}</b>`;
+    this.mensajeConfirmacion = `¿Está seguro/a que quiere eliminar la <b>${splitID[1]} ${splitID[4]}</b> del equipo <b>${splitID[0]}</b> en el minuto <b>${splitID[2]}</b> del jugador número <b>${splitID[3]}</b>?`;
     this.openModalConfirmacion = true;
   }
 

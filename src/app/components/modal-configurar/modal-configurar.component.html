@@ -1,6 +1,6 @@
 <div class="fixed top-0 left-0 w-full h-full bg-[#00000050]">
 
-    <div class="fixed top-1/4 left-1/2 -translate-x-1/2 w-96 flex flex-col gap-4 items-center p-4 bg-white rounded-md">
+    <div class="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-96 max-h-screen flex flex-col gap-4 items-center p-4 bg-white rounded-md">
 
         <h2 class="text-3xl text-center mb-4">Configurar partido</h2>
 
@@ -32,10 +32,11 @@
     </div>
 
     @if (selecEquipo) {
-        <div class="fixed top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 flex flex-col justify-between bg-white rounded-md">
-            <input type="text" placeholder="Buscar" #selecEquipo class="text-xl w-40 flex mx-auto border rounded-md px-1 mt-6 mb-3" [(ngModel)]="buscarEquipo" (keyup)="filtrar()">
+        <div class="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-96 h-80 max-h-screen flex flex-col justify-between p-4 bg-white rounded-md">
+                
+            <input type="text" placeholder="Buscar" #selecEquipo class="text-xl w-40 flex mx-auto mb-2 border rounded-md" [(ngModel)]="buscarEquipo" (keyup)="filtrar()">
             
-            <div class="h-56 overflow-x-auto">
+            <div class="max-h-48 overflow-auto">
                 @for (equipo of listaEquiposFiltrada; track equipo) {
                     <div class="text-xl flex justify-center gap-4 py-2">
                         <span class="w-60">{{equipo.equipo}}</span>
@@ -48,7 +49,7 @@
                 }
             </div>
     
-            <button class="text-xl font-medium flex self-end bg-gray-300 px-5 py-2 rounded-md mt-3 mb-6 mx-auto" (click)="cancelarSelecEquipo()">Cancelar</button>
+            <button class="text-xl font-medium flex self-end bg-gray-300 px-5 py-2 rounded-md mx-auto mt-2" (click)="cancelarSelecEquipo()">Cancelar</button>
     
         </div>
     }

@@ -1,12 +1,12 @@
 <div class="fixed top-0 left-0 w-full h-full bg-[#00000050]">
 
-    <div class="fixed top-1/4 left-1/2 -translate-x-1/2 w-96 flex flex-col gap-2 items-center p-4 bg-white rounded-md">
+    <div class="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-96 max-h-screen flex flex-col gap-2 items-center p-4 bg-white rounded-md">
 
-        <p class="text-xl text-balance text-center leading-relaxed">¿Está seguro/a que quiere <span [innerHTML]="mensaje"></span>?</p>
+        <p class="text-xl text-balance text-center leading-relaxed" [innerHTML]="mensaje"></p>
 
         <div class="flex gap-6">
-            <button class="text-xl font-medium bg-gray-300 px-5 py-2 rounded-md mt-5 mb-2" (click)="cancelar()">Cancelar</button>
-            <button class="text-xl font-medium bg-red-400 px-5 py-2 rounded-md mt-5 mb-2" (click)="continuar()">Continuar</button>
+            <button class="text-xl font-medium bg-gray-300 px-5 py-2 rounded-md m-2 mt-4" (click)="cancelar()">Cancelar</button>
+            <button class="text-xl font-medium bg-red-400 px-5 py-2 rounded-md m-2 mt-4" (click)="continuar()">Continuar</button>
         </div>
 
     </div>

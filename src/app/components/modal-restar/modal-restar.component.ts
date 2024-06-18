@@ -26,8 +26,9 @@ export class ModalRestarComponent {
     
     const splitID: string[] = this.eliminarGolID.split('-');
     this.openModalConfirmacion = true;
-    this.mensajeConfirmacion = `eliminar el <b>${splitID[1]}</b> del equipo <b>${splitID[0]}</b> en el minuto <b>${splitID[2]}</b>`;
+    this.mensajeConfirmacion = `¿Está seguro/a que quiere eliminar el <b>${splitID[1]}</b> del equipo <b>${splitID[0]}</b> en el minuto <b>${splitID[2]}</b>`;
     if (splitID[3] != 'undefined') this.mensajeConfirmacion += ` del jugador <b>${splitID[3]}</b>`;
+    this.mensajeConfirmacion += '?';
   }
 
   eliminar(event: boolean): void {

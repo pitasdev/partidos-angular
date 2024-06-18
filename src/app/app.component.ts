@@ -31,8 +31,8 @@ export class AppComponent implements OnInit {
   equipoVisitante: string = 'Visitante';
   escudoLocal: string = '';
   escudoVisitante: string = '';
-  golesLocal: number = 0;
-  golesVisitante: number = 0;
+  golesLocal: number = 10;
+  golesVisitante: number = 10;
   parte: number = 1;
   faltasLocalParte1: number = 0;
   faltasVisitanteParte1: number = 0;

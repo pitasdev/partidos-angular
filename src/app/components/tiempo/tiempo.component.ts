@@ -88,8 +88,8 @@ export class TiempoComponent implements OnInit {
 
     this.accionARealizar = accion;
     
-    if (accion == 'click') this.mensajeConfirmacion = 'reiniciar el <b>tiempo</b>';
-    else if (accion == 'dblclick') this.mensajeConfirmacion = 'reiniciar <b>todos los parametros</b>';
+    if (accion == 'click') this.mensajeConfirmacion = '¿Está seguro/a que quiere reiniciar el <b>tiempo</b>?';
+    else if (accion == 'dblclick') this.mensajeConfirmacion = '¿Está seguro/a que quiere reiniciar <b>todos los parametros</b>?';
 
     setTimeout(() => {
       this.openModalConfirmacion = true;
