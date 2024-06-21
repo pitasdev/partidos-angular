@@ -34,7 +34,7 @@
     @if (selecEquipo) {
         <div class="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-96 h-80 max-h-screen flex flex-col justify-between p-4 bg-white rounded-md">
                 
-            <input type="text" placeholder="Buscar" #selecEquipo class="text-xl w-40 flex mx-auto mb-2 border rounded-md" [(ngModel)]="buscarEquipo" (keyup)="filtrar()">
+            <input type="text" placeholder="Buscar" #selecEquipo class="text-xl w-40 flex px-1 mx-auto mb-2 border rounded-md" [(ngModel)]="buscarEquipo" (keyup)="filtrar()">
             
             <div class="max-h-48 overflow-auto">
                 @for (equipo of listaEquiposFiltrada; track equipo) {

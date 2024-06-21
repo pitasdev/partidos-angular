@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ControlesEquipoComponent } from './components/controles-equipo/controles-equipo.component';
 import { TiempoComponent } from './components/tiempo/tiempo.component';
 import { ResultadoComponent } from './components/resultado/resultado.component';
@@ -12,8 +12,7 @@ import { Tarjeta } from './components/interfaces/Tarjeta';
 import { Datos } from './components/interfaces/Datos';
 import { ModalRestarComponent } from './components/modal-restar/modal-restar.component';
 import { TipoDato } from './components/interfaces/TipoDato';
-import { Estado } from './components/interfaces/Estado';
-import { EstadoService } from './services/estado.service';
+import { EstadoTiempo } from './components/interfaces/EstadoTiempo';
 import { ModalConfirmacionComponent } from './components/modal-confirmacion/modal-confirmacion.component';
 import { Title } from '@angular/platform-browser';
 
@@ -24,16 +23,16 @@ import { Title } from '@angular/platform-browser';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   // Datos app
-  estado!: Estado;
+  estadoTiempo: EstadoTiempo = 'fullReset';
+  parte: number = 1;
   equipoLocal: string = 'Local';
   equipoVisitante: string = 'Visitante';
   escudoLocal: string = '';
   escudoVisitante: string = '';
   golesLocal: number = 0;
   golesVisitante: number = 0;
-  parte: number = 1;
   faltasLocalParte1: number = 0;
   faltasVisitanteParte1: number = 0;
   faltasLocalParte2: number = 0;
@@ -49,12 +48,7 @@ export class AppComponent implements OnInit {
   openModalSumar: boolean = false;
   openModalRestar: boolean = false;
   // Servicios
-  estadoService = inject(EstadoService);
   title = inject(Title);
-
-  ngOnInit(): void {
-    this.estadoService.estadoActual.subscribe(estadoActual => { this.estado = estadoActual; });
-  }
 
   sumarGol(event: TipoEquipo): void {
     if (event == 'local') {
@@ -106,13 +100,13 @@ export class AppComponent implements OnInit {
     if (event == 'local' && this.parte == 1) {
       if (this.faltasLocalParte1 == 0) return;
       this.faltasLocalParte1--;
-    } else if (event == 'local' && this.parte == 2) { 
+    } else if (event == 'local' && this.parte == 2) {
       if (this.faltasLocalParte2 == 0) return;
       this.faltasLocalParte2--;
     } else if (event == 'visitante' && this.parte == 1) {
       if (this.faltasVisitanteParte1 == 0) return;
       this.faltasVisitanteParte1--;
-    } else if (event == 'visitante' && this.parte == 2) { 
+    } else if (event == 'visitante' && this.parte == 2) {
       if (this.faltasVisitanteParte2 == 0) return;
       this.faltasVisitanteParte2--;
     }
@@ -188,5 +182,9 @@ export class AppComponent implements OnInit {
 
   cambiarParte(event: number): void {
     this.parte = event;
+  }
+
+  cambiarEstadoTiempo(estadoReloj: EstadoTiempo): void {
+    this.estadoTiempo = estadoReloj;
   }
 }

@@ -15,7 +15,7 @@ export class ControlesEquipoComponent {
   @Output() eventoSumarGol = new EventEmitter<TipoEquipo>();
   @Output() eventoRestarGol = new EventEmitter<TipoEquipo>();
   @Output() eventoSumarFalta = new EventEmitter<TipoEquipo>();
-  @Output() eventoRestarFalta= new EventEmitter<TipoEquipo>();
+  @Output() eventoRestarFalta = new EventEmitter<TipoEquipo>();
 
   sumarGol(): void {
     this.eventoSumarGol.emit(this.tipoEquipo);

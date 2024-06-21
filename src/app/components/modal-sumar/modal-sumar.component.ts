@@ -32,7 +32,7 @@ export class ModalSumarComponent {
         minuto: this.minuto,
         dorsal: this.dorsal
       }
-  
+
       this.eventoGuardar.emit(datos);
     } else if (this.tipoDato == 'tarjeta') {
       if (!this.minuto || !this.dorsal) return;
@@ -45,7 +45,7 @@ export class ModalSumarComponent {
         dorsal: this.dorsal,
         tarjeta: this.tarjeta
       }
-  
+
       this.eventoGuardar.emit(datos);
     }
   }

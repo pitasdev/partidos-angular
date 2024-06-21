@@ -11,7 +11,9 @@
     />
 
     <app-tiempo class="sm:col-span-2"
+      [estadoTiempo]="estadoTiempo"
       (eventoReiniciar)="reiniciar()"
+      (eventoCambiarEstadoTiempo)="cambiarEstadoTiempo($event)"
     />
 
     <app-controles-equipo class="sm:col-start-2 sm:row-start-1"
@@ -32,6 +34,7 @@
     [resultadoLocal]="golesLocal"
     [resultadoVisitante]="golesVisitante"
     [parte]="parte"
+    [estadoTiempo]="estadoTiempo"
     (eventoCambiarParte)="cambiarParte($event)"
   />
 
@@ -42,7 +45,7 @@
       [numFaltas]="parte == 1 ? faltasLocalParte1 : faltasLocalParte2"
     />
 
-    @if (estado == 'fullReset') {
+    @if (estadoTiempo == 'fullReset') {
       <app-configurar-partido class="sm:col-span-2 sm:mx-auto sm:mt-5 sm:mb-1"
         (eventoConfigurar)="configurarEquipos($event)"
       />

@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Estado } from '../interfaces/Estado';
-import { EstadoService } from '../../services/estado.service';
+import { EstadoTiempo } from '../interfaces/EstadoTiempo';
 
 @Component({
   selector: 'app-resultado',
@@ -10,7 +9,7 @@ import { EstadoService } from '../../services/estado.service';
   templateUrl: './resultado.component.html',
   styleUrl: './resultado.component.css'
 })
-export class ResultadoComponent implements OnInit, OnChanges {
+export class ResultadoComponent implements OnChanges {
   @Input() equipoLocal: string = 'Local';
   @Input() equipoVisitante: string = 'Visitante';
   @Input() resultadoLocal: number = 0;
@@ -18,15 +17,9 @@ export class ResultadoComponent implements OnInit, OnChanges {
   @Input() escudoLocal: string = '';
   @Input() escudoVisitante: string = '';
   @Input() parte: number = 1;
-
-  estado!: Estado;
-  estadoService = inject(EstadoService);
+  @Input() estadoTiempo!: EstadoTiempo;
 
   @Output() eventoCambiarParte = new EventEmitter<number>();
-
-  ngOnInit(): void {
-    this.estadoService.estadoActual.subscribe(estadoActual => this.estado = estadoActual);
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['escudoLocal']) {

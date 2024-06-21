@@ -54,8 +54,8 @@ export class ModalConfigurarComponent implements OnInit {
     this.tipoSelecEquipo = tipoEquipo;
     this.selecEquipo = true;
 
-    setTimeout(() => { 
-      this.inputSelecEquipo.nativeElement.focus(); 
+    setTimeout(() => {
+      this.inputSelecEquipo.nativeElement.focus();
     }, 0);
   }
 

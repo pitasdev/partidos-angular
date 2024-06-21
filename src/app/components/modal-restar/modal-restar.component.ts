@@ -21,9 +21,9 @@ export class ModalRestarComponent {
 
   @Output() eventoEliminar = new EventEmitter<string | null>();
 
-  confirmacionEliminar(event:Event): void {
+  confirmacionEliminar(event: Event): void {
     this.eliminarGolID = (event.currentTarget as HTMLElement).id;
-    
+
     const splitID: string[] = this.eliminarGolID.split('-');
     this.openModalConfirmacion = true;
     this.mensajeConfirmacion = `¿Está seguro/a que quiere eliminar el <b>${splitID[1]}</b> del equipo <b>${splitID[0]}</b> en el minuto <b>${splitID[2]}</b>`;
