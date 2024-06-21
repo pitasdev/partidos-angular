@@ -17,6 +17,10 @@ export class ClickDirective {
 
   private playAnimation(): void {
     this.player.play();
+
+    setTimeout(() => {
+      this.player.reset();
+    }, 150);
   }
 
   @HostListener('click') onClick(): void {
