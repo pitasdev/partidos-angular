@@ -67,14 +67,13 @@ export class ModalConfigurarComponent implements OnInit {
     if (this.tipoSelecEquipo == 'local') {
       this.equipoLocal = equipo.equipo;
       this.escudoLocal = equipo.escudo;
-      this.buscarEquipo = '';
-      this.listaEquiposFiltrada = this.listaEquipos;
     } else if (this.tipoSelecEquipo == 'visitante') {
       this.equipoVisitante = equipo.equipo;
       this.escudoVisitante = equipo.escudo;
-      this.buscarEquipo = '';
-      this.listaEquiposFiltrada = this.listaEquipos;
     }
+    
+    this.buscarEquipo = '';
+    this.listaEquiposFiltrada = this.listaEquipos;
 
     this.selecEquipo = false;
   }
