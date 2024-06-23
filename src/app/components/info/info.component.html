@@ -62,12 +62,20 @@
         }
         
     </div>
-
-    @if (openModalConfirmacion) {
-        <app-modal-confirmacion 
-            [mensaje]="mensajeConfirmacion"
-            (eventoConfirmar)="eliminar($event)"
-        />
-    }
-
+  
 </section>
+
+@if (openModalSumar) {
+    <app-modal-sumar 
+    [tipoEquipo]="modalTipoEquipo"
+    [tipoDato]="modalTipoDato"
+    (eventoGuardar)="guardarTarjeta($event)"
+    />
+}
+
+@if (openModalConfirmacion) {
+    <app-modal-confirmacion 
+        [mensaje]="mensajeConfirmacion"
+        (eventoConfirmar)="eliminarTarjeta($event)"
+    />
+}

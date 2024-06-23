@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { EstadoTiempo } from '../interfaces/EstadoTiempo';
+import { Estado } from '../../interfaces/Estado';
+import { AppDataService } from '../../services/app-data.service';
 
 @Component({
   selector: 'app-resultado',
@@ -9,17 +10,30 @@ import { EstadoTiempo } from '../interfaces/EstadoTiempo';
   templateUrl: './resultado.component.html',
   styleUrl: './resultado.component.css'
 })
-export class ResultadoComponent implements OnChanges {
-  @Input() equipoLocal: string = 'Local';
-  @Input() equipoVisitante: string = 'Visitante';
-  @Input() resultadoLocal: number = 0;
-  @Input() resultadoVisitante: number = 0;
-  @Input() escudoLocal: string = '';
-  @Input() escudoVisitante: string = '';
-  @Input() parte: number = 1;
-  @Input() estadoTiempo!: EstadoTiempo;
+export class ResultadoComponent implements OnInit, OnChanges {
+  estado!: Estado;
+  parte: number = 1;
+  equipoLocal: string = 'Local';
+  equipoVisitante: string = 'Visitante';
+  resultadoLocal: number = 0;
+  resultadoVisitante: number = 0;
+  escudoLocal: string = '';
+  escudoVisitante: string = '';
 
-  @Output() eventoCambiarParte = new EventEmitter<number>();
+  appDataService = inject(AppDataService);
+
+  ngOnInit(): void {
+    this.appDataService.appData$.subscribe(data => {
+      this.estado = data.estado;
+      this.parte = data.parte;
+      this.equipoLocal = data.local.equipo;
+      this.equipoVisitante = data.visitante.equipo;
+      this.resultadoLocal = data.local.goles;
+      this.resultadoVisitante = data.visitante.goles;
+      this.escudoLocal = data.local.escudo;
+      this.escudoVisitante = data.visitante.escudo;
+    })
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['escudoLocal']) {
@@ -36,6 +50,6 @@ export class ResultadoComponent implements OnChanges {
   }
 
   cambiarParte(): void {
-    this.eventoCambiarParte.emit(this.parte);
+    this.appDataService.setParte(this.parte);
   }
 }

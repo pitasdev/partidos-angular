@@ -41,3 +41,19 @@
     </div>
 
 </div>
+
+@if (openModalSumar) {
+    <app-modal-sumar 
+        [tipoEquipo]="modalTipoEquipo"
+        [tipoDato]="modalTipoDato"
+        (eventoGuardar)="guardarGol($event)"
+    />
+}
+
+@if (openModalRestar) {
+    <app-modal-restar 
+        [tipoEquipo]="modalTipoEquipo"
+        [tipoDato]="modalTipoDato"
+        (eventoEliminar)="eliminarGol($event)"
+    />
+}

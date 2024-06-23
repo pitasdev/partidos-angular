@@ -1,7 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TipoDato } from '../interfaces/TipoDato';
-import { TipoEquipo } from '../interfaces/TipoEquipo';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
+import { TipoDato } from '../../interfaces/TipoDato';
+import { TipoEquipo } from '../../interfaces/TipoEquipo';
 import { ModalConfirmacionComponent } from '../modal-confirmacion/modal-confirmacion.component';
+import { AppDataService } from '../../services/app-data.service';
+import { Gol } from '../../interfaces/Gol';
 
 @Component({
   selector: 'app-modal-restar',
@@ -10,23 +12,33 @@ import { ModalConfirmacionComponent } from '../modal-confirmacion/modal-confirma
   templateUrl: './modal-restar.component.html',
   styleUrl: './modal-restar.component.css'
 })
-export class ModalRestarComponent {
-  @Input() tipoDato!: TipoDato;
+export class ModalRestarComponent implements OnInit {
   @Input() tipoEquipo!: TipoEquipo;
-  @Input() listaDatos: any[] = [];
+  @Input() tipoDato!: TipoDato;
+  listaGoles: Gol[] = [];
 
   openModalConfirmacion: boolean = false;
   mensajeConfirmacion: string = '';
-  eliminarGolID: string = '';
+  id: string = '';
+
+  appDataService = inject(AppDataService);
 
   @Output() eventoEliminar = new EventEmitter<string | null>();
 
-  confirmacionEliminar(event: Event): void {
-    this.eliminarGolID = (event.currentTarget as HTMLElement).id;
+  ngOnInit(): void {
+    this.appDataService.appData$.subscribe(data => {
+      if (this.tipoEquipo == 'local') this.listaGoles = data.local.listaGoles;
+      else if (this.tipoEquipo == 'visitante') this.listaGoles = data.visitante.listaGoles;
+    })
+  }
 
-    const splitID: string[] = this.eliminarGolID.split('-');
+  confirmacionEliminar(event: Event): void {
+    this.id = (event.currentTarget as HTMLElement).id;
+    const splitID: string[] = this.id.split('-');
+
     this.openModalConfirmacion = true;
     this.mensajeConfirmacion = `¿Está seguro/a que quiere eliminar el <b>${splitID[1]}</b> del equipo <b>${splitID[0]}</b> en el minuto <b>${splitID[2]}</b>`;
+
     if (splitID[3] != 'undefined') this.mensajeConfirmacion += ` del jugador <b>${splitID[3]}</b>`;
     this.mensajeConfirmacion += '?';
   }
@@ -36,7 +48,7 @@ export class ModalRestarComponent {
 
     if (!event) return;
 
-    this.eventoEliminar.emit(this.eliminarGolID);
+    this.eventoEliminar.emit(this.id);
   }
 
   cancelar(): void {

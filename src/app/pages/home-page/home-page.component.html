@@ -1,0 +1,96 @@
+<main class="w-[820px] pb-8 m-auto select-none sm:w-[420px]">
+
+    <section class="flex justify-between p-4 sm:grid sm:grid-cols-2">
+      
+        <app-controles-equipo 
+            [tipoEquipo]="'local'"
+        />
+  
+        <app-tiempo class="sm:col-span-2" />
+  
+        <app-controles-equipo class="sm:col-start-2 sm:row-start-1"
+            [tipoEquipo]="'visitante'"
+        />
+  
+    </section>
+  
+    <app-resultado />
+  
+    <section class="flex justify-between px-4 py-2 sm:grid sm:grid-cols-2">
+  
+        <app-faltas 
+            [tipoEquipo]="'local'"
+        />
+  
+        @if (estado == 'configuracion') {
+            <div class="w-60 text-center sm:col-span-2 sm:mx-auto sm:mt-5 sm:mb-1">
+                <button class="text-xl font-semibold bg-sky-400 px-6 py-4 rounded-md" clickAnimation (click)="mostrarModalConfigurar()">Configurar partido</button>
+            </div>
+        }
+  
+        @if (estado == 'finalizado') {
+            <div class="text-xl font-semibold flex gap-6 sm:col-span-2 sm:justify-self-center sm:pt-5 sm:pb-1 sm:gap-10">
+            
+                <button class="bg-sky-400 p-4 px-5 rounded-md" clickAnimation (click)="confirmarReiniciarPartido()">Nuevo partido</button>
+        
+                <button class="flex items-center gap-2 bg-red-500 px-5 py-3 rounded-md" clickAnimation>
+        
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36px" height="36px" viewBox="0 0 24 24">
+                        <path fill="#000" d="m12 16l-5-5l1.4-1.45l2.6 2.6V4h2v8.15l2.6-2.6L17 11zm-6 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z"/>
+                    </svg> 
+        
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 24 24">
+                        <path fill="#000" d="M8.267 14.68c-.184 0-.308.018-.372.036v1.178c.076.018.171.023.302.023c.479 0 .774-.242.774-.651c0-.366-.254-.586-.704-.586m3.487.012c-.2 0-.33.018-.407.036v2.61c.077.018.201.018.313.018c.817.006 1.349-.444 1.349-1.396c.006-.83-.479-1.268-1.255-1.268"/>
+                        <path fill="#000" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM9.498 16.19c-.309.29-.765.42-1.296.42a2.23 2.23 0 0 1-.308-.018v1.426H7v-3.936A7.558 7.558 0 0 1 8.219 14c.557 0 .953.106 1.22.319c.254.202.426.533.426.923c-.001.392-.131.723-.367.948m3.807 1.355c-.42.349-1.059.515-1.84.515c-.468 0-.799-.03-1.024-.06v-3.917A7.947 7.947 0 0 1 11.66 14c.757 0 1.249.136 1.633.426c.415.308.675.799.675 1.504c0 .763-.279 1.29-.663 1.615M17 14.77h-1.532v.911H16.9v.734h-1.432v1.604h-.906V14.03H17zM14 9h-1V4l5 5z"/>
+                    </svg>
+        
+                </button>
+    
+            </div>
+        }
+  
+        <app-faltas class="sm:col-start-2 sm:row-start-1"
+            [tipoEquipo]="'visitante'"
+        />
+  
+    </section>
+  
+    <section class="flex justify-between p-4 sm:flex-col sm:items-center sm:gap-5">
+  
+        <div class="flex flex-col">
+    
+            <h2 class="hidden text-2xl font-semibold text-center pb-2 sm:block">{{equipoLocal}}</h2>
+    
+            <app-info 
+                [tipoEquipo]="'local'"
+            />
+    
+        </div>
+  
+        <div>
+    
+            <h2 class="hidden text-2xl font-semibold text-center pb-2 sm:block">{{equipoVisitante}}</h2>
+    
+            <app-info 
+                [tipoEquipo]="'visitante'"
+            />
+    
+        </div>
+  
+    </section>
+
+    @if (openModalConfigurar) {
+        <app-modal-configurar 
+            [listaEquipos]="listaEquipos"
+            (eventoGuardar)="configurarPartido($event)"
+        />
+    }
+  
+    @if (openModalConfirmacion) {
+        <app-modal-confirmacion 
+            [mensaje]="mensajeConfirmacion"
+            (eventoConfirmar)="reiniciarData($event)"
+        />
+  }
+  
+</main>

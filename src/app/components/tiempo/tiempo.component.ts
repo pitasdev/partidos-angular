@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { EstadoTiempo } from '../interfaces/EstadoTiempo';
+import { Component, OnInit, inject } from '@angular/core';
+import { Estado } from '../../interfaces/Estado';
 import { ModalConfirmacionComponent } from '../modal-confirmacion/modal-confirmacion.component';
 import { ClickDirective } from '../../directives/click.directive';
+import { AppDataService } from '../../services/app-data.service';
 
 @Component({
   selector: 'app-tiempo',
@@ -10,8 +11,8 @@ import { ClickDirective } from '../../directives/click.directive';
   templateUrl: './tiempo.component.html',
   styleUrl: './tiempo.component.css'
 })
-export class TiempoComponent {
-  @Input() estadoTiempo!: EstadoTiempo;
+export class TiempoComponent implements OnInit {
+  estado!: Estado;
   tiempo: string = '00:00';
   interval!: any;
 
@@ -19,13 +20,19 @@ export class TiempoComponent {
   mensajeConfirmacion: string = '';
   accionARealizar: string = '';
 
-  @Output() eventoReiniciar = new EventEmitter();
-  @Output() eventoCambiarEstadoTiempo = new EventEmitter<EstadoTiempo>();
+  appDataService = inject(AppDataService);
+
+  ngOnInit(): void {
+    this.appDataService.appData$.subscribe(data => {
+      this.estado = data.estado;
+      this.tiempo = data.tiempo;
+    })
+  }
 
   iniciarTiempo(): void {
-    if (this.estadoTiempo == 'play') return;
+    if (this.estado == 'play') return;
 
-    this.eventoCambiarEstadoTiempo.emit('play');
+    this.appDataService.setEstado('play')
 
     this.interval = setInterval(() => {
       this.sumarSegundo();
@@ -43,7 +50,7 @@ export class TiempoComponent {
     }
 
     if (minuto == 100) {
-      this.tiempo = '00:00';
+      this.appDataService.setTiempo('00:00');
       return;
     }
 
@@ -54,40 +61,26 @@ export class TiempoComponent {
     if (minuto < 10) splitTiempo[0] = '0' + minuto;
 
     this.tiempo = splitTiempo.join(':');
+
+    this.appDataService.setTiempo(this.tiempo);
   }
 
   pararTiempo(): void {
     clearInterval(this.interval);
-    this.eventoCambiarEstadoTiempo.emit('stop');
+    this.appDataService.setEstado('stop');
   }
 
   reiniciarTiempo(): void {
-    if (this.estadoTiempo == 'play') return;
+    if (this.estado == 'play') return;
 
-    this.tiempo = '00:00';
-    this.eventoCambiarEstadoTiempo.emit('reset');
+    this.appDataService.setTiempo('00:00');
+    this.appDataService.setEstado('reset');
   }
 
-  reiniciarTodo(): void {
-    if (this.estadoTiempo == 'play') return;
+  finalizarPartido(): void {
+    if (this.estado == 'play') return;
 
-    this.tiempo = '00:00';
-    this.eventoCambiarEstadoTiempo.emit('fullReset');
-
-    this.eventoReiniciar.emit();
-  }
-
-  confirmarAccion(accion: string): void {
-    if (this.estadoTiempo == 'play') return;
-
-    this.accionARealizar = accion;
-
-    if (accion == 'click') this.mensajeConfirmacion = '¿Está seguro/a que quiere reiniciar el <b>tiempo</b>?';
-    else if (accion == 'dblclick') this.mensajeConfirmacion = '¿Está seguro/a que quiere reiniciar <b>todos los parametros</b>?';
-
-    setTimeout(() => {
-      this.openModalConfirmacion = true;
-    }, 150)
+    this.appDataService.setEstado('finalizado');
   }
 
   realizarAccion(event: boolean): void {
@@ -95,7 +88,23 @@ export class TiempoComponent {
 
     if (!event) return;
 
-    if (this.accionARealizar == 'click') this.reiniciarTiempo();
-    else if (this.accionARealizar == 'dblclick') this.reiniciarTodo();
+    if (this.accionARealizar == 'reiniciarTiempo') this.reiniciarTiempo();
+    else if (this.accionARealizar == 'finalizar') this.finalizarPartido();
+  }
+
+  confirmarReiniciarTiempo(): void {
+    if (this.estado == 'play') return;
+
+    this.accionARealizar = 'reiniciarTiempo';
+    this.mensajeConfirmacion = '¿Está seguro/a que quiere <b>reiniciar el tiempo</b>?';
+    this.openModalConfirmacion = true;
+  }
+
+  confirmarFinalizarPartido(): void {
+    if (this.estado == 'play') return;
+
+    this.accionARealizar = 'finalizar';
+    this.mensajeConfirmacion = '¿Está seguro/a que quiere <b>finalizar el partido</b>?';
+    this.openModalConfirmacion = true;
   }
 }

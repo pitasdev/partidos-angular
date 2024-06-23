@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Equipo } from '../interfaces/Equipo';
-import { TipoEquipo } from '../interfaces/TipoEquipo';
+import { Equipo } from '../../interfaces/Equipo';
+import { TipoEquipo } from '../../interfaces/TipoEquipo';
 
 @Component({
   selector: 'app-modal-configurar',
@@ -23,6 +23,7 @@ export class ModalConfigurarComponent implements OnInit {
   escudoVisitante: string = '';
 
   @Output() eventoGuardar = new EventEmitter();
+  
   @ViewChild('selecEquipo') inputSelecEquipo!: ElementRef;
 
   ngOnInit(): void {
@@ -35,8 +36,8 @@ export class ModalConfigurarComponent implements OnInit {
     const configuracion = {
       equipoLocal: this.equipoLocal,
       equipoVisitante: this.equipoVisitante,
-      escudoLocal: this.escudoLocal,
-      escudoVisitante: this.escudoVisitante
+      escudoLocal: this.escudoLocal == '' ? 'default.png' : this.escudoLocal,
+      escudoVisitante: this.escudoVisitante == '' ? 'default.png' : this.escudoVisitante
     }
 
     this.eventoGuardar.emit(configuracion);

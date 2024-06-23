@@ -6,12 +6,12 @@
 
         <div class="text-xl flex gap-2">
             <label for="minuto" class="w-20">Minuto</label>
-            <input type="number" inputmode="numeric" min="1" max="99" id="minuto" class="w-28 border rounded-md px-1 transition duration-300" [(ngModel)]="minuto">
+            <input type="number" inputmode="numeric" min="1" max="99" id="minuto" class="w-28 border rounded-md px-1" [(ngModel)]="minuto">
         </div>
 
         <div class="text-xl flex gap-2">
             <label for="dorsal" class="w-20">Dorsal</label>
-            <input type="number" inputmode="numeric" min="1" max="99" id="dorsal" class="w-28 border rounded-md px-1 transition duration-300" [(ngModel)]="dorsal">
+            <input type="number" inputmode="numeric" min="1" max="99" id="dorsal" class="w-28 border rounded-md px-1" [(ngModel)]="dorsal">
         </div>
 
         @if (tipoDato == 'tarjeta') {

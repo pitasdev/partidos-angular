@@ -1,8 +1,8 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Datos } from '../interfaces/Datos';
-import { TipoDato } from '../interfaces/TipoDato';
-import { TipoEquipo } from '../interfaces/TipoEquipo';
+import { Datos } from '../../interfaces/Datos';
+import { TipoDato } from '../../interfaces/TipoDato';
+import { TipoEquipo } from '../../interfaces/TipoEquipo';
 
 @Component({
   selector: 'app-modal-sumar',

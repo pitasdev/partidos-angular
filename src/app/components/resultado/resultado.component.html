@@ -20,7 +20,7 @@
     
         <div class="text-xl flex flex-col items-center">
             <label for="parte">Parte</label>
-            @if (estadoTiempo == 'reset' || estadoTiempo == 'fullReset') {
+            @if (estado == 'reset' || estado == 'configuracion') {
                 <select name="parte" id="parte" class="w-10 h-7 bg-white" [(ngModel)]="parte" (change)="cambiarParte()">
                     <option value="1">1</option>
                     <option value="2">2</option>

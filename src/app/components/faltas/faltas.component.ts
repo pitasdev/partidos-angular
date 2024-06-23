@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, Renderer2, SimpleChanges, ViewChild, inject } from '@angular/core';
-import { TipoEquipo } from '../interfaces/TipoEquipo';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, Renderer2, ViewChild, inject } from '@angular/core';
+import { TipoEquipo } from '../../interfaces/TipoEquipo';
 import { CommonModule } from '@angular/common';
+import { AppDataService } from '../../services/app-data.service';
 
 @Component({
   selector: 'app-faltas',
@@ -9,12 +10,15 @@ import { CommonModule } from '@angular/common';
   templateUrl: './faltas.component.html',
   styleUrl: './faltas.component.css'
 })
-export class FaltasComponent implements AfterViewInit, OnChanges {
+export class FaltasComponent implements OnInit, AfterViewInit {
   @Input() tipoEquipo!: TipoEquipo;
-  @Input() numFaltas: number = 0;
+  numFaltas: number = 0;
+  parte: number = 1;
 
-  renderer = inject(Renderer2);
   componenteCargado: boolean = false;
+
+  appDataService = inject(AppDataService);
+  renderer = inject(Renderer2);
 
   @ViewChild('falta1') falta1!: ElementRef;
   @ViewChild('falta2') falta2!: ElementRef;
@@ -22,12 +26,28 @@ export class FaltasComponent implements AfterViewInit, OnChanges {
   @ViewChild('falta4') falta4!: ElementRef;
   @ViewChild('falta5') falta5!: ElementRef;
 
+  ngOnInit(): void {
+    this.appDataService.appData$.subscribe(data => {
+      this.parte = data.parte;
+
+      if (this.tipoEquipo == 'local') {
+        if (this.parte == 1) this.numFaltas = data.local.faltasParte1;
+        else if (this.parte == 2) this.numFaltas = data.local.faltasParte2;
+      } else if (this.tipoEquipo == 'visitante') {
+        if (this.parte == 1) this.numFaltas = data.visitante.faltasParte1;
+        else if (this.parte == 2) this.numFaltas = data.visitante.faltasParte2;
+      }
+
+      this.comprobarFaltas();
+    })
+  }
+
   ngAfterViewInit(): void {
     this.componenteCargado = true;
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['numFaltas'] && this.componenteCargado) {
+  comprobarFaltas(): void {
+    if (this.componenteCargado) {
       switch (this.numFaltas) {
         case 0:
           this.renderer.removeClass(this.falta1.nativeElement, 'bg-red-600');
