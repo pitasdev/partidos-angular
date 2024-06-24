@@ -1,4 +1,4 @@
-<section id="resultado" class="flex justify-between px-4 py-2 sm:grid sm:grid-cols-2">
+<section class="flex justify-between px-4 py-2 sm:grid sm:grid-cols-2">
 
     <div class="w-60 flex flex-col items-center text-center justify-end sm:w-48">
 
@@ -13,11 +13,11 @@
     <div class="sm:col-span-2 sm:mx-auto">
 
         <div class="w-72 h-32 text-8xl flex justify-center items-center tabular-nums sm:w-[384px] sm:mb-2">
-            <span class="sm:text-center sm:w-28">{{resultadoLocal}}</span>
+            <span class="sm:text-center sm:w-28">{{golesLocal}}</span>
             <span class="px-4 sm:px-5">-</span>
-            <span class="sm:text-center sm:w-28">{{resultadoVisitante}}</span>
+            <span class="sm:text-center sm:w-28">{{golesVisitante}}</span>
         </div>
-    
+         
         <div class="text-xl flex flex-col items-center">
             <label for="parte">Parte</label>
             @if (estado == 'reset' || estado == 'configuracion') {

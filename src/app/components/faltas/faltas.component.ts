@@ -44,6 +44,7 @@ export class FaltasComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.componenteCargado = true;
+    this.comprobarFaltas();
   }
 
   comprobarFaltas(): void {

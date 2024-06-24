@@ -1,1 +1,241 @@
-<p>pdf-page works!</p>
+<main id="pdf" class="w-[820px] pt-20 pb-8 m-auto select-none">
+  
+    <!-- app-resultado -->
+    <section id="resultado" class="flex justify-between px-4 py-2">
+
+        <!-- equipo local -->
+        <div class="w-60 flex flex-col items-center text-center justify-end">
+    
+            <div class="w-32 h-32">
+                <img class="w-full h-full object-cover" src="assets/img/{{escudoLocal}}" alt="" />
+            </div>
+    
+            <div class="text-3xl font-semibold h-24 flex items-center pt-3 overflow-auto -translate-y-2">{{equipoLocal}}</div>
+    
+        </div>
+    
+        <!-- resultado -->
+        <div class="sm:col-span-2">
+    
+            <div class="w-72 h-32 text-8xl flex justify-center items-center tabular-nums">
+                <span class="sm:text-center -translate-y-2">{{golesLocal}}</span>
+                <span class="px-4 -translate-y-2">-</span>
+                <span class="sm:text-center -translate-y-2">{{golesVisitante}}</span>
+            </div>
+    
+        </div>
+    
+        <!-- equipo visitante -->
+        <div class="w-60 flex flex-col items-center text-center">
+    
+            <div class="w-32 h-32">
+                <img class="w-full h-full object-cover -translate-y-2" src="assets/img/{{escudoVisitante}}" alt="" />
+            </div>
+    
+            <div class="text-3xl font-semibold h-24 flex items-center pt-3 overflow-auto">{{equipoVisitante}}</div>
+    
+        </div>
+        
+    </section>
+  
+    <!-- section faltas -->
+    <section class="flex justify-between px-4 py-2">
+  
+        <div>
+
+            <!-- faltas local parte 1 -->
+            <div class="w-60 flex flex-col items-center">
+
+                <span class="text-xl -translate-y-2">Faltas parte 1</span>
+                
+                <div class="flex gap-2 justify-center p-2">
+                    <div #falta1 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte1Local > 0 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte1Local == 5 }"></div>
+                    <div #falta2 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte1Local > 1 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte1Local == 5 }"></div>
+                    <div #falta3 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte1Local > 2 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte1Local == 5 }"></div>
+                    <div #falta4 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte1Local > 3 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte1Local == 5 }"></div>
+                    <div #falta5 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte1Local > 4 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte1Local == 5 }"></div>
+                </div>
+            
+            </div>
+    
+            <!-- faltas local parte 2 -->
+            <div class="w-60 flex flex-col items-center">
+
+                <span class="text-xl -translate-y-2">Faltas parte 2</span>
+                
+                <div class="flex gap-2 justify-center p-2">
+                    <div #falta1 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte2Local > 0 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte2Local == 5 }"></div>
+                    <div #falta2 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte2Local > 1 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte2Local == 5 }"></div>
+                    <div #falta3 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte2Local > 2 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte2Local == 5 }"></div>
+                    <div #falta4 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte2Local > 3 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte2Local == 5 }"></div>
+                    <div #falta5 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte2Local > 4 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte2Local == 5 }"></div>
+                </div>
+            
+            </div>
+
+        </div>
+        
+        <div>
+
+            <!-- faltas visitante parte 1 -->
+            <div class="w-60 flex flex-col items-center">
+
+                <span class="text-xl -translate-y-2">Faltas parte 1</span>
+                
+                <div class="flex gap-2 justify-center p-2">
+                    <div #falta1 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte1Visitante > 0 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte1Visitante == 5 }"></div>
+                    <div #falta2 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte1Visitante > 1 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte1Visitante == 5 }"></div>
+                    <div #falta3 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte1Visitante > 2 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte1Visitante == 5 }"></div>
+                    <div #falta4 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte1Visitante > 3 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte1Visitante == 5 }"></div>
+                    <div #falta5 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte1Visitante > 4 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte1Visitante == 5 }"></div>
+                </div>
+            
+            </div>
+    
+            <!-- faltas visitante parte 2 -->
+            <div class="w-60 flex flex-col items-center">
+
+                <span class="text-xl -translate-y-2">Faltas parte 2</span>
+                
+                <div class="flex gap-2 justify-center p-2">
+                    <div #falta1 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte2Visitante > 0 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte2Visitante == 5 }"></div>
+                    <div #falta2 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte2Visitante > 1 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte2Visitante == 5 }"></div>
+                    <div #falta3 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte2Visitante > 2 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte2Visitante == 5 }"></div>
+                    <div #falta4 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte2Visitante > 3 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte2Visitante == 5 }"></div>
+                    <div #falta5 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte2Visitante > 4 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte2Visitante == 5 }"></div>
+                </div>
+            
+            </div>
+
+        </div>
+  
+    </section>
+  
+    <!-- section info -->
+    <section class="flex justify-between p-4">
+  
+        <!-- info equipo local -->
+        <div class="text-xl w-[380px] max-h-80 overflow-auto grid grid-cols-2 border rounded-md py-2 px-3">
+
+            <div class="flex flex-col gap-1">
+        
+                <span class="font-bold pb-4 -translate-y-2">Goles</span>
+        
+                @for (gol of listaGolesLocal; track gol) {
+                    <div class="flex gap-4">
+                        <div class="w-7 text-end tabular-nums -translate-y-2">{{gol.minuto}}'</div>
+                        <div class="font-semibold w-7 text-end tabular-nums -translate-y-2">{{gol.dorsal}}</div>
+                    </div>
+                }
+                
+            </div>
+        
+            <div class="flex flex-col gap-1">
+        
+                <div class="flex justify-between">
+        
+                    <span class="font-bold pb-4 -translate-y-2">Tarjetas</span>
+        
+                </div>
+        
+                @for (tarjeta of listaTarjetasLocal; track tarjeta) {
+                    <div class="flex justify-between">
+        
+                        <div class="flex gap-3">
+        
+                            <div class="w-7 text-end tabular-nums -translate-y-2">{{tarjeta.minuto}}'</div>
+        
+                                <div>
+                                    @if (tarjeta.color == 'amarilla') {
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 243 243" preserveAspectRatio="xMidYMid meet">
+                                            <g transform="translate(0.000000,243.000000) scale(0.100000,-0.100000)" fill="#f4f408" stroke="none">
+                                                <path d="M1286 2223 c-11 -3 -200 -83 -420 -179 -359 -156 -405 -179 -442-217 -49 -51 -68 -118 -54 -183 18 -79 549 -1347 576 -1375 41 -43 119 -72 171 -65 52 7 831 344 878 380 18 14 43 46 55 71 42 87 40 93 -254 805 -147 355 -278 661 -291 681 -41 63 -143 101 -219 82z"/>
+                                            </g>
+                                        </svg>
+                                    }
+                                    @else {
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 243 243" preserveAspectRatio="xMidYMid meet">
+                                            <g transform="translate(0.000000,243.000000) scale(0.100000,-0.100000)" fill="#e60d0d" stroke="none">
+                                                <path d="M1286 2223 c-11 -3 -200 -83 -420 -179 -359 -156 -405 -179 -442-217 -49 -51 -68 -118 -54 -183 18 -79 549 -1347 576 -1375 41 -43 119 -72 171 -65 52 7 831 344 878 380 18 14 43 46 55 71 42 87 40 93 -254 805 -147 355 -278 661 -291 681 -41 63 -143 101 -219 82z"/>
+                                            </g>
+                                        </svg>
+                                    }
+                                </div>
+        
+                            <div class="font-semibold w-7 text-end tabular-nums -translate-y-2">{{tarjeta.dorsal}}</div>
+                            
+                        </div>
+                        
+                    </div>
+                }
+                
+            </div>
+            
+        </div>
+  
+        <div>
+    
+            <!-- info equipo visitante -->
+            <div class="text-xl w-[380px] max-h-80 overflow-auto grid grid-cols-2 border rounded-md py-2 px-3">
+
+                <div class="flex flex-col gap-1">
+            
+                    <span class="font-bold pb-4 -translate-y-2">Goles</span>
+            
+                    @for (gol of listaGolesVisitante; track gol) {
+                        <div class="flex gap-4">
+                            <div class="w-7 text-end tabular-nums -translate-y-2">{{gol.minuto}}'</div>
+                            <div class="font-semibold w-7 text-end tabular-nums -translate-y-2">{{gol.dorsal}}</div>
+                        </div>
+                    }
+                    
+                </div>
+            
+                <div class="flex flex-col gap-1">
+            
+                    <div class="flex justify-between">
+            
+                        <span class="font-bold pb-4 -translate-y-2">Tarjetas</span>
+            
+                    </div>
+            
+                    @for (tarjeta of listaTarjetasVisitante; track tarjeta) {
+                        <div class="flex justify-between">
+            
+                            <div class="flex gap-3">
+            
+                                <div class="w-7 text-end tabular-nums -translate-y-2">{{tarjeta.minuto}}'</div>
+            
+                                    <div>
+                                        @if (tarjeta.color == 'amarilla') {
+                                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 243 243" preserveAspectRatio="xMidYMid meet">
+                                                <g transform="translate(0.000000,243.000000) scale(0.100000,-0.100000)" fill="#f4f408" stroke="none">
+                                                    <path d="M1286 2223 c-11 -3 -200 -83 -420 -179 -359 -156 -405 -179 -442-217 -49 -51 -68 -118 -54 -183 18 -79 549 -1347 576 -1375 41 -43 119 -72 171 -65 52 7 831 344 878 380 18 14 43 46 55 71 42 87 40 93 -254 805 -147 355 -278 661 -291 681 -41 63 -143 101 -219 82z"/>
+                                                </g>
+                                            </svg>
+                                        }
+                                        @else {
+                                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 243 243" preserveAspectRatio="xMidYMid meet">
+                                                <g transform="translate(0.000000,243.000000) scale(0.100000,-0.100000)" fill="#e60d0d" stroke="none">
+                                                    <path d="M1286 2223 c-11 -3 -200 -83 -420 -179 -359 -156 -405 -179 -442-217 -49 -51 -68 -118 -54 -183 18 -79 549 -1347 576 -1375 41 -43 119 -72 171 -65 52 7 831 344 878 380 18 14 43 46 55 71 42 87 40 93 -254 805 -147 355 -278 661 -291 681 -41 63 -143 101 -219 82z"/>
+                                                </g>
+                                            </svg>
+                                        }
+                                    </div>
+            
+                                <div class="font-semibold w-7 text-end tabular-nums -translate-y-2">{{tarjeta.dorsal}}</div>
+                                
+                            </div>
+                            
+                        </div>
+                    }
+                    
+                </div>
+
+            </div>
+    
+        </div>
+  
+    </section>
+  
+</main>

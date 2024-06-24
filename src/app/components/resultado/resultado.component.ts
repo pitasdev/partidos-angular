@@ -15,8 +15,8 @@ export class ResultadoComponent implements OnInit, OnChanges {
   parte: number = 1;
   equipoLocal: string = 'Local';
   equipoVisitante: string = 'Visitante';
-  resultadoLocal: number = 0;
-  resultadoVisitante: number = 0;
+  golesLocal: number = 0;
+  golesVisitante: number = 0;
   escudoLocal: string = '';
   escudoVisitante: string = '';
 
@@ -28,8 +28,8 @@ export class ResultadoComponent implements OnInit, OnChanges {
       this.parte = data.parte;
       this.equipoLocal = data.local.equipo;
       this.equipoVisitante = data.visitante.equipo;
-      this.resultadoLocal = data.local.goles;
-      this.resultadoVisitante = data.visitante.goles;
+      this.golesLocal = data.local.goles;
+      this.golesVisitante = data.visitante.goles;
       this.escudoLocal = data.local.escudo;
       this.escudoVisitante = data.visitante.escudo;
     })

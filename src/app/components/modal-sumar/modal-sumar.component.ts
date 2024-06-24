@@ -22,9 +22,6 @@ export class ModalSumarComponent {
   @Output() eventoGuardar = new EventEmitter<Datos | null>();
 
   guardar(): void {
-    if (this.minuto < 1) return;
-    if (this.dorsal < 1) return;
-
     const datos: Datos = {
       id: `${this.tipoEquipo}-${this.tipoDato}-${this.minuto}-${this.dorsal}`,
       tipoEquipo: this.tipoEquipo,
@@ -46,5 +43,17 @@ export class ModalSumarComponent {
 
   cancelar(): void {
     this.eventoGuardar.emit();
+  }
+
+  validarInput(valor: string): void {
+    if (valor == 'minuto') {
+      if (!this.minuto) return;
+      if (this.minuto < 1) this.minuto = 1;
+      if (this.minuto > 99) this.minuto = 99;
+    } else if (valor == 'dorsal') {
+      if (!this.dorsal) return;
+      if (this.dorsal < 1) this.dorsal = 1;
+      if (this.dorsal > 99) this.dorsal = 99;
+    }
   }
 }
