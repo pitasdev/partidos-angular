@@ -52,7 +52,7 @@ export class InfoComponent implements OnInit {
     this.id = (event.currentTarget as HTMLElement).id;
 
     const splitID: string[] = this.id.split('-');
-    this.mensajeConfirmacion = `¿Está seguro/a que quiere eliminar la <b>${splitID[1]} ${splitID[4]}</b> del equipo <b>${splitID[0]}</b> en el minuto <b>${splitID[2]}</b> del jugador número <b>${splitID[3]}</b>?`;
+    this.mensajeConfirmacion = `¿Está seguro/a que quiere eliminar la <b>${splitID[1]} ${splitID[4]}</b> del equipo <b>${splitID[0]}</b> en el <b>minuto ${splitID[2]}</b> del <b>jugador número ${splitID[3]}</b>?`;
     this.openModalConfirmacion = true;
   }
 
@@ -79,7 +79,7 @@ export class InfoComponent implements OnInit {
     this.openModalConfirmacion = false;
 
     if (event) {
-      const splitID = this.id.split('-');
+      const splitID: string[] = this.id.split('-');
       
       if (splitID[0] == 'local' && splitID[1] == 'tarjeta') this.appDataService.quitarTarjeta(this.id, 'local'); 
       else if (splitID[0] == 'visitante' && splitID[1] == 'tarjeta') this.appDataService.quitarTarjeta(this.id, 'visitante');

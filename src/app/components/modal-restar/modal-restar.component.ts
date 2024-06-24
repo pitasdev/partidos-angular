@@ -37,9 +37,9 @@ export class ModalRestarComponent implements OnInit {
     const splitID: string[] = this.id.split('-');
 
     this.openModalConfirmacion = true;
-    this.mensajeConfirmacion = `¿Está seguro/a que quiere eliminar el <b>${splitID[1]}</b> del equipo <b>${splitID[0]}</b> en el minuto <b>${splitID[2]}</b>`;
+    this.mensajeConfirmacion = `¿Está seguro/a que quiere eliminar el <b>${splitID[1]}</b> del equipo <b>${splitID[0]}</b> en el <b>minuto ${splitID[2]}</b>`;
 
-    if (splitID[3] != 'undefined') this.mensajeConfirmacion += ` del jugador <b>${splitID[3]}</b>`;
+    if (splitID[3] != 'undefined') this.mensajeConfirmacion += ` del <b>jugador número ${splitID[3]}</b>`;
     this.mensajeConfirmacion += '?';
   }
 

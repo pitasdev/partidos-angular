@@ -12,7 +12,7 @@ export class ModalConfirmacionComponent {
 
   @Output() eventoConfirmar = new EventEmitter<boolean>();
 
-  continuar(): void {
+  eliminar(): void {
     this.eventoConfirmar.emit(true);
   }
 

@@ -10,17 +10,17 @@
                 <img class="w-full h-full object-cover" src="assets/img/{{escudoLocal}}" alt="" />
             </div>
     
-            <div class="text-3xl font-semibold h-24 flex items-center pt-3 overflow-auto -translate-y-2">{{equipoLocal}}</div>
+            <div class="text-3xl font-semibold h-24 flex items-center pt-3 overflow-auto -translate-y-[9px]">{{equipoLocal}}</div>
     
         </div>
     
         <!-- resultado -->
-        <div class="sm:col-span-2">
+        <div>
     
             <div class="w-72 h-32 text-8xl flex justify-center items-center tabular-nums">
-                <span class="sm:text-center -translate-y-2">{{golesLocal}}</span>
-                <span class="px-4 -translate-y-2">-</span>
-                <span class="sm:text-center -translate-y-2">{{golesVisitante}}</span>
+                <span class="-translate-y-[9px]">{{golesLocal}}</span>
+                <span class="px-4 -translate-y-[9px]">-</span>
+                <span class="-translate-y-[9px]">{{golesVisitante}}</span>
             </div>
     
         </div>
@@ -29,7 +29,7 @@
         <div class="w-60 flex flex-col items-center text-center">
     
             <div class="w-32 h-32">
-                <img class="w-full h-full object-cover -translate-y-2" src="assets/img/{{escudoVisitante}}" alt="" />
+                <img class="w-full h-full object-cover -translate-y-[9px]" src="assets/img/{{escudoVisitante}}" alt="" />
             </div>
     
             <div class="text-3xl font-semibold h-24 flex items-center pt-3 overflow-auto">{{equipoVisitante}}</div>
@@ -46,7 +46,7 @@
             <!-- faltas local parte 1 -->
             <div class="w-60 flex flex-col items-center">
 
-                <span class="text-xl -translate-y-2">Faltas parte 1</span>
+                <span class="text-xl -translate-y-[9px]">Faltas parte 1</span>
                 
                 <div class="flex gap-2 justify-center p-2">
                     <div #falta1 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte1Local > 0 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte1Local == 5 }"></div>
@@ -61,7 +61,7 @@
             <!-- faltas local parte 2 -->
             <div class="w-60 flex flex-col items-center">
 
-                <span class="text-xl -translate-y-2">Faltas parte 2</span>
+                <span class="text-xl -translate-y-[9px]">Faltas parte 2</span>
                 
                 <div class="flex gap-2 justify-center p-2">
                     <div #falta1 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte2Local > 0 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte2Local == 5 }"></div>
@@ -80,7 +80,7 @@
             <!-- faltas visitante parte 1 -->
             <div class="w-60 flex flex-col items-center">
 
-                <span class="text-xl -translate-y-2">Faltas parte 1</span>
+                <span class="text-xl -translate-y-[9px]">Faltas parte 1</span>
                 
                 <div class="flex gap-2 justify-center p-2">
                     <div #falta1 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte1Visitante > 0 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte1Visitante == 5 }"></div>
@@ -95,7 +95,7 @@
             <!-- faltas visitante parte 2 -->
             <div class="w-60 flex flex-col items-center">
 
-                <span class="text-xl -translate-y-2">Faltas parte 2</span>
+                <span class="text-xl -translate-y-[9px]">Faltas parte 2</span>
                 
                 <div class="flex gap-2 justify-center p-2">
                     <div #falta1 class="w-4 h-4 bg-blue-600 self-center rounded-sm transition" [ngClass]="{ 'bg-red-600' : faltasParte2Visitante > 0 , 'shadow-[0_0_5px_1px_rgb(239,68,68)]': faltasParte2Visitante == 5 }"></div>
@@ -119,12 +119,12 @@
 
             <div class="flex flex-col gap-1">
         
-                <span class="font-bold pb-4 -translate-y-2">Goles</span>
+                <span class="font-bold pb-4 -translate-y-[9px]">Goles</span>
         
                 @for (gol of listaGolesLocal; track gol) {
                     <div class="flex gap-4">
-                        <div class="w-7 text-end tabular-nums -translate-y-2">{{gol.minuto}}'</div>
-                        <div class="font-semibold w-7 text-end tabular-nums -translate-y-2">{{gol.dorsal}}</div>
+                        <div class="w-7 text-end tabular-nums -translate-y-[9px]">{{gol.minuto}}'</div>
+                        <div class="font-semibold w-7 text-end tabular-nums -translate-y-[9px]">{{gol.dorsal}}</div>
                     </div>
                 }
                 
@@ -134,7 +134,7 @@
         
                 <div class="flex justify-between">
         
-                    <span class="font-bold pb-4 -translate-y-2">Tarjetas</span>
+                    <span class="font-bold pb-4 -translate-y-[9px]">Tarjetas</span>
         
                 </div>
         
@@ -143,7 +143,7 @@
         
                         <div class="flex gap-3">
         
-                            <div class="w-7 text-end tabular-nums -translate-y-2">{{tarjeta.minuto}}'</div>
+                            <div class="w-7 text-end tabular-nums -translate-y-[9px]">{{tarjeta.minuto}}'</div>
         
                                 <div>
                                     @if (tarjeta.color == 'amarilla') {
@@ -162,7 +162,7 @@
                                     }
                                 </div>
         
-                            <div class="font-semibold w-7 text-end tabular-nums -translate-y-2">{{tarjeta.dorsal}}</div>
+                            <div class="font-semibold w-7 text-end tabular-nums -translate-y-[9px]">{{tarjeta.dorsal}}</div>
                             
                         </div>
                         
@@ -180,12 +180,12 @@
 
                 <div class="flex flex-col gap-1">
             
-                    <span class="font-bold pb-4 -translate-y-2">Goles</span>
+                    <span class="font-bold pb-4 -translate-y-[9px]">Goles</span>
             
                     @for (gol of listaGolesVisitante; track gol) {
                         <div class="flex gap-4">
-                            <div class="w-7 text-end tabular-nums -translate-y-2">{{gol.minuto}}'</div>
-                            <div class="font-semibold w-7 text-end tabular-nums -translate-y-2">{{gol.dorsal}}</div>
+                            <div class="w-7 text-end tabular-nums -translate-y-[9px]">{{gol.minuto}}'</div>
+                            <div class="font-semibold w-7 text-end tabular-nums -translate-y-[9px]">{{gol.dorsal}}</div>
                         </div>
                     }
                     
@@ -195,7 +195,7 @@
             
                     <div class="flex justify-between">
             
-                        <span class="font-bold pb-4 -translate-y-2">Tarjetas</span>
+                        <span class="font-bold pb-4 -translate-y-[9px]">Tarjetas</span>
             
                     </div>
             
@@ -204,7 +204,7 @@
             
                             <div class="flex gap-3">
             
-                                <div class="w-7 text-end tabular-nums -translate-y-2">{{tarjeta.minuto}}'</div>
+                                <div class="w-7 text-end tabular-nums -translate-y-[9px]">{{tarjeta.minuto}}'</div>
             
                                     <div>
                                         @if (tarjeta.color == 'amarilla') {
@@ -223,7 +223,7 @@
                                         }
                                     </div>
             
-                                <div class="font-semibold w-7 text-end tabular-nums -translate-y-2">{{tarjeta.dorsal}}</div>
+                                <div class="font-semibold w-7 text-end tabular-nums -translate-y-[9px]">{{tarjeta.dorsal}}</div>
                                 
                             </div>
                             

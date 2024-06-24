@@ -67,6 +67,6 @@ export class PdfPageComponent implements OnInit, AfterViewInit {
       pdf.save(`${this.equipoLocal} - ${this.equipoVisitante}`);
     })
 
-    this.router.navigate(['/']);
+    this.router.navigate(['']);
   }
 }

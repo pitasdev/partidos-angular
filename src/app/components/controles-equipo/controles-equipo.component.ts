@@ -115,7 +115,7 @@ export class ControlesEquipoComponent implements OnInit {
 
   eliminarGol(event: string | null): void {
     if (event) {
-      const splitID = event.split('-');
+      const splitID: string[] = event.split('-');
       
       if (splitID[0] == 'local' && splitID[1] == 'gol'){
         this.appDataService.quitarGol(event, 'local');

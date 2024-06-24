@@ -72,6 +72,8 @@ export class HomePageComponent implements OnInit {
   configurarPartido(event: any): void {
     this.openModalConfigurar = false;
 
+    if (!event) return;
+
     this.appDataService.setDatosEquipo({ equipo: event.equipoLocal, escudo: event.escudoLocal }, 'local');
     this.appDataService.setDatosEquipo({ equipo: event.equipoVisitante, escudo: event.escudoVisitante }, 'visitante');
     this.appDataService.setEstado('reset');

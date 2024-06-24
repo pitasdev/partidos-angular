@@ -40,28 +40,28 @@ export class AppDataService {
   title = inject(Title);
 
   setEstado(estado: Estado): void {
-    const actualData = this._appData.getValue();
+    const actualData: AppData = this._appData.getValue();
     actualData.estado = estado;
 
     this._appData.next(actualData);
   }
 
   setParte(parte: number): void {
-    const actualData = this._appData.getValue();
+    const actualData: AppData = this._appData.getValue();
     actualData.parte = parte;
 
     this._appData.next(actualData);
   }
 
   setTiempo(tiempo: string): void {
-    const actualData = this._appData.getValue();
+    const actualData: AppData = this._appData.getValue();
     actualData.tiempo = tiempo;
 
     this._appData.next(actualData);
   }
 
   setDatosEquipo(datos: Partial<DatosEquipo>, tipoEquipo: TipoEquipo): void {
-    const actualData = this._appData.getValue();
+    const actualData: AppData = this._appData.getValue();
 
     if (tipoEquipo == 'local') actualData.local = { ...actualData.local, ...datos };
     else if (tipoEquipo == 'visitante') actualData.visitante = { ...actualData.visitante, ...datos };
@@ -71,7 +71,7 @@ export class AppDataService {
   }
 
   agregarGol(gol: Gol, tipoEquipo: TipoEquipo): void {
-    const actualData = this._appData.getValue();
+    const actualData: AppData = this._appData.getValue();
 
     if (tipoEquipo == 'local') actualData.local.listaGoles.push(gol);
     else if (tipoEquipo == 'visitante') actualData.visitante.listaGoles.push(gol);
@@ -81,7 +81,7 @@ export class AppDataService {
   }
 
   quitarGol(id: string, tipoEquipo: TipoEquipo): void {
-    const actualData = this._appData.getValue();
+    const actualData: AppData = this._appData.getValue();
 
     if (tipoEquipo == 'local') {
       const i: number = actualData.local.listaGoles.findIndex((gol: Gol) => gol.id == id);
@@ -96,16 +96,30 @@ export class AppDataService {
   }
 
   agregarTarjeta(tarjeta: Tarjeta, tipoEquipo: TipoEquipo): void {
-    const actualData = this._appData.getValue();
+    const actualData: AppData = this._appData.getValue();
+    const splitID: string[] = tarjeta.id.split('-');
 
-    if (tipoEquipo == 'local') actualData.local.listaTarjetas.push(tarjeta);
-    else if (tipoEquipo == 'visitante') actualData.visitante.listaTarjetas.push(tarjeta);
+    if (tipoEquipo == 'local') {
+      const i: number = actualData.local.listaTarjetas.findIndex(t => t.id.includes(`${splitID[3]}-amarilla`)); // Busca si el jugador ya tiene otra tarjeta amarilla
+      actualData.local.listaTarjetas.push(tarjeta);
+
+      if (i != -1) {
+        actualData.local.listaTarjetas.push({ ...tarjeta, ...{ id: `${splitID[0]}-${splitID[1]}-${splitID[2]}-${splitID[3]}-roja`, color: 'roja' } });
+      }
+    } else if (tipoEquipo == 'visitante') {
+      const i: number = actualData.visitante.listaTarjetas.findIndex(t => t.id.includes(`${splitID[3]}-amarilla`)); // Busca si el jugador ya tiene otra tarjeta amarilla
+      actualData.visitante.listaTarjetas.push(tarjeta);
+
+      if (i != -1) {
+        actualData.visitante.listaTarjetas.push({ ...tarjeta, ...{ id: `${splitID[0]}-${splitID[1]}-${splitID[2]}-${splitID[3]}-roja`, color: 'roja' } });
+      }
+    }
 
     this._appData.next(actualData);
   }
 
   quitarTarjeta(id: string, tipoEquipo: TipoEquipo): void {
-    const actualData = this._appData.getValue();
+    const actualData: AppData = this._appData.getValue();
 
     if (tipoEquipo == 'local') {
       const i: number = actualData.local.listaTarjetas.findIndex((tarjeta: Tarjeta) => tarjeta.id == id);
@@ -147,7 +161,7 @@ export class AppDataService {
   }
 
   updateTitle(): void {
-    const actualData = this._appData.getValue();
+    const actualData: AppData = this._appData.getValue();
     this.title.setTitle(`${actualData.local.equipo} ${actualData.local.goles} - ${actualData.visitante.goles} ${actualData.visitante.equipo}`);
   }
 }

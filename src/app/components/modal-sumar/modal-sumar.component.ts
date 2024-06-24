@@ -35,6 +35,7 @@ export class ModalSumarComponent {
     if (this.tipoDato == 'tarjeta') {
       if (!this.minuto || !this.dorsal) return;
 
+      datos.id += `-${this.tarjeta}`;
       datos.tarjeta = this.tarjeta;
     }
 
