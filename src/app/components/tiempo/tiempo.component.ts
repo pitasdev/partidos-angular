@@ -8,8 +8,7 @@ import { AppDataService } from '../../services/app-data.service';
   selector: 'app-tiempo',
   standalone: true,
   imports: [ModalConfirmacionComponent, ClickDirective],
-  templateUrl: './tiempo.component.html',
-  styleUrl: './tiempo.component.css'
+  templateUrl: './tiempo.component.html'
 })
 export class TiempoComponent implements OnInit {
   estado!: Estado;

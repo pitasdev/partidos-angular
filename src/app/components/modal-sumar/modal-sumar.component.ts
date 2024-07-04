@@ -1,25 +1,42 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Datos } from '../../interfaces/Datos';
 import { TipoDato } from '../../interfaces/TipoDato';
 import { TipoEquipo } from '../../interfaces/TipoEquipo';
+import { AppDataService } from '../../services/app-data.service';
+import { Estado } from '../../interfaces/Estado';
 
 @Component({
   selector: 'app-modal-sumar',
   standalone: true,
   imports: [FormsModule],
-  templateUrl: './modal-sumar.component.html',
-  styleUrl: './modal-sumar.component.css'
+  templateUrl: './modal-sumar.component.html'
 })
-export class ModalSumarComponent {
+export class ModalSumarComponent implements OnInit {
   @Input() tipoDato!: TipoDato;
   @Input() tipoEquipo!: TipoEquipo;
 
   minuto!: number;
   dorsal!: number;
   tarjeta: 'amarilla' | 'roja' = 'amarilla';
+  estado!: Estado;
+  tiempo!: string;
+
+  appDataService = inject(AppDataService);
 
   @Output() eventoGuardar = new EventEmitter<Datos | null>();
+
+  ngOnInit(): void {
+    this.appDataService.appData$.subscribe(data => {
+      this.estado = data.estado;
+      this.tiempo = data.tiempo;
+
+      if (this.estado == 'play' || this.tiempo != '00:00') {
+        const splitTiempo: string[] = this.tiempo.split(':');
+        this.minuto = Number(splitTiempo[0]) + 1;
+      }
+    })
+  }
 
   guardar(): void {
     const datos: Datos = {

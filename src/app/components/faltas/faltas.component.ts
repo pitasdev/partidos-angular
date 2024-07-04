@@ -7,8 +7,7 @@ import { AppDataService } from '../../services/app-data.service';
   selector: 'app-faltas',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './faltas.component.html',
-  styleUrl: './faltas.component.css'
+  templateUrl: './faltas.component.html'
 })
 export class FaltasComponent implements OnInit, AfterViewInit {
   @Input() tipoEquipo!: TipoEquipo;

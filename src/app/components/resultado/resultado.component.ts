@@ -7,8 +7,7 @@ import { AppDataService } from '../../services/app-data.service';
   selector: 'app-resultado',
   standalone: true,
   imports: [FormsModule],
-  templateUrl: './resultado.component.html',
-  styleUrl: './resultado.component.css'
+  templateUrl: './resultado.component.html'
 })
 export class ResultadoComponent implements OnInit, OnChanges {
   estado!: Estado;

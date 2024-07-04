@@ -7,8 +7,7 @@ import { TipoEquipo } from '../../interfaces/TipoEquipo';
   selector: 'app-modal-configurar',
   standalone: true,
   imports: [FormsModule],
-  templateUrl: './modal-configurar.component.html',
-  styleUrl: './modal-configurar.component.css'
+  templateUrl: './modal-configurar.component.html'
 })
 export class ModalConfigurarComponent implements OnInit {
   @Input() listaEquipos: Equipo[] = [];

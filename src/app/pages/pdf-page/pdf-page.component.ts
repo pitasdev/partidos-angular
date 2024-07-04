@@ -1,7 +1,4 @@
 import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
-import { ResultadoComponent } from '../../components/resultado/resultado.component';
-import { FaltasComponent } from '../../components/faltas/faltas.component';
-import { InfoComponent } from '../../components/info/info.component';
 import { AppDataService } from '../../services/app-data.service';
 import { Router } from '@angular/router';
 import html2canvas from 'html2canvas';
@@ -13,9 +10,8 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-pdf-page',
   standalone: true,
-  imports: [ResultadoComponent, FaltasComponent, InfoComponent, CommonModule],
-  templateUrl: './pdf-page.component.html',
-  styleUrl: './pdf-page.component.css'
+  imports: [CommonModule],
+  templateUrl: './pdf-page.component.html'
 })
 export class PdfPageComponent implements OnInit, AfterViewInit {
   equipoLocal: string = '';

@@ -14,8 +14,7 @@ import { Datos } from '../../interfaces/Datos';
   selector: 'app-info',
   standalone: true,
   imports: [ModalConfirmacionComponent, ClickDirective, ModalSumarComponent, ModalRestarComponent],
-  templateUrl: './info.component.html',
-  styleUrl: './info.component.css'
+  templateUrl: './info.component.html'
 })
 export class InfoComponent implements OnInit {
   @Input() tipoEquipo!: TipoEquipo;

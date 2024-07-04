@@ -9,8 +9,7 @@ import { Gol } from '../../interfaces/Gol';
   selector: 'app-modal-restar',
   standalone: true,
   imports: [ModalConfirmacionComponent],
-  templateUrl: './modal-restar.component.html',
-  styleUrl: './modal-restar.component.css'
+  templateUrl: './modal-restar.component.html'
 })
 export class ModalRestarComponent implements OnInit {
   @Input() tipoEquipo!: TipoEquipo;

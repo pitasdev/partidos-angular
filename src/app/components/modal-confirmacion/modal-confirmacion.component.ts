@@ -4,15 +4,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   selector: 'app-modal-confirmacion',
   standalone: true,
   imports: [],
-  templateUrl: './modal-confirmacion.component.html',
-  styleUrl: './modal-confirmacion.component.css'
+  templateUrl: './modal-confirmacion.component.html'
 })
 export class ModalConfirmacionComponent {
   @Input() mensaje: string = '';
 
   @Output() eventoConfirmar = new EventEmitter<boolean>();
 
-  eliminar(): void {
+  continuar(): void {
     this.eventoConfirmar.emit(true);
   }
 

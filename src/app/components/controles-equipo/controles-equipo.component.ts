@@ -11,8 +11,7 @@ import { Datos } from '../../interfaces/Datos';
   selector: 'app-controles-equipo',
   standalone: true,
   imports: [ClickDirective, ModalSumarComponent, ModalRestarComponent],
-  templateUrl: './controles-equipo.component.html',
-  styleUrl: './controles-equipo.component.css'
+  templateUrl: './controles-equipo.component.html'
 })
 export class ControlesEquipoComponent implements OnInit {
   @Input() tipoEquipo!: TipoEquipo;

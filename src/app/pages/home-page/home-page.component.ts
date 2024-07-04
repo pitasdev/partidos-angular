@@ -17,8 +17,7 @@ import { Router } from '@angular/router';
   selector: 'app-home-page',
   standalone: true,
   imports: [ControlesEquipoComponent, TiempoComponent, ResultadoComponent, FaltasComponent, InfoComponent, ModalConfirmacionComponent, ModalConfigurarComponent, ClickDirective],
-  templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.css'
+  templateUrl: './home-page.component.html'
 })
 export class HomePageComponent implements OnInit {
   estado: Estado = 'configuracion';
