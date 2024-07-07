@@ -6,18 +6,33 @@
 
         <div class="text-xl flex gap-2">
             <label for="minuto" class="w-20">Minuto</label>
-            <input type="number" inputmode="numeric" min="1" max="99" id="minuto" class="w-28 border rounded-md px-1" [(ngModel)]="minuto" (keyup)="validarInput('minuto')">
-        </div>
-
-        <div class="text-xl flex gap-2">
-            <label for="dorsal" class="w-20">Dorsal</label>
-            <input type="number" inputmode="numeric" min="1" max="99" id="dorsal" class="w-28 border rounded-md px-1" [(ngModel)]="dorsal" (keyup)="validarInput('dorsal')">
+            <input type="number" inputmode="numeric" min="1" max="99" id="minuto" class="w-40 border rounded-md px-1" [(ngModel)]="minuto" (keyup)="validarInput('minuto')">
         </div>
 
         @if (tipoDato == 'tarjeta') {
             <div class="text-xl flex gap-2">
+                <label for="persona-tarjeta" class="w-20">Para</label>
+                <select name="persona-tarjeta" id="persona-tarjeta" class="w-40 border rounded-md px-1 bg-white" [(ngModel)]="personaTarjeta">
+                    <option value="J">Jugador</option>
+                    <option value="E">Entrenador</option>
+                    <option value="D">Delegado</option>
+                    <option value="2E">2º Entrenador</option>
+                    <option value="A">Auxiliar</option>
+                </select>
+            </div>
+        }
+
+        @if (tipoDato == 'gol' || (tipoDato == 'tarjeta' && personaTarjeta == 'J')) {
+            <div class="text-xl flex gap-2">
+                <label for="dorsal" class="w-20">Dorsal</label>
+                <input type="number" inputmode="numeric" min="1" max="99" id="dorsal" class="w-40 border rounded-md px-1" [(ngModel)]="dorsal" (keyup)="validarInput('dorsal')">
+            </div>
+        }
+
+        @if (tipoDato == 'tarjeta') {
+            <div class="text-xl flex gap-2">
                 <label for="tarjeta" class="w-20">Tarjeta</label>
-                <select name="tarjeta" id="tarjeta" class="w-28 border rounded-md px-1 bg-white" [(ngModel)]="tarjeta">
+                <select name="tarjeta" id="tarjeta" class="w-40 border rounded-md px-1 bg-white" [(ngModel)]="tarjeta">
                     <option value="amarilla">Amarilla</option>
                     <option value="roja">Roja</option>
                 </select>

@@ -1,8 +1,8 @@
-<div class="text-xl w-[380px] max-h-80 overflow-auto grid grid-cols-2 border rounded-md py-2 px-3">
+<div class="text-xl w-[380px] max-h-72 overflow-auto grid grid-cols-2 border rounded-md pb-2 px-3">
 
-    <div class="flex flex-col gap-1">
+    <div class="flex flex-col gap-2">
 
-        <span class="font-bold pb-4">Goles</span>
+        <span class="sticky top-0 font-bold pt-2 pb-2 bg-white shadow-[0_0_5px_2px_rgb(255,255,255)]">Goles</span>
 
         @for (gol of goles; track gol) {
             <div class="flex gap-4">
@@ -13,13 +13,13 @@
         
     </div>
 
-    <div class="flex flex-col gap-1">
+    <div class="flex flex-col gap-2">
 
-        <div class="flex justify-between">
+        <div class="sticky top-0 flex justify-between pt-2 bg-white shadow-[0_0_5px_2px_rgb(255,255,255)]">
 
-            <span class="font-bold pb-4">Tarjetas</span>
+            <span class="font-bold pb-2">Tarjetas</span>
 
-            <div class="cursor-pointer" clickAnimation (click)="anadirTarjeta()" title="Añadir tarjeta">
+            <div class="h-8 cursor-pointer" clickAnimation (click)="anadirTarjeta()" title="Añadir tarjeta">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 24 24">
                     <path fill="rgb(34 197 94)" d="M5 21h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2m2-10h4V7h2v4h4v2h-4v4h-2v-4H7z"/>
                 </svg>
@@ -58,7 +58,7 @@
                     
                 </div>
 
-                <div class="flex items-center pr-[7px] cursor-pointer" id="{{tarjeta.id}}" (click)="confirmacionEliminar($event)" title="Eliminar">
+                <div class="flex items-center pr-[7px] cursor-pointer" id="{{tarjeta.id}}" clickAnimation (click)="confirmacionEliminar($event)" title="Eliminar">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 64 64">
                         <path fill="#ec1c24" d="M50.592 2.291L32 20.884C25.803 14.689 19.604 8.488 13.406 2.291c-7.17-7.17-18.284 3.948-11.12 11.12c6.199 6.193 12.4 12.395 18.592 18.592A32589.37 32589.37 0 0 1 2.286 50.595c-7.164 7.168 3.951 18.283 11.12 11.12c6.197-6.199 12.396-12.399 18.593-18.594l18.592 18.594c7.17 7.168 18.287-3.951 11.12-11.12c-6.199-6.199-12.396-12.396-18.597-18.594c6.2-6.199 12.397-12.398 18.597-18.596c7.168-7.166-3.949-18.284-11.12-11.11"/>
                     </svg>

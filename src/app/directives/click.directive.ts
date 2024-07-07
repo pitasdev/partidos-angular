@@ -23,7 +23,8 @@ export class ClickDirective {
     }, 150);
   }
 
-  @HostListener('click') onClick(): void {
+  @HostListener('click')
+  onClick(): void {
     this.playAnimation();
   }
 }

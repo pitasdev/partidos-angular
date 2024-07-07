@@ -36,11 +36,11 @@
                 
             <input type="text" placeholder="Buscar" id="selec-equipo" #selecEquipo class="text-xl w-40 flex px-1 mx-auto mb-2 border rounded-md" [(ngModel)]="buscarEquipo" (keyup)="filtrar()">
             
-            <div class="max-h-48 overflow-auto">
+            <div class="max-h-48 grid gap-2 overflow-auto">
                 @for (equipo of listaEquiposFiltrada; track equipo) {
-                    <div class="text-xl flex justify-center gap-4 py-2">
+                    <div class="text-xl flex justify-center gap-4 cursor-pointer" (click)="seleccionarEquipo(equipo)">
                         <span class="w-60">{{equipo.equipo}}</span>
-                        <div class="cursor-pointer" (click)="seleccionarEquipo(equipo)">
+                        <div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24">
                                 <path fill="#22c55e" d="m9.55 15.15l8.475-8.475q.3-.3.7-.3t.7.3t.3.713t-.3.712l-9.175 9.2q-.3.3-.7.3t-.7-.3L4.55 13q-.3-.3-.288-.712t.313-.713t.713-.3t.712.3z"/>
                             </svg>

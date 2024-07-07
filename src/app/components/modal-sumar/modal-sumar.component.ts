@@ -18,6 +18,7 @@ export class ModalSumarComponent implements OnInit {
 
   minuto!: number;
   dorsal!: number;
+  personaTarjeta: string = 'J';
   tarjeta: 'amarilla' | 'roja' = 'amarilla';
   estado!: Estado;
   tiempo!: string;
@@ -50,7 +51,12 @@ export class ModalSumarComponent implements OnInit {
     if (this.tipoDato == 'gol' && !this.minuto) return;
 
     if (this.tipoDato == 'tarjeta') {
-      if (!this.minuto || !this.dorsal) return;
+      if (!this.minuto || (!this.dorsal && this.personaTarjeta == 'J')) return;
+      
+      if (this.personaTarjeta != 'J') {
+        datos.id = `${this.tipoEquipo}-${this.tipoDato}-${this.minuto}-${this.personaTarjeta}`;
+        datos.dorsal = this.personaTarjeta;
+      } 
 
       datos.id += `-${this.tarjeta}`;
       datos.tarjeta = this.tarjeta;

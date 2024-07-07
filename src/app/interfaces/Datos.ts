@@ -6,6 +6,6 @@ export interface Datos {
     tipoEquipo: TipoEquipo;
     tipoDato: TipoDato;
     minuto: number;
-    dorsal: number;
+    dorsal: number | string;
     tarjeta?: 'amarilla' | 'roja';
 }

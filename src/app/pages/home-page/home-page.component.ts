@@ -41,7 +41,7 @@ export class HomePageComponent implements OnInit {
     })
 
    this.equiposService.getEquipos().subscribe(equipos => {
-    this.listaEquipos = equipos
+    this.listaEquipos = equipos;
 
     this.listaEquipos.sort((a, b) => {
       if (a.equipo > b.equipo) return 1;
@@ -61,7 +61,7 @@ export class HomePageComponent implements OnInit {
 
   confirmarReiniciarPartido(): void {
     this.openModalConfirmacion = true;
-    this.mensajeConfirmacion = '¿Está seguro/a que quiere <b>empezar un partido nuevo</b>?'
+    this.mensajeConfirmacion = '¿Está seguro/a que quiere <b>empezar un partido nuevo</b>?';
   }
   
   mostrarModalConfigurar(): void {
@@ -81,6 +81,6 @@ export class HomePageComponent implements OnInit {
   descargarPDF(): void {
     setTimeout(() => {
       this.router.navigate(['descargar']);
-    }, 150)
+    }, 150);
   }
 }

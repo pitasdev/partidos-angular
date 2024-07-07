@@ -1,5 +1,5 @@
 export interface Gol {
     id: string;
-    dorsal: number;
+    dorsal: number | string;
     minuto: number;
 }
