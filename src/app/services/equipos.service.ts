@@ -7,9 +7,9 @@ import { Equipo } from '../interfaces/Equipo';
   providedIn: 'root'
 })
 export class EquiposService {
-  http: HttpClient = inject(HttpClient);
+  private _http: HttpClient = inject(HttpClient);
 
   getEquipos(): Observable<Equipo[]> {
-    return this.http.get<Equipo[]>('assets/equipos.json');
+    return this._http.get<Equipo[]>('assets/equipos.json');
   }
 }

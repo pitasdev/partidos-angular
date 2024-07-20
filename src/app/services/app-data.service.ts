@@ -34,10 +34,10 @@ export class AppDataService {
       listaGoles: [],
       listaTarjetas: []
     }
-  })
+  });
   appData$ = this._appData.asObservable();
 
-  title = inject(Title);
+  private _title = inject(Title);
 
   setEstado(estado: Estado): void {
     const actualData: AppData = this._appData.getValue();
@@ -73,8 +73,23 @@ export class AppDataService {
   agregarGol(gol: Gol, tipoEquipo: TipoEquipo): void {
     const actualData: AppData = this._appData.getValue();
 
-    if (tipoEquipo == 'local') actualData.local.listaGoles.push(gol);
-    else if (tipoEquipo == 'visitante') actualData.visitante.listaGoles.push(gol);
+    if (tipoEquipo == 'local') {
+      actualData.local.listaGoles.push(gol);
+
+      actualData.local.listaGoles.sort((a, b) => {
+        if (a.minuto > b.minuto) return 1;
+        else if (a.minuto < b.minuto) return -1;
+        else return 0;
+      });
+    } else if (tipoEquipo == 'visitante') {
+      actualData.visitante.listaGoles.push(gol);
+
+      actualData.visitante.listaGoles.sort((a, b) => {
+        if (a.minuto > b.minuto) return 1;
+        else if (a.minuto < b.minuto) return -1;
+        else return 0;
+      });
+    }
 
     this._appData.next(actualData);
     this.updateTitle();
@@ -100,19 +115,33 @@ export class AppDataService {
     const splitID: string[] = tarjeta.id.split('-');
 
     if (tipoEquipo == 'local') {
-      const i: number = actualData.local.listaTarjetas.findIndex(t => t.id.endsWith(`-${splitID[3]}-amarilla`)); // Busca si el jugador ya tiene otra tarjeta amarilla
+      // Busca si el jugador ya tiene otra tarjeta amarilla
+      const i: number = actualData.local.listaTarjetas.findIndex(t => t.id.endsWith(`-${splitID[3]}-amarilla`));
       actualData.local.listaTarjetas.push(tarjeta);
 
-      if (i != -1) {
+      if (i != -1 && tarjeta.color == 'amarilla') {
         actualData.local.listaTarjetas.push({ ...tarjeta, ...{ id: `${splitID[0]}-${splitID[1]}-${splitID[2]}-${splitID[3]}-roja`, color: 'roja' } });
       }
+
+      actualData.local.listaTarjetas.sort((a, b) => {
+        if (a.minuto > b.minuto) return 1;
+        else if (a.minuto < b.minuto) return -1;
+        else return 0;
+      });
     } else if (tipoEquipo == 'visitante') {
-      const i: number = actualData.visitante.listaTarjetas.findIndex(t => t.id.endsWith(`-${splitID[3]}-amarilla`)); // Busca si el jugador ya tiene otra tarjeta amarilla
+      // Busca si el jugador ya tiene otra tarjeta amarilla
+      const i: number = actualData.visitante.listaTarjetas.findIndex(t => t.id.endsWith(`-${splitID[3]}-amarilla`));
       actualData.visitante.listaTarjetas.push(tarjeta);
 
-      if (i != -1) {
+      if (i != -1 && tarjeta.color == 'amarilla') {
         actualData.visitante.listaTarjetas.push({ ...tarjeta, ...{ id: `${splitID[0]}-${splitID[1]}-${splitID[2]}-${splitID[3]}-roja`, color: 'roja' } });
       }
+
+      actualData.visitante.listaTarjetas.sort((a, b) => {
+        if (a.minuto > b.minuto) return 1;
+        else if (a.minuto < b.minuto) return -1;
+        else return 0;
+      });
     }
 
     this._appData.next(actualData);
@@ -162,6 +191,6 @@ export class AppDataService {
 
   private updateTitle(): void {
     const actualData: AppData = this._appData.getValue();
-    this.title.setTitle(`${actualData.local.equipo} ${actualData.local.goles} - ${actualData.visitante.goles} ${actualData.visitante.equipo}`);
+    this._title.setTitle(`${actualData.local.equipo} ${actualData.local.goles} - ${actualData.visitante.goles} ${actualData.visitante.equipo}`);
   }
 }
