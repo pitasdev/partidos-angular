@@ -44,6 +44,7 @@ export class AppDataService {
     actualData.estado = estado;
 
     this._appData.next(actualData);
+    this.setLocalStorage();
   }
 
   setParte(parte: number): void {
@@ -51,6 +52,7 @@ export class AppDataService {
     actualData.parte = parte;
 
     this._appData.next(actualData);
+    this.setLocalStorage();
   }
 
   setTiempo(tiempo: string): void {
@@ -58,6 +60,7 @@ export class AppDataService {
     actualData.tiempo = tiempo;
 
     this._appData.next(actualData);
+    this.setLocalStorage();
   }
 
   setDatosEquipo(datos: Partial<DatosEquipo>, tipoEquipo: TipoEquipo): void {
@@ -68,6 +71,7 @@ export class AppDataService {
 
     this._appData.next(actualData);
     this.updateTitle();
+    this.setLocalStorage();
   }
 
   agregarGol(gol: Gol, tipoEquipo: TipoEquipo): void {
@@ -93,6 +97,7 @@ export class AppDataService {
 
     this._appData.next(actualData);
     this.updateTitle();
+    this.setLocalStorage();
   }
 
   quitarGol(id: string, tipoEquipo: TipoEquipo): void {
@@ -108,6 +113,7 @@ export class AppDataService {
 
     this._appData.next(actualData);
     this.updateTitle();
+    this.setLocalStorage();
   }
 
   agregarTarjeta(tarjeta: Tarjeta, tipoEquipo: TipoEquipo): void {
@@ -145,6 +151,7 @@ export class AppDataService {
     }
 
     this._appData.next(actualData);
+    this.setLocalStorage();
   }
 
   quitarTarjeta(id: string, tipoEquipo: TipoEquipo): void {
@@ -159,6 +166,7 @@ export class AppDataService {
     }
 
     this._appData.next(actualData);
+    this.setLocalStorage();
   }
 
   resetData(): void {
@@ -187,6 +195,44 @@ export class AppDataService {
     });
 
     this.updateTitle();
+    localStorage.clear();
+  }
+
+  getData(): any {
+    const actualData = this._appData.getValue();
+    const data = {
+      local: {
+        equipo: actualData.local.equipo,
+        goles: actualData.local.goles,
+        faltasParte1: actualData.local.faltasParte1, 
+        faltasParte2: actualData.local.faltasParte2,
+        listaGoles: actualData.local.listaGoles,
+        listaTarjetas: actualData.local.listaTarjetas 
+      },
+      visitante: {
+        equipo: actualData.visitante.equipo,
+        goles: actualData.visitante.goles,
+        faltasParte1: actualData.visitante.faltasParte1, 
+        faltasParte2: actualData.visitante.faltasParte2,
+        listaGoles: actualData.visitante.listaGoles,
+        listaTarjetas: actualData.visitante.listaTarjetas
+      }
+    };
+    
+    return data;
+  }
+
+  cargarLocalStorage(): void {
+    const data: AppData = JSON.parse(localStorage.getItem('partido')!);
+
+    if (data) this._appData.next(data);
+  }
+
+  private setLocalStorage(): void {
+    const actualData: AppData = this._appData.getValue();
+
+    localStorage.setItem('partido', JSON.stringify(actualData));
+    localStorage.setItem('createdAt', new Date().toString());
   }
 
   private updateTitle(): void {

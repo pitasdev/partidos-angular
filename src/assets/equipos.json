@@ -54,5 +54,69 @@
     {
         "equipo": "Vilobi",
         "escudo": "vilobi.png"
+    },
+    {
+        "equipo": "Arrahona",
+        "escudo": "arrahona.png"
+    },
+    {
+        "equipo": "Can Cuyas",
+        "escudo": "can_cuyas.png"
+    },
+    {
+        "equipo": "Marina Pou",
+        "escudo": "marina_pou.png"
+    },
+    {
+        "equipo": "Matadepera",
+        "escudo": "matadepera.png"
+    },
+    {
+        "equipo": "Escola Pia",
+        "escudo": "escola_pia.png"
+    },
+    {
+        "equipo": "Canet",
+        "escudo": "canet.png"
+    },
+    {
+        "equipo": "Girona",
+        "escudo": "girona.png"
+    },
+    {
+        "equipo": "Inter Esportiu Malgrat",
+        "escudo": "inter_esportiu_malgrat.png"
+    },
+    {
+        "equipo": "Montcada",
+        "escudo": "montcada.png"
+    },
+    {
+        "equipo": "Natacio Sabadell",
+        "escudo": "natacio_sabadell.png"
+    },
+    {
+        "equipo": "Palafolls",
+        "escudo": "palafolls.png"
+    },
+    {
+        "equipo": "Palau Solita i Plegamans",
+        "escudo": "palau_solita_i_plegamans.png"
+    },
+    {
+        "equipo": "Pineda de Mar",
+        "escudo": "pineda_de_mar.png"
+    },
+    {
+        "equipo": "Riudellots",
+        "escudo": "riudellots.png"
+    },
+    {
+        "equipo": "Sant Julià de Ramis",
+        "escudo": "sant_julia_de_ramis.png"
+    },
+    {
+        "equipo": "Vilafant",
+        "escudo": "vilafant.png"
     }
 ]

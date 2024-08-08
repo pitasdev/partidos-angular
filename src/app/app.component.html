@@ -1,1 +1,8 @@
+@if (modal) {
+    <app-modal-confirmacion 
+        [mensaje]="'¿Quiere cargar los datos del último partido registrado?'"
+        (eventoConfirmar)="respuestaModal($event)"
+    />
+}
+
 <router-outlet />

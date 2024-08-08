@@ -40,15 +40,15 @@ export class HomePageComponent implements OnInit {
       this.equipoVisitante = data.visitante.equipo;
     })
 
-   this.equiposService.getEquipos().subscribe(equipos => {
-    this.listaEquipos = equipos;
+    this.equiposService.getEquipos().subscribe(equipos => {
+      this.listaEquipos = equipos;
 
-    this.listaEquipos.sort((a, b) => {
-      if (a.equipo > b.equipo) return 1;
-      else if (a.equipo < b.equipo) return -1;
-      else return 0;
-    })
-  });
+      this.listaEquipos.sort((a, b) => {
+        if (a.equipo > b.equipo) return 1;
+        else if (a.equipo < b.equipo) return -1;
+        else return 0;
+      })
+    });
   }
 
   reiniciarData(event: boolean): void {
@@ -63,11 +63,11 @@ export class HomePageComponent implements OnInit {
     this.openModalConfirmacion = true;
     this.mensajeConfirmacion = '¿Está seguro/a que quiere <b>empezar un partido nuevo</b>?';
   }
-  
+
   mostrarModalConfigurar(): void {
-      this.openModalConfigurar = true;
+    this.openModalConfigurar = true;
   }
-  
+
   configurarPartido(event: any): void {
     this.openModalConfigurar = false;
 
