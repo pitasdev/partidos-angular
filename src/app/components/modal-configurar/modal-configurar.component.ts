@@ -2,11 +2,12 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild }
 import { FormsModule } from '@angular/forms';
 import { Equipo } from '../../interfaces/Equipo';
 import { TipoEquipo } from '../../interfaces/TipoEquipo';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-modal-configurar',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './modal-configurar.component.html'
 })
 export class ModalConfigurarComponent implements OnInit {

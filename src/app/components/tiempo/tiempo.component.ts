@@ -3,6 +3,7 @@ import { Estado } from '../../interfaces/Estado';
 import { ModalConfirmacionComponent } from '../modal-confirmacion/modal-confirmacion.component';
 import { ClickDirective } from '../../directives/click.directive';
 import { AppDataService } from '../../services/app-data.service';
+import { RecargaPaginaService } from '../../services/recarga-pagina.service';
 
 @Component({
   selector: 'app-tiempo',
@@ -14,24 +15,35 @@ export class TiempoComponent implements OnInit {
   estado!: Estado;
   tiempo: string = '00:00';
   interval!: any;
+  tiempoInicio!: number;
+  tiempoActual!: number;
+  tiempoEnSegundos: number = 0;
 
   openModalConfirmacion: boolean = false;
   mensajeConfirmacion: string = '';
   accionARealizar: string = '';
 
   appDataService = inject(AppDataService);
+  recargaPaginaService = inject(RecargaPaginaService);
 
   ngOnInit(): void {
     this.appDataService.appData$.subscribe(data => {
       this.estado = data.estado;
       this.tiempo = data.tiempo;
+
+      if (this.tiempo == '00:00') this.tiempoEnSegundos = 0;
+    })
+
+    this.recargaPaginaService.recarga$.subscribe(data => {
+      if (data) this.tiempoEnSegundos = this.tiempoASegundos(this.tiempo);
     })
   }
 
   iniciarTiempo(): void {
     if (this.estado == 'play') return;
 
-    this.appDataService.setEstado('play')
+    this.appDataService.setEstado('play');
+    this.tiempoInicio = Math.floor(new Date().getTime() / 1000);
 
     this.interval = setInterval(() => {
       this.sumarSegundo();
@@ -39,32 +51,32 @@ export class TiempoComponent implements OnInit {
   }
 
   sumarSegundo(): void {
-    const splitTiempo: string[] = this.tiempo.split(':');
-    let segundo: number = Number(splitTiempo[1]) + 1;
-    let minuto: number = Number(splitTiempo[0]);
+    this.tiempoActual = Math.floor(new Date().getTime() / 1000);
 
-    if (segundo == 60) {
-      segundo = 0;
-      minuto++;
-    }
+    const sumaTiempo = this.tiempoEnSegundos + (this.tiempoActual - this.tiempoInicio);
+    let minutos = Math.floor(sumaTiempo / 60);
+    let segundos = sumaTiempo % 60;
+    
+    if (minutos > 99) {
+      minutos = 0;
+      segundos = 0;
+      this.tiempoEnSegundos = 0;
+      this.tiempoInicio = Math.floor(new Date().getTime() / 1000);
+    } 
 
-    if (minuto == 100) {
-      this.appDataService.setTiempo('00:00');
-      return;
-    }
+    let tiempo: string;
 
-    splitTiempo[1] = segundo.toString();
-    splitTiempo[0] = minuto.toString();
+    if (minutos < 10 && segundos < 10) tiempo = `0${minutos}:0${segundos}`;
+    else if (minutos < 10) tiempo = `0${minutos}:${segundos}`;
+    else if (segundos < 10) tiempo = `${minutos}:0${segundos}`;
+    else tiempo = `${minutos}:${segundos}`;
 
-    if (segundo < 10) splitTiempo[1] = '0' + segundo;
-    if (minuto < 10) splitTiempo[0] = '0' + minuto;
-
-    this.tiempo = splitTiempo.join(':');
-
-    this.appDataService.setTiempo(this.tiempo);
+    this.appDataService.setTiempo(tiempo);
   }
 
   pararTiempo(): void {
+    this.tiempoEnSegundos = this.tiempoASegundos(this.tiempo);
+
     clearInterval(this.interval);
     this.appDataService.setEstado('stop');
   }
@@ -105,5 +117,13 @@ export class TiempoComponent implements OnInit {
     this.accionARealizar = 'finalizar';
     this.mensajeConfirmacion = '¿Está seguro/a que quiere <b>finalizar el partido</b>?';
     this.openModalConfirmacion = true;
+  }
+
+  tiempoASegundos(tiempo: string): number {
+    const splitTiempo: string[] = tiempo.split(':');
+    const segundos: number = Number(splitTiempo[1]);
+    const minutos: number = Number(splitTiempo[0]);
+
+    return (minutos * 60) + segundos;
   }
 }

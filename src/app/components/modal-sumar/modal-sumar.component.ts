@@ -5,11 +5,12 @@ import { TipoDato } from '../../interfaces/TipoDato';
 import { TipoEquipo } from '../../interfaces/TipoEquipo';
 import { AppDataService } from '../../services/app-data.service';
 import { Estado } from '../../interfaces/Estado';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-modal-sumar',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './modal-sumar.component.html'
 })
 export class ModalSumarComponent implements OnInit {
@@ -22,19 +23,24 @@ export class ModalSumarComponent implements OnInit {
   tarjeta: 'amarilla' | 'roja' = 'amarilla';
   estado!: Estado;
   tiempo!: string;
+  parte!: number;
+  dataService!: any;
 
   appDataService = inject(AppDataService);
 
   @Output() eventoGuardar = new EventEmitter<Datos | null>();
 
   ngOnInit(): void {
-    this.appDataService.appData$.subscribe(data => {
+    this.dataService = this.appDataService.appData$.subscribe(data => {
       this.estado = data.estado;
       this.tiempo = data.tiempo;
+      this.parte = data.parte;
 
       if (this.estado == 'play' || this.tiempo != '00:00') {
         const splitTiempo: string[] = this.tiempo.split(':');
-        this.minuto = Number(splitTiempo[0]) + 1;
+
+        if (this.parte == 1) this.minuto = Number(splitTiempo[0]) + 1;
+        else if (this.parte == 2) this.minuto = Number(splitTiempo[0]) + 1 + 25;
       }
     })
   }
@@ -52,11 +58,11 @@ export class ModalSumarComponent implements OnInit {
 
     if (this.tipoDato == 'tarjeta') {
       if (!this.minuto || (!this.dorsal && this.personaTarjeta == 'J')) return;
-      
+
       if (this.personaTarjeta != 'J') {
         datos.id = `${this.tipoEquipo}-${this.tipoDato}-${this.minuto}-${this.personaTarjeta}`;
         datos.dorsal = this.personaTarjeta;
-      } 
+      }
 
       datos.id += `-${this.tarjeta}`;
       datos.tarjeta = this.tarjeta;
@@ -79,5 +85,9 @@ export class ModalSumarComponent implements OnInit {
       if (this.dorsal < 1) this.dorsal = 1;
       if (this.dorsal > 99) this.dorsal = 99;
     }
+  }
+
+  unsubscribeAppDataService(): void {
+    this.dataService.unsubscribe();
   }
 }

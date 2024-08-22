@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AppDataService } from './services/app-data.service';
 import { ModalConfirmacionComponent } from './components/modal-confirmacion/modal-confirmacion.component';
+import { RecargaPaginaService } from './services/recarga-pagina.service';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ export class AppComponent implements OnInit {
   modal: boolean = false;
 
   appDataService = inject(AppDataService);
+  recargaPaginaService = inject(RecargaPaginaService);
 
   ngOnInit(): void {
     const createdAt = new Date(localStorage.getItem('createdAt')!);
@@ -23,7 +25,15 @@ export class AppComponent implements OnInit {
   }
 
   respuestaModal(event: boolean): void {
-    if (event) this.appDataService.cargarLocalStorage();
+    if (event) {
+      this.appDataService.cargarLocalStorage();
+
+      this.recargaPaginaService.recargaTrue();
+
+      this.appDataService.appData$.subscribe(data => { 
+        if (data.estado == 'play') this.appDataService.setEstado('stop');
+      }).unsubscribe();
+    }
 
     this.modal = false;
   }

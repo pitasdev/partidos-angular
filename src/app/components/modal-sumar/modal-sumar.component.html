@@ -6,7 +6,7 @@
 
         <div class="text-xl flex gap-2">
             <label for="minuto" class="w-20">Minuto</label>
-            <input type="number" inputmode="numeric" min="1" max="99" id="minuto" class="w-40 border rounded-md px-1" [(ngModel)]="minuto" (keyup)="validarInput('minuto')">
+            <input type="number" inputmode="numeric" min="1" max="99" id="minuto" class="w-40 border rounded-md px-1" [ngClass]="{'outline outline-2 -outline-offset-2 outline-red-500' : !minuto}" [(ngModel)]="minuto" (keyup)="validarInput('minuto')" (focus)="unsubscribeAppDataService()">
         </div>
 
         @if (tipoDato == 'tarjeta') {
@@ -25,7 +25,7 @@
         @if (tipoDato == 'gol' || (tipoDato == 'tarjeta' && personaTarjeta == 'J')) {
             <div class="text-xl flex gap-2">
                 <label for="dorsal" class="w-20">Dorsal</label>
-                <input type="number" inputmode="numeric" min="1" max="99" id="dorsal" class="w-40 border rounded-md px-1" [(ngModel)]="dorsal" (keyup)="validarInput('dorsal')">
+                <input type="number" inputmode="numeric" min="1" max="99" id="dorsal" class="w-40 border rounded-md px-1" [ngClass]="{'outline outline-2 -outline-offset-2 outline-red-500' : !dorsal && tipoDato == 'tarjeta'}" [(ngModel)]="dorsal" (keyup)="validarInput('dorsal')">
             </div>
         }
 
