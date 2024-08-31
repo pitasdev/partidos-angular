@@ -20,6 +20,7 @@ export class InfoComponent implements OnInit {
   @Input() tipoEquipo!: TipoEquipo;
   goles: Gol[] = [];
   tarjetas: Tarjeta[] = [];
+  nombreEquipo!: string;
 
   openModalConfirmacion: boolean = false;
   mensajeConfirmacion: string = '';
@@ -35,9 +36,11 @@ export class InfoComponent implements OnInit {
       if (this.tipoEquipo == 'local') {
         this.goles = data.local.listaGoles;
         this.tarjetas = data.local.listaTarjetas;
+        this.nombreEquipo = data.local.equipo;
       } else if (this.tipoEquipo == 'visitante') {
         this.goles = data.visitante.listaGoles;
         this.tarjetas = data.visitante.listaTarjetas;
+        this.nombreEquipo = data.visitante.equipo;
       }
     })
   }
@@ -51,7 +54,7 @@ export class InfoComponent implements OnInit {
     this.id = (event.currentTarget as HTMLElement).id;
 
     const splitID: string[] = this.id.split('-');
-    this.mensajeConfirmacion = `¿Está seguro/a que quiere eliminar la <b>${splitID[1]} ${splitID[4]}</b> del equipo <b>${splitID[0]}</b> en el <b>minuto ${splitID[2]}</b>`;
+    this.mensajeConfirmacion = `¿Está seguro/a que quiere eliminar la <b>${splitID[1]} ${splitID[4]}</b> del <b>${this.nombreEquipo}</b> en el <b>minuto ${splitID[2]}</b>`;
 
     if (splitID[3] == 'E') this.mensajeConfirmacion += ` del <b>Entrenador</b>?`;
     else if (splitID[3] == 'D') this.mensajeConfirmacion += ` del <b>Delegado</b>?`;

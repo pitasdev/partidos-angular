@@ -15,6 +15,7 @@ export class ModalRestarComponent implements OnInit {
   @Input() tipoEquipo!: TipoEquipo;
   @Input() tipoDato!: TipoDato;
   listaGoles: Gol[] = [];
+  nombreEquipo!: string;
 
   openModalConfirmacion: boolean = false;
   mensajeConfirmacion: string = '';
@@ -26,8 +27,13 @@ export class ModalRestarComponent implements OnInit {
 
   ngOnInit(): void {
     this.appDataService.appData$.subscribe(data => {
-      if (this.tipoEquipo == 'local') this.listaGoles = data.local.listaGoles;
-      else if (this.tipoEquipo == 'visitante') this.listaGoles = data.visitante.listaGoles;
+      if (this.tipoEquipo == 'local') {
+        this.listaGoles = data.local.listaGoles;
+        this.nombreEquipo = data.local.equipo;
+      } else if (this.tipoEquipo == 'visitante') {
+        this.listaGoles = data.visitante.listaGoles;
+        this.nombreEquipo = data.visitante.equipo;
+      }
     })
   }
 
@@ -36,7 +42,7 @@ export class ModalRestarComponent implements OnInit {
     const splitID: string[] = this.id.split('-');
 
     this.openModalConfirmacion = true;
-    this.mensajeConfirmacion = `¿Está seguro/a que quiere eliminar el <b>${splitID[1]}</b> del equipo <b>${splitID[0]}</b> en el <b>minuto ${splitID[2]}</b>`;
+    this.mensajeConfirmacion = `¿Está seguro/a que quiere eliminar el <b>${splitID[1]}</b> del <b>${this.nombreEquipo}</b> en el <b>minuto ${splitID[2]}</b>`;
 
     if (splitID[3] != 'undefined') this.mensajeConfirmacion += ` del <b>jugador número ${splitID[3]}</b>`;
     this.mensajeConfirmacion += '?';

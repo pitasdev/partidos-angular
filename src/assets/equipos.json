@@ -118,5 +118,57 @@
     {
         "equipo": "Vilafant",
         "escudo": "vilafant.png"
+    },
+    {
+        "equipo": "Sant Feliu",
+        "escudo": "sant_feliu.png"
+    },
+    {
+        "equipo": "Gava",
+        "escudo": "gava.png"
+    },
+    {
+        "equipo": "Cet 10",
+        "escudo": "cet_10.png"
+    },
+    {
+        "equipo": "Athletic Vilatorrada",
+        "escudo": "athletic_vilatorrada.png"
+    },
+    {
+        "equipo": "Sant Vincenç dels Horts",
+        "escudo": "sant_vicenc_dels_horts.png"
+    },
+    {
+        "equipo": "Sant Joan Despi",
+        "escudo": "sant_joan_despi.png"
+    },
+    {
+        "equipo": "Olesa",
+        "escudo": "olesa.png"
+    },
+    {
+        "equipo": "Olimpic Floresta",
+        "escudo": "olimpic_floresta.png"
+    },
+    {
+        "equipo": "Maristes Rubi",
+        "escudo": "maristes_rubi.png"
+    },
+    {
+        "equipo": "Penya Esplugues",
+        "escudo": "penya_esplugues.png"
+    },
+    {
+        "equipo": "Cornella",
+        "escudo": "cornella.png"
+    },
+    {
+        "equipo": "Castelldefels",
+        "escudo": "castelldefels.png"
+    },
+    {
+        "equipo": "Santo Angel",
+        "escudo": "santo_angel.png"
     }
 ]
