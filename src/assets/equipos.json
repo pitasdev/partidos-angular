@@ -170,5 +170,17 @@
     {
         "equipo": "Santo Angel",
         "escudo": "santo_angel.png"
+    },
+    {
+        "equipo": "Arrels",
+        "escudo": "arrels.png"
+    },
+    {
+        "equipo": "Lopez Roca",
+        "escudo": "lopez_roca.png"
+    },
+    {
+        "equipo": "Molins",
+        "escudo": "molins.png"
     }
 ]
