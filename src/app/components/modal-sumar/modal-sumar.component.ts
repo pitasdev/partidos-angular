@@ -6,6 +6,7 @@ import { TipoEquipo } from '../../interfaces/TipoEquipo';
 import { AppDataService } from '../../services/app-data.service';
 import { Estado } from '../../interfaces/Estado';
 import { CommonModule } from '@angular/common';
+import { ModoTiempo } from '../../interfaces/ModoTiempo';
 
 @Component({
   selector: 'app-modal-sumar',
@@ -22,9 +23,12 @@ export class ModalSumarComponent implements OnInit {
   personaTarjeta: string = 'J';
   tarjeta: 'amarilla' | 'roja' = 'amarilla';
   estado!: Estado;
-  tiempo!: string;
+  tiempo!: number;
   parte!: number;
+  minutosParte!: number;
+  modoTiempo!: ModoTiempo;
   dataService!: any;
+  autocalcularMinuto: boolean = true;
 
   appDataService = inject(AppDataService);
 
@@ -35,14 +39,22 @@ export class ModalSumarComponent implements OnInit {
       this.estado = data.estado;
       this.tiempo = data.tiempo;
       this.parte = data.parte;
+      this.minutosParte = data.minutosParte;
+      this.modoTiempo = data.modoTiempo;
 
-      if (this.estado == 'play' || this.tiempo != '00:00') {
-        const splitTiempo: string[] = this.tiempo.split(':');
-
-        if (this.parte == 1) this.minuto = Number(splitTiempo[0]) + 1;
-        else if (this.parte == 2) this.minuto = Number(splitTiempo[0]) + 1 + 25;
+      if (this.modoTiempo == 'ascendente') {
+        if (this.parte == 1 && this.tiempo != 0) this.minuto = Math.floor(this.tiempo / 60) + 1;
+        else if (this.parte == 2 && this.tiempo != 0) this.minuto = Math.floor(this.tiempo / 60) + 1 + data.minutosParte;
+      } else {
+        if (this.parte == 1 && this.tiempo != this.minutosParte * 60) this.minuto = this.minutosParte - Math.floor(this.tiempo / 60);
+        else if (this.parte == 2 && this.tiempo != this.minutosParte * 60) this.minuto = this.minutosParte - Math.floor(this.tiempo / 60) + Number(this.minutosParte);
       }
     })
+
+    const autocalcular: string | null = localStorage.getItem('autocalcularMinuto');
+
+    if (autocalcular == 'true') this.autocalcularMinuto = true;
+    else if (autocalcular == 'false') this.autocalcularMinuto = false;
   }
 
   guardar(): void {
@@ -75,6 +87,15 @@ export class ModalSumarComponent implements OnInit {
     this.eventoGuardar.emit();
   }
 
+  calcularMinuto(valor: Event): void {
+    if (!this.minuto || this.modoTiempo == 'ascendente' || !this.autocalcularMinuto) return;
+
+    const valorInput = (valor.target as HTMLInputElement).value;
+
+    if (this.parte == 1) this.minuto = this.minutosParte - Number(valorInput.slice(0, 2));
+    else if (this.parte == 2) this.minuto = this.minutosParte - Number(valorInput.slice(0, 2)) + Number(this.minutosParte);
+  }
+
   validarInput(valor: string): void {
     if (valor == 'minuto') {
       if (!this.minuto) return;
@@ -89,5 +110,9 @@ export class ModalSumarComponent implements OnInit {
 
   unsubscribeAppDataService(): void {
     this.dataService.unsubscribe();
+  }
+
+  setAutocalcularMinuto(): void {
+    localStorage.setItem('autocalcularMinuto', this.autocalcularMinuto.toString());
   }
 }

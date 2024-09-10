@@ -75,6 +75,7 @@ export class HomePageComponent implements OnInit {
 
     this.appDataService.setDatosEquipo({ equipo: event.equipoLocal, escudo: event.escudoLocal }, 'local');
     this.appDataService.setDatosEquipo({ equipo: event.equipoVisitante, escudo: event.escudoVisitante }, 'visitante');
+    this.appDataService.setConfiguracionTiempo(event.minutos, event.modoTiempo);
     this.appDataService.setEstado('reset');
   }
 

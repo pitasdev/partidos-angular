@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 import { AppData } from '../interfaces/AppData';
 import { DatosEquipo } from '../interfaces/DatosEquipo';
 import { Title } from '@angular/platform-browser';
+import { ModoTiempo } from '../interfaces/ModoTiempo';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,9 @@ export class AppDataService {
   private _appData: BehaviorSubject<AppData> = new BehaviorSubject<AppData>({
     estado: 'configuracion',
     parte: 1,
-    tiempo: '00:00',
+    tiempo: 0,
+    minutosParte: 25,
+    modoTiempo: 'ascendente',
     local: {
       equipo: 'Local',
       escudo: 'default.png',
@@ -55,12 +58,23 @@ export class AppDataService {
     this.setLocalStorage();
   }
 
-  setTiempo(tiempo: string): void {
+  setTiempo(tiempo: number): void {
     const actualData: AppData = this._appData.getValue();
     actualData.tiempo = tiempo;
 
     this._appData.next(actualData);
     this.setLocalStorage();
+  }
+
+  setConfiguracionTiempo(minutosParte: number, modoTiempo: ModoTiempo): void {
+    const actualData: AppData = this._appData.getValue();
+    actualData.minutosParte = minutosParte;
+    actualData.modoTiempo = modoTiempo;
+
+    if (modoTiempo == 'descendente') this.setTiempo(minutosParte * 60);
+
+    this._appData.next(actualData);
+    this.setLocalStorage;
   }
 
   setDatosEquipo(datos: Partial<DatosEquipo>, tipoEquipo: TipoEquipo): void {
@@ -173,7 +187,9 @@ export class AppDataService {
     this._appData.next({
       estado: 'configuracion',
       parte: 1,
-      tiempo: '00:00',
+      tiempo: 0,
+      minutosParte: 25,
+      modoTiempo: 'ascendente',
       local: {
         equipo: 'Local',
         escudo: 'default.png',
@@ -204,21 +220,21 @@ export class AppDataService {
       local: {
         equipo: actualData.local.equipo,
         goles: actualData.local.goles,
-        faltasParte1: actualData.local.faltasParte1, 
+        faltasParte1: actualData.local.faltasParte1,
         faltasParte2: actualData.local.faltasParte2,
         listaGoles: actualData.local.listaGoles,
-        listaTarjetas: actualData.local.listaTarjetas 
+        listaTarjetas: actualData.local.listaTarjetas
       },
       visitante: {
         equipo: actualData.visitante.equipo,
         goles: actualData.visitante.goles,
-        faltasParte1: actualData.visitante.faltasParte1, 
+        faltasParte1: actualData.visitante.faltasParte1,
         faltasParte2: actualData.visitante.faltasParte2,
         listaGoles: actualData.visitante.listaGoles,
         listaTarjetas: actualData.visitante.listaTarjetas
       }
     };
-    
+
     return data;
   }
 

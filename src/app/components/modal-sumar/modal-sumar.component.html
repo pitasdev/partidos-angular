@@ -6,7 +6,7 @@
 
         <div class="text-xl flex gap-2">
             <label for="minuto" class="w-20">Minuto</label>
-            <input type="number" inputmode="numeric" min="1" max="99" id="minuto" class="w-40 border rounded-md px-1" [ngClass]="{'outline outline-2 -outline-offset-2 outline-red-500' : !minuto}" [(ngModel)]="minuto" (keyup)="validarInput('minuto')" (focus)="unsubscribeAppDataService()">
+            <input type="number" inputmode="numeric" min="1" max="99" id="minuto" class="w-40 border rounded-md px-1" [ngClass]="{'outline outline-2 -outline-offset-2 outline-red-500' : !minuto}" [(ngModel)]="minuto" (focus)="unsubscribeAppDataService()" (blur)="calcularMinuto($event)" (blur)="validarInput('minuto')">
         </div>
 
         @if (tipoDato == 'tarjeta') {
@@ -36,6 +36,13 @@
                     <option value="amarilla">Amarilla</option>
                     <option value="roja">Roja</option>
                 </select>
+            </div>
+        }
+
+        @if (modoTiempo == 'descendente') {
+            <div class="text-sm font-semibold flex gap-2 mt-2">
+                <input type="checkbox" id="auto-calcular" [(ngModel)]="autocalcularMinuto" (change)="setAutocalcularMinuto()">
+                <label for="auto-calcular">Autocalcular minuto</label>
             </div>
         }
 

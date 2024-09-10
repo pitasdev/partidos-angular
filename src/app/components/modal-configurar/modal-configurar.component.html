@@ -1,6 +1,6 @@
 <div class="fixed top-0 left-0 w-full h-full bg-[#00000050] z-50">
 
-    <div class="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-96 max-h-screen flex flex-col gap-4 items-center p-4 bg-white rounded-md">
+    <div class="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-96 h-96 flex flex-col gap-4 items-center p-4 bg-white rounded-md">
 
         <h2 class="text-3xl text-center mb-4">Configurar partido</h2>
 
@@ -24,6 +24,24 @@
             </div>
         </div>
 
+        <div class="border-b h-1 w-full mb-[3px]"></div>
+
+        <div class="text-xl w-full flex gap-2">
+            <label for="minutos" class="w-36">Minutos</label>
+            <select name="minutos" id="minutos" class="w-40 text-end pr-2 border rounded-md bg-white" [(ngModel)]="minutos">
+                <option value="25">25</option>
+                <option value="20">20</option>
+            </select>
+        </div>
+
+        <div class="text-xl w-full flex gap-2">
+            <label for="tiempo" class="w-36">Tiempo</label>
+            <select name="tiempo" id="tiempo" class="w-40 text-end pr-2 border rounded-md bg-white" [(ngModel)]="modoTiempo">
+                <option value="ascendente">Ascendente</option>
+                <option value="descendente">Descendente</option>
+            </select>
+        </div>
+
         <div class="flex gap-6">
             <button class="text-xl font-medium w-32 bg-gray-300 px-5 py-2 rounded-md mt-5 mb-2" (click)="cancelar()">Cancelar</button>
             <button class="text-xl font-medium w-32 bg-green-500 px-5 py-2 rounded-md mt-5 mb-2" (click)="guardar()">Guardar</button>
@@ -32,11 +50,11 @@
     </div>
 
     @if (selecEquipo) {
-        <div class="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-96 h-80 max-h-screen flex flex-col justify-between p-4 bg-white rounded-md">
+        <div class="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-96 h-96 max-h-screen flex flex-col justify-between p-4 bg-white rounded-md">
                 
             <input type="text" placeholder="Buscar" id="selec-equipo" #selecEquipo class="text-xl w-40 flex px-1 mx-auto mb-2 border rounded-md" [(ngModel)]="buscarEquipo" (keyup)="filtrar()">
             
-            <div class="max-h-48 grid gap-2 overflow-auto">
+            <div class="max-h-56 grid gap-2 overflow-auto">
                 @for (equipo of listaEquiposFiltrada; track equipo) {
                     <div class="text-xl flex justify-center gap-4 cursor-pointer" (click)="seleccionarEquipo(equipo)">
                         <span class="w-60">{{equipo.equipo}}</span>

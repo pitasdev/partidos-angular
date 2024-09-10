@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Equipo } from '../../interfaces/Equipo';
 import { TipoEquipo } from '../../interfaces/TipoEquipo';
 import { CommonModule } from '@angular/common';
+import { ModoTiempo } from '../../interfaces/ModoTiempo';
 
 @Component({
   selector: 'app-modal-configurar',
@@ -21,9 +22,11 @@ export class ModalConfigurarComponent implements OnInit {
   equipoVisitante: string = '';
   escudoLocal: string = '';
   escudoVisitante: string = '';
+  minutos: number = 25;
+  modoTiempo: ModoTiempo = 'ascendente';
 
   @Output() eventoGuardar = new EventEmitter();
-  
+
   @ViewChild('selecEquipo') inputSelecEquipo!: ElementRef;
 
   ngOnInit(): void {
@@ -37,7 +40,9 @@ export class ModalConfigurarComponent implements OnInit {
       equipoLocal: this.equipoLocal,
       equipoVisitante: this.equipoVisitante,
       escudoLocal: this.escudoLocal == '' ? 'default.png' : this.escudoLocal,
-      escudoVisitante: this.escudoVisitante == '' ? 'default.png' : this.escudoVisitante
+      escudoVisitante: this.escudoVisitante == '' ? 'default.png' : this.escudoVisitante,
+      minutos: this.minutos,
+      modoTiempo: this.modoTiempo
     }
 
     this.eventoGuardar.emit(configuracion);
@@ -72,7 +77,7 @@ export class ModalConfigurarComponent implements OnInit {
       this.equipoVisitante = equipo.equipo;
       this.escudoVisitante = equipo.escudo;
     }
-    
+
     this.buscarEquipo = '';
     this.listaEquiposFiltrada = this.listaEquipos;
 

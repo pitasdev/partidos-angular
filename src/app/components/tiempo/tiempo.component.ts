@@ -4,6 +4,7 @@ import { ModalConfirmacionComponent } from '../modal-confirmacion/modal-confirma
 import { ClickDirective } from '../../directives/click.directive';
 import { AppDataService } from '../../services/app-data.service';
 import { RecargaPaginaService } from '../../services/recarga-pagina.service';
+import { ModoTiempo } from '../../interfaces/ModoTiempo';
 
 @Component({
   selector: 'app-tiempo',
@@ -13,11 +14,15 @@ import { RecargaPaginaService } from '../../services/recarga-pagina.service';
 })
 export class TiempoComponent implements OnInit {
   estado!: Estado;
-  tiempo: string = '00:00';
+  tiempo: number = 0;
+  minutosParte!: number;
+  modoTiempo!: ModoTiempo;
+
+  cronometro: string = '00:00';
   interval!: any;
-  tiempoInicio!: number;
-  tiempoActual!: number;
-  tiempoEnSegundos: number = 0;
+  tiempoAcumulado: number = 0;
+  timestampInicio!: number;
+  timestampActual!: number;
 
   openModalConfirmacion: boolean = false;
   mensajeConfirmacion: string = '';
@@ -30,12 +35,16 @@ export class TiempoComponent implements OnInit {
     this.appDataService.appData$.subscribe(data => {
       this.estado = data.estado;
       this.tiempo = data.tiempo;
+      this.minutosParte = data.minutosParte;
+      this.modoTiempo = data.modoTiempo;
 
-      if (this.tiempo == '00:00') this.tiempoEnSegundos = 0;
+      this.cronometro = this.setCronometro(this.tiempo);
+
+      if (data.estado == 'configuracion') this.tiempoAcumulado = 0;
     })
 
     this.recargaPaginaService.recarga$.subscribe(data => {
-      if (data) this.tiempoEnSegundos = this.tiempoASegundos(this.tiempo);
+      if (data) this.tiempoAcumulado = this.tiempo;
     })
   }
 
@@ -43,39 +52,33 @@ export class TiempoComponent implements OnInit {
     if (this.estado == 'play') return;
 
     this.appDataService.setEstado('play');
-    this.tiempoInicio = Math.floor(new Date().getTime() / 1000);
+    this.timestampInicio = Math.floor(new Date().getTime() / 1000);
+
+    if (this.modoTiempo == 'descendente') this.tiempoAcumulado = this.tiempo;
 
     this.interval = setInterval(() => {
-      this.sumarSegundo();
+      this.modoTiempo == 'ascendente' ? this.sumarSegundo() : this.restarSegundo();
     }, 1000)
   }
 
   sumarSegundo(): void {
-    this.tiempoActual = Math.floor(new Date().getTime() / 1000);
+    this.timestampActual = Math.floor(new Date().getTime() / 1000);
 
-    const sumaTiempo = this.tiempoEnSegundos + (this.tiempoActual - this.tiempoInicio);
-    let minutos = Math.floor(sumaTiempo / 60);
-    let segundos = sumaTiempo % 60;
-    
-    if (minutos > 99) {
-      minutos = 0;
-      segundos = 0;
-      this.tiempoEnSegundos = 0;
-      this.tiempoInicio = Math.floor(new Date().getTime() / 1000);
-    } 
+    const sumaTiempo: number = this.tiempoAcumulado + (this.timestampActual - this.timestampInicio);
 
-    let tiempo: string;
+    this.appDataService.setTiempo(sumaTiempo);
+  }
 
-    if (minutos < 10 && segundos < 10) tiempo = `0${minutos}:0${segundos}`;
-    else if (minutos < 10) tiempo = `0${minutos}:${segundos}`;
-    else if (segundos < 10) tiempo = `${minutos}:0${segundos}`;
-    else tiempo = `${minutos}:${segundos}`;
+  restarSegundo(): void {
+    this.timestampActual = Math.floor(new Date().getTime() / 1000);
 
-    this.appDataService.setTiempo(tiempo);
+    const restaTiempo = this.tiempoAcumulado - (this.timestampActual - this.timestampInicio);
+
+    this.appDataService.setTiempo(restaTiempo);
   }
 
   pararTiempo(): void {
-    this.tiempoEnSegundos = this.tiempoASegundos(this.tiempo);
+    if (this.modoTiempo == 'ascendente') this.tiempoAcumulado = this.tiempo;
 
     clearInterval(this.interval);
     this.appDataService.setEstado('stop');
@@ -84,7 +87,14 @@ export class TiempoComponent implements OnInit {
   reiniciarTiempo(): void {
     if (this.estado == 'play') return;
 
-    this.appDataService.setTiempo('00:00');
+    if (this.modoTiempo == 'ascendente') {
+      this.appDataService.setTiempo(0);
+      this.tiempoAcumulado = 0;
+    } else {
+      this.appDataService.setTiempo(this.minutosParte * 60);
+      this.tiempoAcumulado = this.minutosParte * 60;
+    }
+
     this.appDataService.setEstado('reset');
   }
 
@@ -119,11 +129,13 @@ export class TiempoComponent implements OnInit {
     this.openModalConfirmacion = true;
   }
 
-  tiempoASegundos(tiempo: string): number {
-    const splitTiempo: string[] = tiempo.split(':');
-    const segundos: number = Number(splitTiempo[1]);
-    const minutos: number = Number(splitTiempo[0]);
+  setCronometro(tiempo: number): string {
+    const minutos: number = Math.floor(tiempo / 60);
+    const segundos: number = tiempo % 60;
 
-    return (minutos * 60) + segundos;
+    if (minutos < 10 && segundos < 10) return `0${minutos}:0${segundos}`;
+    else if (minutos < 10) return `0${minutos}:${segundos}`;
+    else if (segundos < 10) return `${minutos}:0${segundos}`;
+    else return `${minutos}:${segundos}`;
   }
 }
