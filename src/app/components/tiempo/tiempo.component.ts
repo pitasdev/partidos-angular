@@ -5,11 +5,12 @@ import { ClickDirective } from '../../directives/click.directive';
 import { AppDataService } from '../../services/app-data.service';
 import { RecargaPaginaService } from '../../services/recarga-pagina.service';
 import { ModoTiempo } from '../../interfaces/ModoTiempo';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-tiempo',
   standalone: true,
-  imports: [ModalConfirmacionComponent, ClickDirective],
+  imports: [ModalConfirmacionComponent, ClickDirective, CommonModule],
   templateUrl: './tiempo.component.html'
 })
 export class TiempoComponent implements OnInit {
@@ -23,6 +24,7 @@ export class TiempoComponent implements OnInit {
   tiempoAcumulado: number = 0;
   timestampInicio!: number;
   timestampActual!: number;
+  limiteTiempo: boolean = false;
 
   openModalConfirmacion: boolean = false;
   mensajeConfirmacion: string = '';
@@ -40,7 +42,10 @@ export class TiempoComponent implements OnInit {
 
       this.cronometro = this.setCronometro(this.tiempo);
 
-      if (data.estado == 'configuracion') this.tiempoAcumulado = 0;
+      if (data.estado == 'configuracion') {
+        this.tiempoAcumulado = 0;
+        this.limiteTiempo = false;
+      }
     })
 
     this.recargaPaginaService.recarga$.subscribe(data => {
@@ -62,17 +67,31 @@ export class TiempoComponent implements OnInit {
   }
 
   sumarSegundo(): void {
+    if (this.tiempo >= 5999) {
+      clearInterval(this.interval);
+      return;
+    }
+
     this.timestampActual = Math.floor(new Date().getTime() / 1000);
 
     const sumaTiempo: number = this.tiempoAcumulado + (this.timestampActual - this.timestampInicio);
+
+    if (sumaTiempo >= this.minutosParte * 60) this.limiteTiempo = true;
 
     this.appDataService.setTiempo(sumaTiempo);
   }
 
   restarSegundo(): void {
+    if (this.tiempo <= 0) {
+      clearInterval(this.interval);
+      return;
+    }
+
     this.timestampActual = Math.floor(new Date().getTime() / 1000);
 
     const restaTiempo = this.tiempoAcumulado - (this.timestampActual - this.timestampInicio);
+
+    if (restaTiempo <= 0) this.limiteTiempo = true;
 
     this.appDataService.setTiempo(restaTiempo);
   }
@@ -94,6 +113,8 @@ export class TiempoComponent implements OnInit {
       this.appDataService.setTiempo(this.minutosParte * 60);
       this.tiempoAcumulado = this.minutosParte * 60;
     }
+
+    this.limiteTiempo = false;
 
     this.appDataService.setEstado('reset');
   }
