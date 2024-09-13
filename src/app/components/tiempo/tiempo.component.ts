@@ -92,7 +92,7 @@ export class TiempoComponent implements OnInit {
     const restaTiempo = this.tiempoAcumulado - (this.timestampActual - this.timestampInicio);
     
     if (restaTiempo <= 0) {
-      if (restaTiempo <= 0) this.limiteTiempo = true;
+      this.limiteTiempo = true;
       clearInterval(this.interval);
       this.appDataService.setTiempo(0);
       return;
