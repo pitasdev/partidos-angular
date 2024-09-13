@@ -67,10 +67,7 @@ export class TiempoComponent implements OnInit {
   }
 
   sumarSegundo(): void {
-    if (this.tiempo >= 5999) {
-      clearInterval(this.interval);
-      return;
-    }
+    if (this.tiempo >= 5999) return;
 
     this.timestampActual = Math.floor(new Date().getTime() / 1000);
 
@@ -78,20 +75,28 @@ export class TiempoComponent implements OnInit {
 
     if (sumaTiempo >= this.minutosParte * 60) this.limiteTiempo = true;
 
+    if (sumaTiempo >= 5999) {
+      clearInterval(this.interval);
+      this.appDataService.setTiempo(5999);
+      return;
+    }
+
     this.appDataService.setTiempo(sumaTiempo);
   }
 
   restarSegundo(): void {
-    if (this.tiempo <= 0) {
-      clearInterval(this.interval);
-      return;
-    }
+    if (this.tiempo <= 0) return;
 
     this.timestampActual = Math.floor(new Date().getTime() / 1000);
 
     const restaTiempo = this.tiempoAcumulado - (this.timestampActual - this.timestampInicio);
-
-    if (restaTiempo <= 0) this.limiteTiempo = true;
+    
+    if (restaTiempo <= 0) {
+      if (restaTiempo <= 0) this.limiteTiempo = true;
+      clearInterval(this.interval);
+      this.appDataService.setTiempo(0);
+      return;
+    }
 
     this.appDataService.setTiempo(restaTiempo);
   }
