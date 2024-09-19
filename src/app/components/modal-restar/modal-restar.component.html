@@ -7,9 +7,9 @@
         <div class="max-h-40 overflow-auto">
             @for (gol of listaGoles; track gol) {
                 <div class="text-xl w-48 flex justify-between border-b">
-                    <div class="flex gap-4 px-4">
-                        <div>{{gol.minuto}}'</div>
-                        <div class="font-semibold">{{gol.dorsal}}</div>
+                    <div class="flex gap-4 px-4 tabular-nums">
+                        <div class="w-7 text-end">{{gol.minuto}}'</div>
+                        <div class="font-semibold w-7 text-end">{{gol.dorsal}}</div>
                     </div>
                     <div class="flex items-center px-4 cursor-pointer" id="{{gol.id}}" (click)="confirmacionEliminar($event)" title="Eliminar">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 64 64">

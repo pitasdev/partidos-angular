@@ -182,5 +182,41 @@
     {
         "equipo": "Molins",
         "escudo": "molins.png"
+    },
+    {
+        "equipo": "Alheña",
+        "escudo": "alhena.png"
+    },
+    {
+        "equipo": "Castellbisbal",
+        "escudo": "castellbisbal.png"
+    },
+    {
+        "equipo": "Coret",
+        "escudo": "coret.png"
+    },
+    {
+        "equipo": "Fortaleza",
+        "escudo": "fortaleza.png"
+    },
+    {
+        "equipo": "Fractals",
+        "escudo": "fractals.png"
+    },
+    {
+        "equipo": "Franciscans Sabadell",
+        "escudo": "franciscans_sabadell.png"
+    },
+    {
+        "equipo": "Fundacio Terrassa",
+        "escudo": "fundacio_terrassa.png"
+    },
+    {
+        "equipo": "OAR Gracia",
+        "escudo": "oar_gracia.jpg"
+    },
+    {
+        "equipo": "Unio 10 Terrassa",
+        "escudo": "unio_10_terrassa.png"
     }
 ]

@@ -4,7 +4,6 @@ import { Datos } from '../../interfaces/Datos';
 import { TipoDato } from '../../interfaces/TipoDato';
 import { TipoEquipo } from '../../interfaces/TipoEquipo';
 import { AppDataService } from '../../services/app-data.service';
-import { Estado } from '../../interfaces/Estado';
 import { CommonModule } from '@angular/common';
 import { ModoTiempo } from '../../interfaces/ModoTiempo';
 
@@ -22,8 +21,6 @@ export class ModalSumarComponent implements OnInit {
   dorsal!: number;
   personaTarjeta: string = 'J';
   tarjeta: 'amarilla' | 'roja' = 'amarilla';
-  estado!: Estado;
-  tiempo!: number;
   parte!: number;
   minutosParte!: number;
   modoTiempo!: ModoTiempo;
@@ -36,20 +33,18 @@ export class ModalSumarComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService = this.appDataService.appData$.subscribe(data => {
-      this.estado = data.estado;
-      this.tiempo = data.tiempo;
       this.parte = data.parte;
       this.minutosParte = data.minutosParte;
       this.modoTiempo = data.modoTiempo;
 
       if (this.modoTiempo == 'ascendente') {
-        if (this.parte == 1 && this.tiempo != 0) this.minuto = Math.floor(this.tiempo / 60) + 1;
-        else if (this.parte == 2 && this.tiempo != 0) this.minuto = Math.floor(this.tiempo / 60) + 1 + data.minutosParte;
+        if (this.parte == 1 && data.tiempo != 0) this.minuto = Math.floor(data.tiempo / 60) + 1;
+        else if (this.parte == 2 && data.tiempo != 0) this.minuto = Math.floor(data.tiempo / 60) + 1 + data.minutosParte;
       } else {
-        if (this.parte == 1 && this.tiempo != this.minutosParte * 60) this.minuto = this.minutosParte - Math.floor(this.tiempo / 60);
-        else if (this.parte == 2 && this.tiempo != this.minutosParte * 60) this.minuto = this.minutosParte - Math.floor(this.tiempo / 60) + Number(this.minutosParte);
+        if (this.parte == 1 && data.tiempo != this.minutosParte * 60) this.minuto = this.minutosParte - Math.floor(data.tiempo / 60);
+        else if (this.parte == 2 && data.tiempo != this.minutosParte * 60) this.minuto = this.minutosParte - Math.floor(data.tiempo / 60) + Number(this.minutosParte);
       }
-    })
+    }).unsubscribe();
 
     const autocalcular: string | null = localStorage.getItem('autocalcularMinuto');
 
@@ -88,9 +83,9 @@ export class ModalSumarComponent implements OnInit {
   }
 
   calcularMinuto(valor: Event): void {
-    if (!this.minuto || this.modoTiempo == 'ascendente' || !this.autocalcularMinuto) return;
+    if (!this.minuto?.toString() || this.modoTiempo == 'ascendente' || !this.autocalcularMinuto) return;
 
-    const valorInput = (valor.target as HTMLInputElement).value;
+    const valorInput: string = (valor.target as HTMLInputElement).value;
 
     if (this.parte == 1) this.minuto = this.minutosParte - Number(valorInput.slice(0, 2));
     else if (this.parte == 2) this.minuto = this.minutosParte - Number(valorInput.slice(0, 2)) + Number(this.minutosParte);
@@ -106,10 +101,6 @@ export class ModalSumarComponent implements OnInit {
       if (this.dorsal < 1) this.dorsal = 1;
       if (this.dorsal > 99) this.dorsal = 99;
     }
-  }
-
-  unsubscribeAppDataService(): void {
-    this.dataService.unsubscribe();
   }
 
   setAutocalcularMinuto(): void {
