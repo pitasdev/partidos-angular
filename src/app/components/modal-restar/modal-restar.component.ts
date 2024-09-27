@@ -4,17 +4,20 @@ import { TipoEquipo } from '../../interfaces/TipoEquipo';
 import { ModalConfirmacionComponent } from '../modal-confirmacion/modal-confirmacion.component';
 import { AppDataService } from '../../services/app-data.service';
 import { Gol } from '../../interfaces/Gol';
+import { Tarjeta } from '../../interfaces/Tarjeta';
+import { ClickDirective } from '../../directives/click.directive';
 
 @Component({
   selector: 'app-modal-restar',
   standalone: true,
-  imports: [ModalConfirmacionComponent],
+  imports: [ModalConfirmacionComponent, ClickDirective],
   templateUrl: './modal-restar.component.html'
 })
 export class ModalRestarComponent implements OnInit {
   @Input() tipoEquipo!: TipoEquipo;
   @Input() tipoDato!: TipoDato;
   listaGoles: Gol[] = [];
+  listaTarjetas: Tarjeta[] = [];
   nombreEquipo!: string;
 
   openModalConfirmacion: boolean = false;
@@ -29,9 +32,11 @@ export class ModalRestarComponent implements OnInit {
     this.appDataService.appData$.subscribe(data => {
       if (this.tipoEquipo == 'local') {
         this.listaGoles = data.local.listaGoles;
+        this.listaTarjetas = data.local.listaTarjetas;
         this.nombreEquipo = data.local.equipo;
       } else if (this.tipoEquipo == 'visitante') {
         this.listaGoles = data.visitante.listaGoles;
+        this.listaTarjetas = data.visitante.listaTarjetas;
         this.nombreEquipo = data.visitante.equipo;
       }
     })
@@ -42,10 +47,21 @@ export class ModalRestarComponent implements OnInit {
     const splitID: string[] = this.id.split('-');
 
     this.openModalConfirmacion = true;
-    this.mensajeConfirmacion = `¿Está seguro/a que quiere eliminar el <b>${splitID[1]}</b> del <b>${this.nombreEquipo}</b> en el <b>minuto ${splitID[2]}</b>`;
-
-    if (splitID[3] != 'undefined') this.mensajeConfirmacion += ` del <b>jugador número ${splitID[3]}</b>`;
-    this.mensajeConfirmacion += '?';
+    if (this.tipoDato == 'gol') {
+      this.mensajeConfirmacion = `¿Está seguro/a que quiere eliminar el <b>${splitID[1]}</b> del <b>${this.nombreEquipo}</b> en el <b>minuto ${splitID[2]}</b>`;
+  
+      if (splitID[3] != 'undefined') this.mensajeConfirmacion += ` del <b>jugador ${splitID[3]}</b>`;
+      this.mensajeConfirmacion += '?';
+    } else if (this.tipoDato == 'tarjeta') {
+      this.mensajeConfirmacion = `¿Está seguro/a que quiere eliminar la <b>${splitID[1]} ${splitID[4]}</b> del <b>${this.nombreEquipo}</b> en el <b>minuto ${splitID[2]}</b>`;
+      console.log(splitID);
+      
+      if (splitID[3] == 'E') this.mensajeConfirmacion += ' del <b>Entrenador</b>?';
+      else if (splitID[3] == '2E') this.mensajeConfirmacion += ' del <b>2º Entrenador</b>?';
+      else if (splitID[3] == 'D') this.mensajeConfirmacion += ' del <b>Delegado</b>?';
+      else if (splitID[3] == 'A') this.mensajeConfirmacion += ' del <b>Auxiliar</b>?';
+      else this.mensajeConfirmacion += ` del <b>jugador ${splitID[3]}</b>?`;
+    }
   }
 
   eliminar(event: boolean): void {

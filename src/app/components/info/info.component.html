@@ -1,87 +1,191 @@
 <div class="text-xl w-[380px] max-h-72 overflow-auto grid grid-cols-2 border border-gray-300 rounded-md pb-2 px-3">
 
-    <div class="flex flex-col gap-2">
-
-        <span class="sticky top-0 font-bold pt-2 pb-2 bg-white shadow-[0_2px_5px_rgb(255,255,255)]">Goles</span>
-
-        @for (gol of goles; track gol) {
-            <div class="flex gap-4">
-                <div class="w-7 text-end tabular-nums">{{gol.minuto}}'</div>
-                <div class="font-semibold w-7 text-end tabular-nums">{{gol.dorsal}}</div>
-            </div>
-        }
+    @if (!mostrarJugadores) {
+        <div class="flex flex-col gap-2">
+    
+            <div class="sticky top-0 font-bold flex justify-between pt-2 bg-white shadow-[0_2px_5px_rgb(255,255,255)]">
+    
+                <span class="font-bold pb-2">Goles</span>
         
-    </div>
+                <div class="mr-4 translate-y-1 cursor-pointer" clickAnimation (click)="cambiarMostrarJugadores()" title="Ver jugadores">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 1920 1792">
+                        <path fill="#22c55e" d="M593 896q-162 5-265 128H194q-82 0-138-40.5T0 865q0-353 124-353q6 0 43.5 21t97.5 42.5T384 597q67 0 133-23q-5 37-5 66q0 139 81 256m1071 637q0 120-73 189.5t-194 69.5H523q-121 0-194-69.5T256 1533q0-53 3.5-103.5t14-109T300 1212t43-97.5t62-81t85.5-53.5T602 960q10 0 43 21.5t73 48t107 48t135 21.5t135-21.5t107-48t73-48t43-21.5q61 0 111.5 20t85.5 53.5t62 81t43 97.5t26.5 108.5t14 109t3.5 103.5M640 256q0 106-75 181t-181 75t-181-75t-75-181t75-181T384 0t181 75t75 181m704 384q0 159-112.5 271.5T960 1024T688.5 911.5T576 640t112.5-271.5T960 256t271.5 112.5T1344 640m576 225q0 78-56 118.5t-138 40.5h-134q-103-123-265-128q81-117 81-256q0-29-5-66q66 23 133 23q59 0 119-21.5t97.5-42.5t43.5-21q124 0 124 353m-128-609q0 106-75 181t-181 75t-181-75t-75-181t75-181t181-75t181 75t75 181"/>
+                    </svg>
+                </div>
+    
+            </div>
+    
+            @for (gol of goles; track gol) {
+                <div class="flex gap-4">
+                    <div class="w-7 text-end tabular-nums">{{gol.minuto}}'</div>
 
-    <div class="flex flex-col gap-2">
+                    @if (jugadores.length > 0) {
+                        <div class="font-semibold w-28">{{obtenerNombreJugador(gol.dorsal)}}</div>
+                    } @else {
+                        <div class="font-semibold w-7 text-end tabular-nums">{{gol.dorsal}}</div>
+                    }
+                </div>
+            }
+            
+        </div>
+    
+        <div class="flex flex-col gap-2">
+    
+            <div class="sticky top-0 flex justify-between pt-2 bg-white shadow-[0_2px_5px_rgb(255,255,255)]">
+    
+                <span class="font-bold pb-2">Tarjetas</span>
+    
+                <div class="flex gap-2">
+                    <div class="h-8 cursor-pointer" clickAnimation (click)="restarTarjeta()" title="Eliminar tarjeta">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 24 24">
+                            <path fill="rgb(34 197 94)" d="M5 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm12 10H7v-2h10z"/>
+                        </svg>
+                    </div>
+        
+                    <div class="h-8 cursor-pointer" clickAnimation (click)="sumarTarjeta()" title="Añadir tarjeta">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 24 24">
+                            <path fill="rgb(34 197 94)" d="M5 21h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2m2-10h4V7h2v4h4v2h-4v4h-2v-4H7z"/>
+                        </svg>
+                    </div>
+                </div>
+    
+            </div>
+    
+            @for (tarjeta of tarjetas; track tarjeta) {
+                <div class="flex justify-between">
+    
+                    <div class="flex gap-1">
+    
+                        <div class="w-7 text-end tabular-nums">{{tarjeta.minuto}}'</div>
+    
+                            <div>
+                                @if (tarjeta.color == 'amarilla') {
+                                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 243 243" preserveAspectRatio="xMidYMid meet">
+                                        <g transform="translate(0.000000,243.000000) scale(0.100000,-0.100000)" fill="#f4f408" stroke="none">
+                                            <path d="M1286 2223 c-11 -3 -200 -83 -420 -179 -359 -156 -405 -179 -442-217 -49 -51 -68 -118 -54 -183 18 -79 549 -1347 576 -1375 41 -43 119 -72 171 -65 52 7 831 344 878 380 18 14 43 46 55 71 42 87 40 93 -254 805 -147 355 -278 661 -291 681 -41 63 -143 101 -219 82z"/>
+                                        </g>
+                                    </svg>
+                                }
+                                @else {
+                                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 243 243" preserveAspectRatio="xMidYMid meet">
+                                        <g transform="translate(0.000000,243.000000) scale(0.100000,-0.100000)" fill="#e60d0d" stroke="none">
+                                            <path d="M1286 2223 c-11 -3 -200 -83 -420 -179 -359 -156 -405 -179 -442-217 -49 -51 -68 -118 -54 -183 18 -79 549 -1347 576 -1375 41 -43 119 -72 171 -65 52 7 831 344 878 380 18 14 43 46 55 71 42 87 40 93 -254 805 -147 355 -278 661 -291 681 -41 63 -143 101 -219 82z"/>
+                                        </g>
+                                    </svg>
+                                    <!-- <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 24 24">
+                                        <path fill="#e60d0d" d="m10.348 3.169l-7.15 3.113a2 2 0 0 0-1.03 2.608l4.92 11.895a1.96 1.96 0 0 0 2.59 1.063l7.142-3.11a2 2 0 0 0 1.036-2.611l-4.92-11.894a1.96 1.96 0 0 0-2.588-1.064M16"/>
+                                    </svg> -->
+                                }
+                            </div>
+    
+                        @if (jugadores.length > 0) {
+                            <div class="font-semibold w-28">{{obtenerNombreJugador(tarjeta.dorsal)}}</div>
+                        } @else {
+                            <div class="font-semibold w-7 text-end tabular-nums">{{tarjeta.dorsal}}</div>
+                        }
+                        
+                    </div>
+                    
+                </div>
+            }
+            
+        </div>
+    }
+    @else {
+        <div class="flex flex-col gap-2">
+    
+            <div class="sticky top-0 font-bold flex justify-between pt-2 bg-white shadow-[0_2px_5px_rgb(255,255,255)]">
+    
+                <span class="font-bold pb-2">Jugadores</span>
+        
+                <div class="flex mr-4 translate-x-[2px] translate-y-[2px] cursor-pointer" clickAnimation (click)="cambiarMostrarJugadores()" title="Atras">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 24 24">
+                        <path fill="#22c55e" fill-rule="evenodd" d="M3.464 3.464C2 4.93 2 7.286 2 12s0 7.071 1.464 8.535C4.93 22 7.286 22 12 22s7.071 0 8.535-1.465C22 19.072 22 16.716 22 12s0-7.071-1.465-8.536C19.072 2 16.714 2 12 2S4.929 2 3.464 3.464m5.795 4.51A.75.75 0 1 0 8.24 6.872L5.99 8.949a.75.75 0 0 0 0 1.102l2.25 2.077a.75.75 0 1 0 1.018-1.102l-.84-.776h5.62a2.712 2.712 0 0 1 0 5.423H9.5a.75.75 0 1 0 0 1.5h4.539a4.212 4.212 0 0 0 0-8.423h-5.62z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+    
+            </div>
+    
+            @for (jugador of jugadores; track jugador) {
+                <div class="flex gap-4">
+                    <div class="w-7 text-end tabular-nums">{{jugador.dorsal}}</div>
+                    <div class="font-semibold w-28">{{jugador.nombre}}</div>
+                </div>
+            }
+            
+        </div>
+    
+        <div class="flex flex-col gap-2">
+    
+            <div class="sticky top-0 flex gap-2 justify-end pt-2 bg-white shadow-[0_2px_5px_rgb(255,255,255)]">
+                
+                @if (jugadores.length > 0) {
+                    <div class="w-8 flex justify-center translate-y-1 cursor-pointer" clickAnimation (click)="cargarEquipo()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 1920 1792">
+                            <path fill="#3b82f6" d="M593 896q-162 5-265 128H194q-82 0-138-40.5T0 865q0-353 124-353q6 0 43.5 21t97.5 42.5T384 597q67 0 133-23q-5 37-5 66q0 139 81 256m1071 637q0 120-73 189.5t-194 69.5H523q-121 0-194-69.5T256 1533q0-53 3.5-103.5t14-109T300 1212t43-97.5t62-81t85.5-53.5T602 960q10 0 43 21.5t73 48t107 48t135 21.5t135-21.5t107-48t73-48t43-21.5q61 0 111.5 20t85.5 53.5t62 81t43 97.5t26.5 108.5t14 109t3.5 103.5M640 256q0 106-75 181t-181 75t-181-75t-75-181t75-181T384 0t181 75t75 181m704 384q0 159-112.5 271.5T960 1024T688.5 911.5T576 640t112.5-271.5T960 256t271.5 112.5T1344 640m576 225q0 78-56 118.5t-138 40.5h-134q-103-123-265-128q81-117 81-256q0-29-5-66q66 23 133 23q59 0 119-21.5t97.5-42.5t43.5-21q124 0 124 353m-128-609q0 106-75 181t-181 75t-181-75t-75-181t75-181t181-75t181 75t75 181"/>
+                        </svg>
+                    </div>
 
-        <div class="sticky top-0 flex justify-between pt-2 bg-white shadow-[0_2px_5px_rgb(255,255,255)]">
+                    <div class="cursor-pointer" clickAnimation (click)="guardarJugadores()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                            <path fill="#3b82f6" d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h11.175q.4 0 .763.15t.637.425l2.85 2.85q.275.275.425.638t.15.762V19q0 .825-.587 1.413T19 21zm7-3q1.25 0 2.125-.875T15 15t-.875-2.125T12 12t-2.125.875T9 15t.875 2.125T12 18m-5-8h7q.425 0 .713-.288T15 9V7q0-.425-.288-.712T14 6H7q-.425 0-.712.288T6 7v2q0 .425.288.713T7 10"/>
+                        </svg>
+                    </div>
 
-            <span class="font-bold pb-2">Tarjetas</span>
+                    <div class="h-8 cursor-pointer" clickAnimation (click)="confirmarEliminarJugador()" title="Eliminar jugador">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 24 24">
+                            <path fill="rgb(34 197 94)" d="M5 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm12 10H7v-2h10z"/>
+                        </svg>
+                    </div>
+                }
+    
+                <div class="h-8 cursor-pointer" clickAnimation (click)="anadirJugador()" title="Añadir jugador">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 24 24">
+                        <path fill="rgb(34 197 94)" d="M5 21h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2m2-10h4V7h2v4h4v2h-4v4h-2v-4H7z"/>
+                    </svg>
+                </div>
 
-            <div class="h-8 cursor-pointer" clickAnimation (click)="anadirTarjeta()" title="Añadir tarjeta">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 24 24">
-                    <path fill="rgb(34 197 94)" d="M5 21h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2m2-10h4V7h2v4h4v2h-4v4h-2v-4H7z"/>
-                </svg>
             </div>
 
         </div>
 
-        @for (tarjeta of tarjetas; track tarjeta) {
-            <div class="flex justify-between">
-
-                <div class="flex gap-3">
-
-                    <div class="w-7 text-end tabular-nums">{{tarjeta.minuto}}'</div>
-
-                        <div>
-                            @if (tarjeta.color == 'amarilla') {
-                                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 243 243" preserveAspectRatio="xMidYMid meet">
-                                    <g transform="translate(0.000000,243.000000) scale(0.100000,-0.100000)" fill="#f4f408" stroke="none">
-                                        <path d="M1286 2223 c-11 -3 -200 -83 -420 -179 -359 -156 -405 -179 -442-217 -49 -51 -68 -118 -54 -183 18 -79 549 -1347 576 -1375 41 -43 119 -72 171 -65 52 7 831 344 878 380 18 14 43 46 55 71 42 87 40 93 -254 805 -147 355 -278 661 -291 681 -41 63 -143 101 -219 82z"/>
-                                    </g>
-                                </svg>
-                            }
-                            @else {
-                                <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 243 243" preserveAspectRatio="xMidYMid meet">
-                                    <g transform="translate(0.000000,243.000000) scale(0.100000,-0.100000)" fill="#e60d0d" stroke="none">
-                                        <path d="M1286 2223 c-11 -3 -200 -83 -420 -179 -359 -156 -405 -179 -442-217 -49 -51 -68 -118 -54 -183 18 -79 549 -1347 576 -1375 41 -43 119 -72 171 -65 52 7 831 344 878 380 18 14 43 46 55 71 42 87 40 93 -254 805 -147 355 -278 661 -291 681 -41 63 -143 101 -219 82z"/>
-                                    </g>
-                                </svg>
-                                <!-- <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 24 24">
-                                    <path fill="#e60d0d" d="m10.348 3.169l-7.15 3.113a2 2 0 0 0-1.03 2.608l4.92 11.895a1.96 1.96 0 0 0 2.59 1.063l7.142-3.11a2 2 0 0 0 1.036-2.611l-4.92-11.894a1.96 1.96 0 0 0-2.588-1.064M16"/>
-                                </svg> -->
-                            }
-                        </div>
-
-                    <div class="font-semibold w-7 text-end tabular-nums">{{tarjeta.dorsal}}</div>
-                    
-                </div>
-
-                <div class="flex items-center pr-[7px] cursor-pointer" id="{{tarjeta.id}}" clickAnimation (click)="confirmacionEliminar($event)" title="Eliminar">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 64 64">
-                        <path fill="#ec1c24" d="M50.592 2.291L32 20.884C25.803 14.689 19.604 8.488 13.406 2.291c-7.17-7.17-18.284 3.948-11.12 11.12c6.199 6.193 12.4 12.395 18.592 18.592A32589.37 32589.37 0 0 1 2.286 50.595c-7.164 7.168 3.951 18.283 11.12 11.12c6.197-6.199 12.396-12.399 18.593-18.594l18.592 18.594c7.17 7.168 18.287-3.951 11.12-11.12c-6.199-6.199-12.396-12.396-18.597-18.594c6.2-6.199 12.397-12.398 18.597-18.596c7.168-7.166-3.949-18.284-11.12-11.11"/>
-                    </svg>
-                </div>
-                
+        @if (jugadores.length == 0) {
+            <div class="col-span-2 h-20 flex justify-center items-center cursor-pointer" clickAnimation (click)="cargarEquipo()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 1920 1792">
+                    <path fill="#3b82f6" d="M593 896q-162 5-265 128H194q-82 0-138-40.5T0 865q0-353 124-353q6 0 43.5 21t97.5 42.5T384 597q67 0 133-23q-5 37-5 66q0 139 81 256m1071 637q0 120-73 189.5t-194 69.5H523q-121 0-194-69.5T256 1533q0-53 3.5-103.5t14-109T300 1212t43-97.5t62-81t85.5-53.5T602 960q10 0 43 21.5t73 48t107 48t135 21.5t135-21.5t107-48t73-48t43-21.5q61 0 111.5 20t85.5 53.5t62 81t43 97.5t26.5 108.5t14 109t3.5 103.5M640 256q0 106-75 181t-181 75t-181-75t-75-181t75-181T384 0t181 75t75 181m704 384q0 159-112.5 271.5T960 1024T688.5 911.5T576 640t112.5-271.5T960 256t271.5 112.5T1344 640m576 225q0 78-56 118.5t-138 40.5h-134q-103-123-265-128q81-117 81-256q0-29-5-66q66 23 133 23q59 0 119-21.5t97.5-42.5t43.5-21q124 0 124 353m-128-609q0 106-75 181t-181 75t-181-75t-75-181t75-181t181-75t181 75t75 181"/>
+                </svg>
             </div>
         }
-        
-    </div>
+    }
+
   
 </div>
 
 @if (openModalSumar) {
     <app-modal-sumar 
-    [tipoEquipo]="modalTipoEquipo"
+    [tipoEquipo]="tipoEquipo"
     [tipoDato]="modalTipoDato"
     (eventoGuardar)="guardarTarjeta($event)"
     />
 }
 
-@if (openModalConfirmacion) {
-    <app-modal-confirmacion 
-        [mensaje]="mensajeConfirmacion"
-        (eventoConfirmar)="eliminarTarjeta($event)"
+@if (openModalRestar) {
+    <app-modal-restar 
+        [tipoEquipo]="tipoEquipo"
+        [tipoDato]="modalTipoDato"
+        (eventoEliminar)="eliminarTarjeta($event)"
+    />
+}
+
+@if (openModalJugador) {
+    <app-modal-jugador 
+        [tipoEquipo]="tipoEquipo"
+        [accionModal]="accionModalJugador"
+        (eventoNuevoJugador)="guardarJugador($event)"
+        (eventoGuardarEquipo)="guardarEquipo($event)"
+        (eventoReemplarEquipo)="reemplazarEquipo($event)"
+        (eventoEliminarJugador)="eliminarJugador($event)"
+        (eventoEliminarEquipoLS)="eliminarEquipoLS($event)"
+        (eventoCloseModal)="closeModal()"
     />
 }

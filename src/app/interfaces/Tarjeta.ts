@@ -1,6 +1,8 @@
+import { TipoPersona } from "./TipoPersona";
+
 export interface Tarjeta {
     id: string;
     color: 'amarilla' | 'roja';
-    dorsal: number | string;
+    dorsal: number | TipoPersona;
     minuto: number;
 }

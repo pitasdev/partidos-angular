@@ -6,6 +6,7 @@ import { TipoEquipo } from '../../interfaces/TipoEquipo';
 import { AppDataService } from '../../services/app-data.service';
 import { CommonModule } from '@angular/common';
 import { ModoTiempo } from '../../interfaces/ModoTiempo';
+import { TipoPersona } from '../../interfaces/TipoPersona';
 
 @Component({
   selector: 'app-modal-sumar',
@@ -19,7 +20,7 @@ export class ModalSumarComponent implements OnInit {
 
   minuto!: number;
   dorsal!: number;
-  personaTarjeta: string = 'J';
+  personaTarjeta: TipoPersona = 'J';
   tarjeta: 'amarilla' | 'roja' = 'amarilla';
   parte!: number;
   minutosParte!: number;
