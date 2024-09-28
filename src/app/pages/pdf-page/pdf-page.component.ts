@@ -6,6 +6,10 @@ import jsPDF from 'jspdf';
 import { Gol } from '../../interfaces/Gol';
 import { Tarjeta } from '../../interfaces/Tarjeta';
 import { CommonModule } from '@angular/common';
+import { JugadoresService } from '../../services/jugadores.service';
+import { Jugador } from '../../interfaces/Jugador';
+import { TipoPersona } from '../../interfaces/TipoPersona';
+import { TipoEquipo } from '../../interfaces/TipoEquipo';
 
 @Component({
   selector: 'app-pdf-page',
@@ -30,7 +34,11 @@ export class PdfPageComponent implements OnInit, AfterViewInit {
   listaGolesVisitante: Gol[] = [];
   listaTarjetasVisitante: Tarjeta[] = [];
 
+  listaJugadoresLocal: Jugador[] = [];
+  listaJugadoresVisitante: Jugador[] = [];
+
   appDataService = inject(AppDataService);
+  jugadoresService = inject(JugadoresService);
   router = inject(Router);
 
   ngOnInit(): void {
@@ -50,6 +58,11 @@ export class PdfPageComponent implements OnInit, AfterViewInit {
       this.listaGolesVisitante = data.visitante.listaGoles;
       this.listaTarjetasVisitante = data.visitante.listaTarjetas;
     })
+
+    this.jugadoresService.listaJugadores$.subscribe(data => {
+      this.listaJugadoresLocal = data.local;
+      this.listaJugadoresVisitante = data.visitante;
+    })
   }
   
   ngAfterViewInit(): void {
@@ -58,11 +71,32 @@ export class PdfPageComponent implements OnInit, AfterViewInit {
     html2canvas(pdfElement, { scale: 3 }).then((canvas) => {
       const pdf = new jsPDF();
       
-      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 45, 10, 125, 90);
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 42.5, 10, 125, 90);
 
       pdf.save(`${this.equipoLocal} - ${this.equipoVisitante}`);
     })
 
     this.router.navigate(['']);
+  }
+
+  obtenerNombreJugador(dorsal: number | TipoPersona, tipoEquipo: TipoEquipo): string {
+    switch (dorsal) {
+      case 'E':
+        return 'Entrenador';
+      case '2E':
+        return '2º Entrenador';
+      case 'D':
+        return 'Delegado';
+      case 'A':
+        return 'Auxiliar'
+      default:
+        let existeDorsal;
+
+        if (tipoEquipo == 'local') existeDorsal = this.listaJugadoresLocal.find(jugador => dorsal == jugador.dorsal);
+        else if (tipoEquipo == 'visitante') existeDorsal = this.listaJugadoresVisitante.find(jugador => dorsal == jugador.dorsal);
+    
+        if (existeDorsal) return existeDorsal.nombre;
+        else return dorsal.toString();
+    }
   }
 }

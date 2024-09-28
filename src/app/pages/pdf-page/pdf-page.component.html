@@ -1,7 +1,7 @@
-<main id="pdf" class="w-[820px] pt-20 pb-8 m-auto select-none">
+<main id="pdf" class="w-[900px] grid pt-20 pb-8 mx-auto select-none">
   
     <!-- app-resultado -->
-    <section id="resultado" class="flex justify-between px-4 py-2">
+    <section id="resultado" class="justify-self-center w-[820px] flex justify-between px-4 py-2">
 
         <!-- equipo local -->
         <div class="w-60 flex flex-col items-center text-center justify-end">
@@ -29,17 +29,17 @@
         <div class="w-60 flex flex-col items-center text-center">
     
             <div class="w-32 h-32">
-                <img class="w-full h-full object-cover -translate-y-[9px]" src="assets/img/{{escudoVisitante}}" alt="" />
+                <img class="w-full h-full object-cover" src="assets/img/{{escudoVisitante}}" alt="" />
             </div>
     
-            <div class="text-3xl font-semibold h-24 flex items-center py-3 overflow-auto">{{equipoVisitante}}</div>
+            <div class="text-3xl font-semibold h-24 flex items-center py-3 overflow-auto -translate-y-[9px]">{{equipoVisitante}}</div>
     
         </div>
         
     </section>
   
     <!-- section faltas -->
-    <section class="flex justify-between px-4 py-2">
+    <section class="justify-self-center w-[820px] flex justify-between px-4 py-2">
   
         <div>
 
@@ -112,19 +112,23 @@
     </section>
   
     <!-- section info -->
-    <section class="flex justify-between p-4">
+    <section class="w-[900px] flex gap-5 justify-between p-4">
   
         <!-- info equipo local -->
-        <div class="text-xl w-[380px] grid grid-cols-2 border border-gray-400 rounded-md py-2 px-3">
+        <div class="text-xl w-[440px] grid grid-cols-2 border border-gray-400 rounded-md py-2 px-3">
 
             <div class="flex flex-col gap-2">
         
                 <span class="font-bold pb-4 -translate-y-[9px]">Goles</span>
         
                 @for (gol of listaGolesLocal; track gol) {
-                    <div class="flex gap-4">
-                        <div class="w-7 text-end tabular-nums -translate-y-[9px]">{{gol.minuto}}'</div>
-                        <div class="font-semibold w-7 text-end tabular-nums -translate-y-[9px]">{{gol.dorsal}}</div>
+                    <div class="flex gap-4 -translate-y-[13px]">
+                        <div class="w-7 text-end tabular-nums">{{gol.minuto}}'</div>
+                        @if (listaJugadoresLocal.length > 0) {
+                            <div class="font-semibold w-36">{{obtenerNombreJugador(gol.dorsal, 'local')}}</div>
+                        } @else {
+                            <div class="font-semibold w-7 text-end tabular-nums">{{gol.dorsal}}</div>
+                        }
                     </div>
                 }
                 
@@ -141,11 +145,11 @@
                 @for (tarjeta of listaTarjetasLocal; track tarjeta) {
                     <div class="flex justify-between">
         
-                        <div class="flex gap-3">
+                        <div class="flex gap-1">
         
-                            <div class="w-7 text-end tabular-nums -translate-y-[9px]">{{tarjeta.minuto}}'</div>
+                            <div class="w-7 text-end tabular-nums -translate-y-[13px]">{{tarjeta.minuto}}'</div>
         
-                                <div>
+                                <div class="-translate-y-1">
                                     @if (tarjeta.color == 'amarilla') {
                                         <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 243 243" preserveAspectRatio="xMidYMid meet">
                                             <g transform="translate(0.000000,243.000000) scale(0.100000,-0.100000)" fill="#f4f408" stroke="none">
@@ -162,7 +166,11 @@
                                     }
                                 </div>
         
-                            <div class="font-semibold w-7 text-end tabular-nums -translate-y-[9px]">{{tarjeta.dorsal}}</div>
+                                @if (listaJugadoresLocal.length > 0) {
+                                    <div class="font-semibold w-36 -translate-y-[13px]">{{obtenerNombreJugador(tarjeta.dorsal, 'visitante')}}</div>
+                                } @else {
+                                    <div class="font-semibold w-7 text-end tabular-nums -translate-y-[13px]">{{tarjeta.dorsal}}</div>
+                                }
                             
                         </div>
                         
@@ -172,68 +180,72 @@
             </div>
             
         </div>
-  
-        <div>
-    
-            <!-- info equipo visitante -->
-            <div class="text-xl w-[380px] grid grid-cols-2 border border-gray-400 rounded-md py-2 px-3">
 
-                <div class="flex flex-col gap-2">
-            
-                    <span class="font-bold pb-4 -translate-y-[9px]">Goles</span>
-            
-                    @for (gol of listaGolesVisitante; track gol) {
-                        <div class="flex gap-4">
-                            <div class="w-7 text-end tabular-nums -translate-y-[9px]">{{gol.minuto}}'</div>
-                            <div class="font-semibold w-7 text-end tabular-nums -translate-y-[9px]">{{gol.dorsal}}</div>
-                        </div>
-                    }
-                    
-                </div>
-            
-                <div class="flex flex-col gap-2">
-            
-                    <div class="flex justify-between">
-            
-                        <span class="font-bold pb-4 -translate-y-[9px]">Tarjetas</span>
-            
+        <!-- info equipo visitante -->
+        <div class="text-xl w-[440px] grid grid-cols-2 border border-gray-400 rounded-md py-2 px-3">
+
+            <div class="flex flex-col gap-2">
+        
+                <span class="font-bold pb-4 -translate-y-[9px]">Goles</span>
+        
+                @for (gol of listaGolesVisitante; track gol) {
+                    <div class="flex gap-4 -translate-y-[13px]">
+                        <div class="w-7 text-end tabular-nums">{{gol.minuto}}'</div>
+                        @if (listaJugadoresVisitante.length > 0) {
+                            <div class="font-semibold w-36">{{obtenerNombreJugador(gol.dorsal, 'local')}}</div>
+                        } @else {
+                            <div class="font-semibold w-7 text-end tabular-nums">{{gol.dorsal}}</div>
+                        }
                     </div>
-            
-                    @for (tarjeta of listaTarjetasVisitante; track tarjeta) {
-                        <div class="flex justify-between">
-            
-                            <div class="flex gap-3">
-            
-                                <div class="w-7 text-end tabular-nums -translate-y-[9px]">{{tarjeta.minuto}}'</div>
-            
-                                    <div>
-                                        @if (tarjeta.color == 'amarilla') {
-                                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 243 243" preserveAspectRatio="xMidYMid meet">
-                                                <g transform="translate(0.000000,243.000000) scale(0.100000,-0.100000)" fill="#f4f408" stroke="none">
-                                                    <path d="M1286 2223 c-11 -3 -200 -83 -420 -179 -359 -156 -405 -179 -442-217 -49 -51 -68 -118 -54 -183 18 -79 549 -1347 576 -1375 41 -43 119 -72 171 -65 52 7 831 344 878 380 18 14 43 46 55 71 42 87 40 93 -254 805 -147 355 -278 661 -291 681 -41 63 -143 101 -219 82z"/>
-                                                </g>
-                                            </svg>
-                                        }
-                                        @else {
-                                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 243 243" preserveAspectRatio="xMidYMid meet">
-                                                <g transform="translate(0.000000,243.000000) scale(0.100000,-0.100000)" fill="#e60d0d" stroke="none">
-                                                    <path d="M1286 2223 c-11 -3 -200 -83 -420 -179 -359 -156 -405 -179 -442-217 -49 -51 -68 -118 -54 -183 18 -79 549 -1347 576 -1375 41 -43 119 -72 171 -65 52 7 831 344 878 380 18 14 43 46 55 71 42 87 40 93 -254 805 -147 355 -278 661 -291 681 -41 63 -143 101 -219 82z"/>
-                                                </g>
-                                            </svg>
-                                        }
-                                    </div>
-            
-                                <div class="font-semibold w-7 text-end tabular-nums -translate-y-[9px]">{{tarjeta.dorsal}}</div>
-                                
-                            </div>
+                }
+                
+            </div>
+        
+            <div class="flex flex-col gap-2">
+        
+                <div class="flex justify-between">
+        
+                    <span class="font-bold pb-4 -translate-y-[9px]">Tarjetas</span>
+        
+                </div>
+        
+                @for (tarjeta of listaTarjetasVisitante; track tarjeta) {
+                    <div class="flex justify-between">
+        
+                        <div class="flex gap-1">
+        
+                            <div class="w-7 text-end tabular-nums -translate-y-[13px]">{{tarjeta.minuto}}'</div>
+        
+                                <div class="-translate-y-1">
+                                    @if (tarjeta.color == 'amarilla') {
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 243 243" preserveAspectRatio="xMidYMid meet">
+                                            <g transform="translate(0.000000,243.000000) scale(0.100000,-0.100000)" fill="#f4f408" stroke="none">
+                                                <path d="M1286 2223 c-11 -3 -200 -83 -420 -179 -359 -156 -405 -179 -442-217 -49 -51 -68 -118 -54 -183 18 -79 549 -1347 576 -1375 41 -43 119 -72 171 -65 52 7 831 344 878 380 18 14 43 46 55 71 42 87 40 93 -254 805 -147 355 -278 661 -291 681 -41 63 -143 101 -219 82z"/>
+                                            </g>
+                                        </svg>
+                                    }
+                                    @else {
+                                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 243 243" preserveAspectRatio="xMidYMid meet">
+                                            <g transform="translate(0.000000,243.000000) scale(0.100000,-0.100000)" fill="#e60d0d" stroke="none">
+                                                <path d="M1286 2223 c-11 -3 -200 -83 -420 -179 -359 -156 -405 -179 -442-217 -49 -51 -68 -118 -54 -183 18 -79 549 -1347 576 -1375 41 -43 119 -72 171 -65 52 7 831 344 878 380 18 14 43 46 55 71 42 87 40 93 -254 805 -147 355 -278 661 -291 681 -41 63 -143 101 -219 82z"/>
+                                            </g>
+                                        </svg>
+                                    }
+                                </div>
+        
+                                @if (listaJugadoresVisitante.length > 0) {
+                                    <div class="font-semibold w-36 -translate-y-[13px]">{{obtenerNombreJugador(tarjeta.dorsal, 'local')}}</div>
+                                } @else {
+                                    <div class="font-semibold w-7 text-end tabular-nums -translate-y-[13px]">{{tarjeta.dorsal}}</div>
+                                }
                             
                         </div>
-                    }
-                    
-                </div>
-
+                        
+                    </div>
+                }
+                
             </div>
-    
+
         </div>
   
     </section>
