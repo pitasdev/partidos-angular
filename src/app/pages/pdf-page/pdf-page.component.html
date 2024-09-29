@@ -167,7 +167,7 @@
                                 </div>
         
                                 @if (listaJugadoresLocal.length > 0) {
-                                    <div class="font-semibold w-36 -translate-y-[13px]">{{obtenerNombreJugador(tarjeta.dorsal, 'visitante')}}</div>
+                                    <div class="font-semibold w-36 -translate-y-[13px]">{{obtenerNombreJugador(tarjeta.dorsal, 'local')}}</div>
                                 } @else {
                                     <div class="font-semibold w-7 text-end tabular-nums -translate-y-[13px]">{{tarjeta.dorsal}}</div>
                                 }
@@ -192,7 +192,7 @@
                     <div class="flex gap-4 -translate-y-[13px]">
                         <div class="w-7 text-end tabular-nums">{{gol.minuto}}'</div>
                         @if (listaJugadoresVisitante.length > 0) {
-                            <div class="font-semibold w-36">{{obtenerNombreJugador(gol.dorsal, 'local')}}</div>
+                            <div class="font-semibold w-36">{{obtenerNombreJugador(gol.dorsal, 'visitante')}}</div>
                         } @else {
                             <div class="font-semibold w-7 text-end tabular-nums">{{gol.dorsal}}</div>
                         }
@@ -234,7 +234,7 @@
                                 </div>
         
                                 @if (listaJugadoresVisitante.length > 0) {
-                                    <div class="font-semibold w-36 -translate-y-[13px]">{{obtenerNombreJugador(tarjeta.dorsal, 'local')}}</div>
+                                    <div class="font-semibold w-36 -translate-y-[13px]">{{obtenerNombreJugador(tarjeta.dorsal, 'visitante')}}</div>
                                 } @else {
                                     <div class="font-semibold w-7 text-end tabular-nums -translate-y-[13px]">{{tarjeta.dorsal}}</div>
                                 }

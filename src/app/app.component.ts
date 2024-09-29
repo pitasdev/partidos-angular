@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { AppDataService } from './services/app-data.service';
 import { ModalConfirmacionComponent } from './components/modal-confirmacion/modal-confirmacion.component';
 import { RecargaPaginaService } from './services/recarga-pagina.service';
+import { JugadoresService } from './services/jugadores.service';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ export class AppComponent implements OnInit {
   modal: boolean = false;
 
   appDataService = inject(AppDataService);
+  jugadoresService = inject(JugadoresService);
   recargaPaginaService = inject(RecargaPaginaService);
 
   ngOnInit(): void {
@@ -27,6 +29,7 @@ export class AppComponent implements OnInit {
   respuestaModal(event: boolean): void {
     if (event) {
       this.appDataService.cargarLocalStorage();
+      this.jugadoresService.cargarLocalStorage();
 
       this.recargaPaginaService.recargaTrue();
 

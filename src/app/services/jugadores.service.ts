@@ -17,6 +17,7 @@ export class JugadoresService {
 
   anadirJugador(jugador: Jugador, tipoEquipo: TipoEquipo): void {
     const listaJugadores: ListaJugadores = this._listaJugadores.getValue();
+
     if (tipoEquipo == 'local') {
       listaJugadores.local.push(jugador);
       listaJugadores.local.sort((a, b) => {
@@ -34,6 +35,7 @@ export class JugadoresService {
     }
 
     this._listaJugadores.next(listaJugadores);
+    this.setLocalStorage();
   }
 
   obtenerListaJugadores(tipoEquipo: TipoEquipo): Jugador[] {
@@ -62,6 +64,7 @@ export class JugadoresService {
     }
 
     this._listaJugadores.next(listaJugadores);
+    this.setLocalStorage();
   }
 
   guardarEquipo(equipo: EquipoLS): void {
@@ -82,13 +85,24 @@ export class JugadoresService {
       else if (tipoEquipo == 'visitante') listaJugadores.visitante = equipos[i].jugadores;
 
       this._listaJugadores.next(listaJugadores);
+      this.setLocalStorage();
     }
   }
 
   obtenerEquiposLS(): EquipoLS[] {
-    const equipos: EquipoLS[] = JSON.parse(localStorage.getItem('equipos')!);
+    const equipos: EquipoLS[] = JSON.parse(localStorage.getItem('equipos')!) ?? [];
+    let validacionEquipos: boolean = true;
 
-    if (Array.isArray(equipos)) return equipos;
+    if (!Array.isArray(equipos)) return [];
+
+    equipos.forEach(equipo => {
+      if (!this.esEquipoLS(equipo)) {
+        validacionEquipos = false;
+        return;
+      }
+    });
+
+    if (validacionEquipos) return equipos;
     else return [];
   }
 
@@ -107,5 +121,23 @@ export class JugadoresService {
   reemplazarEquipoLS(equipo: EquipoLS): void {
     this.eliminarEquipoLS(equipo);
     this.guardarEquipo(equipo);
+  }
+
+  cargarLocalStorage(): void {
+    const listaJugadores: ListaJugadores = JSON.parse(localStorage.getItem('jugadores')!);
+
+    if (listaJugadores) this._listaJugadores.next(listaJugadores);
+  }
+
+  private setLocalStorage(): void {
+    const listaJugadores: ListaJugadores = this._listaJugadores.getValue();
+
+    localStorage.setItem('jugadores', JSON.stringify(listaJugadores));
+  }
+
+  private esEquipoLS(obj: any): obj is EquipoLS {
+    return typeof obj.nombre == 'string' &&
+      Array.isArray(obj.jugadores) &&
+      obj.jugadores.every((jugador: any) => typeof jugador.dorsal == 'number' && typeof jugador.nombre == 'string');
   }
 }

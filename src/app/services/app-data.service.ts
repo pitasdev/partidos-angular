@@ -211,7 +211,8 @@ export class AppDataService {
     });
 
     this.updateTitle();
-    localStorage.clear();
+    localStorage.removeItem('partido');
+    localStorage.removeItem('createdAt');
   }
 
   getData(): any {
