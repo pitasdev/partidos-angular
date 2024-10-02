@@ -218,5 +218,49 @@
     {
         "equipo": "Unio 10 Terrassa",
         "escudo": "unio_10_terrassa.png"
+    },
+    {
+        "equipo": "Almacelles",
+        "escudo": "almacelles.png"
+    },
+    {
+        "equipo": "Badalona Futsal Iris",
+        "escudo": "badalona_futsal_iris.jpeg"
+    },
+    {
+        "equipo": "Eixample",
+        "escudo": "eixample.png"
+    },
+    {
+        "equipo": "Estel Vallseca",
+        "escudo": "estel_vallseca.png"
+    },
+    {
+        "equipo": "Industrias Santa Coloma",
+        "escudo": "industrias_santa_coloma.png"
+    },
+    {
+        "equipo": "Magic Sants",
+        "escudo": "magic_sants.png"
+    },
+    {
+        "equipo": "Manlleu",
+        "escudo": "manlleu.png"
+    },
+    {
+        "equipo": "Mataro",
+        "escudo": "mataro.png"
+    },
+    {
+        "equipo": "Martorell",
+        "escudo": "martorell.png"
+    },
+    {
+        "equipo": "Casserres",
+        "escudo": "casserres.png"
+    },
+    {
+        "equipo": "Arenys de Munts",
+        "escudo": "arenys_de_munt.png"
     }
 ]
