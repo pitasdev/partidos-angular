@@ -12,6 +12,7 @@ import { ModalConfigurarComponent } from '../../components/modal-configurar/moda
 import { Equipo } from '../../interfaces/Equipo';
 import { EquiposService } from '../../services/equipos.service';
 import { Router } from '@angular/router';
+import { JugadoresService } from '../../services/jugadores.service';
 
 @Component({
   selector: 'app-home-page',
@@ -30,6 +31,7 @@ export class HomePageComponent implements OnInit {
   openModalConfigurar: boolean = false;
 
   appDataService = inject(AppDataService);
+  jugadoresService = inject(JugadoresService);
   equiposService = inject(EquiposService);
   router = inject(Router);
 
@@ -57,6 +59,7 @@ export class HomePageComponent implements OnInit {
     if (!event) return;
 
     this.appDataService.resetData();
+    this.jugadoresService.resetJugadores();
   }
 
   confirmarReiniciarPartido(): void {

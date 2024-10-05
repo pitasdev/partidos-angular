@@ -129,6 +129,15 @@ export class JugadoresService {
     if (listaJugadores) this._listaJugadores.next(listaJugadores);
   }
 
+  resetJugadores(): void {
+    this._listaJugadores.next({
+      local: [],
+      visitante: []
+    });
+
+    localStorage.removeItem('jugadores');
+  }
+
   private setLocalStorage(): void {
     const listaJugadores: ListaJugadores = this._listaJugadores.getValue();
 

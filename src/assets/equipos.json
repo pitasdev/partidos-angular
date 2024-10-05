@@ -262,5 +262,13 @@
     {
         "equipo": "Arenys de Munts",
         "escudo": "arenys_de_munt.png"
+    },
+    {
+        "equipo": "Cervello",
+        "escudo": "cervello.png"
+    },
+    {
+        "equipo": "Vilomara",
+        "escudo": "vilomara.png"
     }
 ]
