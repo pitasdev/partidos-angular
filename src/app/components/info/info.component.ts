@@ -55,8 +55,8 @@ export class InfoComponent implements OnInit {
     })
 
     this.jugadoresService.listaJugadores$.subscribe(data => {
-      if (this.tipoEquipo == 'local') this.jugadores = data.local
-      else if (this.tipoEquipo == 'visitante') this.jugadores = data.visitante
+      if (this.tipoEquipo == 'local') this.jugadores = data.local;
+      else if (this.tipoEquipo == 'visitante') this.jugadores = data.visitante;
     })
   }
 

@@ -6,11 +6,15 @@ import { AppDataService } from '../../services/app-data.service';
 import { Gol } from '../../interfaces/Gol';
 import { Tarjeta } from '../../interfaces/Tarjeta';
 import { ClickDirective } from '../../directives/click.directive';
+import { Jugador } from '../../interfaces/Jugador';
+import { JugadoresService } from '../../services/jugadores.service';
+import { TipoPersona } from '../../interfaces/TipoPersona';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-modal-restar',
   standalone: true,
-  imports: [ModalConfirmacionComponent, ClickDirective],
+  imports: [ModalConfirmacionComponent, ClickDirective, CommonModule],
   templateUrl: './modal-restar.component.html'
 })
 export class ModalRestarComponent implements OnInit {
@@ -19,12 +23,14 @@ export class ModalRestarComponent implements OnInit {
   listaGoles: Gol[] = [];
   listaTarjetas: Tarjeta[] = [];
   nombreEquipo!: string;
+  jugadores!: Jugador[];
 
   openModalConfirmacion: boolean = false;
   mensajeConfirmacion: string = '';
   id: string = '';
 
   appDataService = inject(AppDataService);
+  jugadoresService = inject(JugadoresService);
 
   @Output() eventoEliminar = new EventEmitter<string | null>();
 
@@ -40,6 +46,29 @@ export class ModalRestarComponent implements OnInit {
         this.nombreEquipo = data.visitante.equipo;
       }
     })
+
+    this.jugadoresService.listaJugadores$.subscribe(data => {
+      if (this.tipoEquipo == 'local') this.jugadores = data.local;
+      else if (this.tipoEquipo == 'visitante') this.jugadores = data.visitante;
+    })
+  }
+
+  obtenerNombreJugador(dorsal: number | TipoPersona): string {
+    switch (dorsal) {
+      case 'E':
+        return 'Entrenador';
+      case '2E':
+        return '2º Entrenador';
+      case 'D':
+        return 'Delegado';
+      case 'A':
+        return 'Auxiliar'
+      default:
+        const existeDorsal = this.jugadores.find(jugador => dorsal == jugador.dorsal);
+    
+        if (existeDorsal) return existeDorsal.nombre;
+        else return dorsal.toString();
+    }
   }
 
   confirmacionEliminar(event: Event): void {

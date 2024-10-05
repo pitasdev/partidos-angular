@@ -5,36 +5,65 @@
         <h2 class="text-3xl text-center mb-4">Eliminar {{tipoDato}}</h2>
 
         @if (tipoDato == 'gol') {
-            <div class="max-h-40 overflow-auto">
+            <div class="max-h-44 overflow-auto">
                 @for (gol of listaGoles; track gol) {
-                    <div class="text-xl w-48 flex justify-between border-b">
-                        <div class="flex gap-4 px-4 tabular-nums">
+                    <div class="text-xl flex justify-between px-4 border-b" [ngClass]="{ 'w-48' : jugadores.length == 0, 'w-60' : jugadores.length > 0 }">
+
+                        <div class="flex gap-4 tabular-nums">
                             <div class="w-7 text-end">{{gol.minuto}}'</div>
-                            <div class="font-semibold w-7 text-end">{{gol.dorsal}}</div>
+                            @if (jugadores.length > 0) {
+                                <div class="font-semibold w-28 truncate">{{obtenerNombreJugador(gol.dorsal)}}</div>
+                            } @else {
+                                <div class="font-semibold w-7 text-end tabular-nums">{{gol.dorsal}}</div>
+                            }
                         </div>
-                        <div class="flex items-center px-4 cursor-pointer" id="{{gol.id}}" clickAnimation (click)="confirmacionEliminar($event)" title="Eliminar">
+
+                        <div class="flex items-center cursor-pointer" id="{{gol.id}}" clickAnimation (click)="confirmacionEliminar($event)" title="Eliminar">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 64 64">
                                 <path fill="#ec1c24" d="M50.592 2.291L32 20.884C25.803 14.689 19.604 8.488 13.406 2.291c-7.17-7.17-18.284 3.948-11.12 11.12c6.199 6.193 12.4 12.395 18.592 18.592A32589.37 32589.37 0 0 1 2.286 50.595c-7.164 7.168 3.951 18.283 11.12 11.12c6.197-6.199 12.396-12.399 18.593-18.594l18.592 18.594c7.17 7.168 18.287-3.951 11.12-11.12c-6.199-6.199-12.396-12.396-18.597-18.594c6.2-6.199 12.397-12.398 18.597-18.596c7.168-7.166-3.949-18.284-11.12-11.11"/>
                             </svg>
                         </div>
+
                     </div>
                 }
             </div>
         }
 
         @if (tipoDato == 'tarjeta') {
-            <div class="max-h-40 overflow-auto">
+            <div class="max-h-44 overflow-auto">
                 @for (tarjeta of listaTarjetas; track tarjeta) {
-                    <div class="text-xl w-48 flex justify-between border-b">
-                        <div class="flex gap-4 px-4 tabular-nums">
+                    <div class="text-xl flex justify-between px-4 border-b" [ngClass]="{ 'w-48' : jugadores.length == 0, 'w-60' : jugadores.length > 0 }">
+
+                        <div class="flex gap-1 tabular-nums">
                             <div class="w-7 text-end">{{tarjeta.minuto}}'</div>
-                            <div class="font-semibold w-7 text-end">{{tarjeta.dorsal}}</div>
+                            <div>
+                                @if (tarjeta.color == 'amarilla') {
+                                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 243 243" preserveAspectRatio="xMidYMid meet">
+                                        <g transform="translate(0.000000,243.000000) scale(0.100000,-0.100000)" fill="#f4f408" stroke="none">
+                                            <path d="M1286 2223 c-11 -3 -200 -83 -420 -179 -359 -156 -405 -179 -442-217 -49 -51 -68 -118 -54 -183 18 -79 549 -1347 576 -1375 41 -43 119 -72 171 -65 52 7 831 344 878 380 18 14 43 46 55 71 42 87 40 93 -254 805 -147 355 -278 661 -291 681 -41 63 -143 101 -219 82z"/>
+                                        </g>
+                                    </svg>
+                                } @else {
+                                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 243 243" preserveAspectRatio="xMidYMid meet">
+                                        <g transform="translate(0.000000,243.000000) scale(0.100000,-0.100000)" fill="#e60d0d" stroke="none">
+                                            <path d="M1286 2223 c-11 -3 -200 -83 -420 -179 -359 -156 -405 -179 -442-217 -49 -51 -68 -118 -54 -183 18 -79 549 -1347 576 -1375 41 -43 119 -72 171 -65 52 7 831 344 878 380 18 14 43 46 55 71 42 87 40 93 -254 805 -147 355 -278 661 -291 681 -41 63 -143 101 -219 82z"/>
+                                        </g>
+                                    </svg>
+                                }
+                            </div>
+                            @if (jugadores.length > 0) {
+                                <div class="font-semibold w-28 truncate">{{obtenerNombreJugador(tarjeta.dorsal)}}</div>
+                            } @else {
+                                <div class="font-semibold w-7 text-end tabular-nums">{{tarjeta.dorsal}}</div>
+                            }
                         </div>
-                        <div class="flex items-center px-4 cursor-pointer" id="{{tarjeta.id}}" clickAnimation (click)="confirmacionEliminar($event)" title="Eliminar">
+
+                        <div class="flex items-center cursor-pointer" id="{{tarjeta.id}}" clickAnimation (click)="confirmacionEliminar($event)" title="Eliminar">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 64 64">
                                 <path fill="#ec1c24" d="M50.592 2.291L32 20.884C25.803 14.689 19.604 8.488 13.406 2.291c-7.17-7.17-18.284 3.948-11.12 11.12c6.199 6.193 12.4 12.395 18.592 18.592A32589.37 32589.37 0 0 1 2.286 50.595c-7.164 7.168 3.951 18.283 11.12 11.12c6.197-6.199 12.396-12.399 18.593-18.594l18.592 18.594c7.17 7.168 18.287-3.951 11.12-11.12c-6.199-6.199-12.396-12.396-18.597-18.594c6.2-6.199 12.397-12.398 18.597-18.596c7.168-7.166-3.949-18.284-11.12-11.11"/>
                             </svg>
                         </div>
+
                     </div>
                 }
             </div>
