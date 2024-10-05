@@ -24,7 +24,7 @@
         @if (accionModal == 'eliminar') {
             <h2 class="text-3xl text-center mb-4">Eliminar jugador</h2>
 
-            <div class="max-h-44 overflow-auto">
+            <div class="max-h-48 grid gap-[3px] overflow-auto">
                 @for (jugador of jugadores; track jugador) {
                     <div class="text-xl w-60 flex gap-2 justify-between px-4 border-b">
                         <div class="flex gap-4 tabular-nums">
@@ -46,7 +46,7 @@
         @if (accionModal == 'guardar') {
             <h2 class="text-3xl text-center mb-4">Nombre del equipo</h2>
 
-            <input type="text" id="equipo" maxlength="15" class="w-40 border rounded-md px-1" [ngClass]="{'outline outline-2 -outline-offset-2 outline-red-500' : !equipo}" [(ngModel)]="equipo" (blur)="validarNombre()">
+            <input type="text" id="equipo" maxlength="15" class="text-xl w-40 border rounded-md px-1" [ngClass]="{'outline outline-2 -outline-offset-2 outline-red-500' : !equipo}" [(ngModel)]="equipo" (blur)="validarNombre()">
 
             <div class="flex gap-6">
                 <button class="text-xl font-medium w-32 bg-gray-300 px-5 py-2 rounded-md mt-5 mb-2" (click)="cancelar()">Cancelar</button>
@@ -55,28 +55,24 @@
         }
 
         @if (accionModal == 'cargar') {
-            <div class="max-h-80 overflow-auto">
+            <h2 class="text-3xl text-center mb-4">Selecciona un equipo</h2>
 
-                <h2 class="text-3xl text-center mb-4">Selecciona un equipo</h2>
+            <div class="max-h-48 grid gap-[3px] justify-center overflow-auto">
+                @for (equipo of equiposLS; track equipo) {
+                    <div class="text-xl w-fit flex gap-4 justify-between px-4 border-b">
 
-                <div class="grid justify-center overflow-auto">
-                    @for (equipo of equiposLS; track equipo) {
-                        <div class="text-xl w-fit flex gap-4 justify-between px-4 border-b">
+                        <div class="w-36 cursor-pointer truncate" (click)="cargarEquipoLS(equipo)">{{equipo.nombre}}</div>
 
-                            <div class="w-36 cursor-pointer truncate" (click)="cargarEquipoLS(equipo)">{{equipo.nombre}}</div>
-
-                            <div class="flex items-center cursor-pointer" clickAnimation (click)="confirmarEliminarEquipoLS(equipo)" title="Eliminar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 64 64">
-                                    <path fill="#ec1c24" d="M50.592 2.291L32 20.884C25.803 14.689 19.604 8.488 13.406 2.291c-7.17-7.17-18.284 3.948-11.12 11.12c6.199 6.193 12.4 12.395 18.592 18.592A32589.37 32589.37 0 0 1 2.286 50.595c-7.164 7.168 3.951 18.283 11.12 11.12c6.197-6.199 12.396-12.399 18.593-18.594l18.592 18.594c7.17 7.168 18.287-3.951 11.12-11.12c-6.199-6.199-12.396-12.396-18.597-18.594c6.2-6.199 12.397-12.398 18.597-18.596c7.168-7.166-3.949-18.284-11.12-11.11"/>
-                                </svg>
-                            </div>
+                        <div class="flex items-center cursor-pointer" clickAnimation (click)="confirmarEliminarEquipoLS(equipo)" title="Eliminar">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 64 64">
+                                <path fill="#ec1c24" d="M50.592 2.291L32 20.884C25.803 14.689 19.604 8.488 13.406 2.291c-7.17-7.17-18.284 3.948-11.12 11.12c6.199 6.193 12.4 12.395 18.592 18.592A32589.37 32589.37 0 0 1 2.286 50.595c-7.164 7.168 3.951 18.283 11.12 11.12c6.197-6.199 12.396-12.399 18.593-18.594l18.592 18.594c7.17 7.168 18.287-3.951 11.12-11.12c-6.199-6.199-12.396-12.396-18.597-18.594c6.2-6.199 12.397-12.398 18.597-18.596c7.168-7.166-3.949-18.284-11.12-11.11"/>
+                            </svg>
                         </div>
-                    }
-                </div>
-
-                <button class="text-xl font-medium w-32 flex justify-center bg-gray-300 px-5 py-2 rounded-md mx-auto mt-5 mb-2" (click)="cancelar()">Cancelar</button>
-
+                    </div>
+                }
             </div>
+
+            <button class="text-xl font-medium w-32 flex justify-center bg-gray-300 px-5 py-2 rounded-md mx-auto mt-5 mb-2" (click)="cancelar()">Cancelar</button>
         }
 
     </div>

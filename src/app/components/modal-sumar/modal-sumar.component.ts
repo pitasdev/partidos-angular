@@ -7,6 +7,8 @@ import { AppDataService } from '../../services/app-data.service';
 import { CommonModule } from '@angular/common';
 import { ModoTiempo } from '../../interfaces/ModoTiempo';
 import { TipoPersona } from '../../interfaces/TipoPersona';
+import { Jugador } from '../../interfaces/Jugador';
+import { JugadoresService } from '../../services/jugadores.service';
 
 @Component({
   selector: 'app-modal-sumar',
@@ -27,8 +29,11 @@ export class ModalSumarComponent implements OnInit {
   modoTiempo!: ModoTiempo;
   dataService!: any;
   autocalcularMinuto: boolean = true;
+  jugador!: number;
+  jugadores!: Jugador[];
 
   appDataService = inject(AppDataService);
+  jugadoresService = inject(JugadoresService);
 
   @Output() eventoGuardar = new EventEmitter<Datos | null>();
 
@@ -47,6 +52,11 @@ export class ModalSumarComponent implements OnInit {
       }
     }).unsubscribe();
 
+    this.jugadoresService.listaJugadores$.subscribe(data => {
+      if (this.tipoEquipo == 'local') this.jugadores = data.local;
+      else if (this.tipoEquipo == 'visitante') this.jugadores = data.visitante;
+    })
+
     const autocalcular: string | null = localStorage.getItem('autocalcularMinuto');
 
     if (autocalcular == 'true') this.autocalcularMinuto = true;
@@ -55,17 +65,17 @@ export class ModalSumarComponent implements OnInit {
 
   guardar(): void {
     const datos: Datos = {
-      id: `${this.tipoEquipo}-${this.tipoDato}-${this.minuto}-${this.dorsal}`,
+      id: `${this.tipoEquipo}-${this.tipoDato}-${this.minuto}-${this.dorsal ?? this.jugador}`,
       tipoEquipo: this.tipoEquipo,
       tipoDato: this.tipoDato,
       minuto: this.minuto,
-      dorsal: this.dorsal
+      dorsal: this.dorsal ?? this.jugador
     }
 
     if (this.tipoDato == 'gol' && !this.minuto) return;
 
     if (this.tipoDato == 'tarjeta') {
-      if (!this.minuto || (!this.dorsal && this.personaTarjeta == 'J')) return;
+      if (!this.minuto || (!this.dorsal && !this.jugador && this.personaTarjeta == 'J')) return;
 
       if (this.personaTarjeta != 'J') {
         datos.id = `${this.tipoEquipo}-${this.tipoDato}-${this.minuto}-${this.personaTarjeta}`;

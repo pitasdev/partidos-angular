@@ -108,7 +108,7 @@ export class InfoComponent implements OnInit {
         const existeDorsal = this.jugadores.find(jugador => dorsal == jugador.dorsal);
     
         if (existeDorsal) return existeDorsal.nombre;
-        else return dorsal.toString();
+        else return dorsal?.toString();
     }
   }
 

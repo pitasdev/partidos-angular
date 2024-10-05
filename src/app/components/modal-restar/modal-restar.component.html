@@ -5,7 +5,7 @@
         <h2 class="text-3xl text-center mb-4">Eliminar {{tipoDato}}</h2>
 
         @if (tipoDato == 'gol') {
-            <div class="max-h-44 overflow-auto">
+            <div class="max-h-48 grid gap-[3px] overflow-auto">
                 @for (gol of listaGoles; track gol) {
                     <div class="text-xl flex justify-between px-4 border-b" [ngClass]="{ 'w-48' : jugadores.length == 0, 'w-60' : jugadores.length > 0 }">
 
@@ -30,7 +30,7 @@
         }
 
         @if (tipoDato == 'tarjeta') {
-            <div class="max-h-44 overflow-auto">
+            <div class="max-h-48 grid gap-[3px] overflow-auto">
                 @for (tarjeta of listaTarjetas; track tarjeta) {
                     <div class="text-xl flex justify-between px-4 border-b" [ngClass]="{ 'w-48' : jugadores.length == 0, 'w-60' : jugadores.length > 0 }">
 

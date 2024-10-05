@@ -27,7 +27,7 @@ export class ModalRestarComponent implements OnInit {
 
   openModalConfirmacion: boolean = false;
   mensajeConfirmacion: string = '';
-  id: string = '';
+  id: string = ''; // tipoEquipo-tipoDato-minuto-dorsal --> local-gol-10-5 || tipoEquipo-tipoDato-minuto-dorsal-tarjeta --> visitante-tarjeta-10-5-amarilla
 
   appDataService = inject(AppDataService);
   jugadoresService = inject(JugadoresService);
@@ -67,7 +67,7 @@ export class ModalRestarComponent implements OnInit {
         const existeDorsal = this.jugadores.find(jugador => dorsal == jugador.dorsal);
     
         if (existeDorsal) return existeDorsal.nombre;
-        else return dorsal.toString();
+        else return dorsal?.toString();
     }
   }
 
@@ -79,16 +79,18 @@ export class ModalRestarComponent implements OnInit {
     if (this.tipoDato == 'gol') {
       this.mensajeConfirmacion = `¿Está seguro/a que quiere eliminar el <b>${splitID[1]}</b> del <b>${this.nombreEquipo}</b> en el <b>minuto ${splitID[2]}</b>`;
   
-      if (splitID[3] != 'undefined') this.mensajeConfirmacion += ` del <b>jugador ${splitID[3]}</b>`;
+      if (splitID[3] != 'undefined' && this.jugadores.length > 0) this.mensajeConfirmacion += ` de <b>${this.obtenerNombreJugador(Number(splitID[3]))}`;
+      else if (splitID[3] != 'undefined') this.mensajeConfirmacion += ` del <b>jugador ${splitID[3]}</b>`;
+
       this.mensajeConfirmacion += '?';
     } else if (this.tipoDato == 'tarjeta') {
       this.mensajeConfirmacion = `¿Está seguro/a que quiere eliminar la <b>${splitID[1]} ${splitID[4]}</b> del <b>${this.nombreEquipo}</b> en el <b>minuto ${splitID[2]}</b>`;
-      console.log(splitID);
       
       if (splitID[3] == 'E') this.mensajeConfirmacion += ' del <b>Entrenador</b>?';
       else if (splitID[3] == '2E') this.mensajeConfirmacion += ' del <b>2º Entrenador</b>?';
       else if (splitID[3] == 'D') this.mensajeConfirmacion += ' del <b>Delegado</b>?';
       else if (splitID[3] == 'A') this.mensajeConfirmacion += ' del <b>Auxiliar</b>?';
+      else if (this.jugadores.length > 0) this.mensajeConfirmacion += ` de <b>${this.obtenerNombreJugador(Number(splitID[3]))}</b>?`;
       else this.mensajeConfirmacion += ` del <b>jugador ${splitID[3]}</b>?`;
     }
   }
