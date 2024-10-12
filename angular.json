@@ -15,6 +15,7 @@
           "options": {
             "outputPath": "dist/partidos-angular",
             "index": "src/index.html",
+            "baseHref": "/partidos/",
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
