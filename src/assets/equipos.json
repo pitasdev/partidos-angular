@@ -270,5 +270,9 @@
     {
         "equipo": "Vilomara",
         "escudo": "vilomara.png"
+    },
+    {
+        "equipo": "Piera",
+        "escudo": "piera.png"
     }
 ]
