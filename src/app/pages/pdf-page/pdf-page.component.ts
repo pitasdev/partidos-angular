@@ -96,7 +96,7 @@ export class PdfPageComponent implements OnInit, AfterViewInit {
         else if (tipoEquipo == 'visitante') existeDorsal = this.listaJugadoresVisitante.find(jugador => dorsal == jugador.dorsal);
     
         if (existeDorsal) return existeDorsal.nombre;
-        else return dorsal.toString();
+        else return dorsal?.toString();
     }
   }
 }
