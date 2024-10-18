@@ -29,7 +29,7 @@
                     <select id="jugador" class="w-40 border rounded-md px-1 bg-white" [ngClass]="{'outline outline-2 -outline-offset-2 outline-red-500' : !jugador && tipoDato == 'tarjeta'}" [(ngModel)]="jugador">
                         <option value=""></option>
                         @for (jugador of jugadores; track jugador) {
-                            <option value="{{jugador.dorsal}}">{{jugador.nombre}}</option>
+                            <option value="{{jugador.dorsal}}">{{jugador.dorsal}} - {{jugador.nombre}}</option>
                         }
                     </select>
                 } @else {
