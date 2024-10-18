@@ -10,7 +10,6 @@ import { Estado } from '../../interfaces/Estado';
 import { AppDataService } from '../../services/app-data.service';
 import { ModalConfigurarComponent } from '../../components/modal-configurar/modal-configurar.component';
 import { Equipo } from '../../interfaces/Equipo';
-import { EquiposService } from '../../services/equipos.service';
 import { Router } from '@angular/router';
 import { JugadoresService } from '../../services/jugadores.service';
 
@@ -32,7 +31,6 @@ export class HomePageComponent implements OnInit {
 
   appDataService = inject(AppDataService);
   jugadoresService = inject(JugadoresService);
-  equiposService = inject(EquiposService);
   router = inject(Router);
 
   ngOnInit(): void {
@@ -40,16 +38,6 @@ export class HomePageComponent implements OnInit {
       this.estado = data.estado;
       this.equipoLocal = data.local.equipo;
       this.equipoVisitante = data.visitante.equipo;
-    })
-
-    this.equiposService.getEquipos().subscribe(equipos => {
-      this.listaEquipos = equipos;
-
-      this.listaEquipos.sort((a, b) => {
-        if (a.equipo > b.equipo) return 1;
-        else if (a.equipo < b.equipo) return -1;
-        else return 0;
-      })
     });
   }
 

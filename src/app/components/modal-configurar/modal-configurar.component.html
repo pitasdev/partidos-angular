@@ -4,39 +4,39 @@
 
         <h2 class="text-3xl text-center mb-4">Configurar partido</h2>
 
-        <div class="text-xl flex gap-2">
+        <div class="text-xl w-full flex gap-4">
             <label for="local" class="w-36">Equipo local</label>
-            <input type="text" id="local" class="w-40 border rounded-md px-1" [ngClass]="{'outline outline-2 -outline-offset-2 outline-red-500' : !equipoLocal}" [(ngModel)]="equipoLocal">
-            <div class="cursor-pointer" (click)="modalSelecEquipo('local')">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24">
-                    <path fill="#22c55e" d="M14 12v7.88c.04.3-.06.62-.29.83a.996.996 0 0 1-1.41 0l-2.01-2.01a.99.99 0 0 1-.29-.83V12h-.03L4.21 4.62a1 1 0 0 1 .17-1.4c.19-.14.4-.22.62-.22h14c.22 0 .43.08.62.22a1 1 0 0 1 .17 1.4L14.03 12z"/>
-                </svg>
-            </div>
+            <input type="text" id="local" list="equipo-local" class="w-48 border rounded-md px-2 rm-datalist-arrow" [ngClass]="{'outline outline-2 -outline-offset-2 outline-red-500' : !equipoLocal}" [(ngModel)]="equipoLocal" (blur)="seleccionarEquipo($event, 'local')">
+            <datalist id="equipo-local">
+                @for (equipo of listaEquipos; track equipo) {
+                    <option value="{{equipo.equipo}}">{{equipo.equipo}}</option>
+                }
+            </datalist>
         </div>
 
-        <div class="text-xl flex gap-2">
+        <div class="text-xl w-full flex gap-4">
             <label for="visitante" class="w-36">Equipo visitante</label>
-            <input type="text" id="visitante" class="w-40 border rounded-md px-1" [ngClass]="{'outline outline-2 -outline-offset-2 outline-red-500' : !equipoVisitante}" [(ngModel)]="equipoVisitante">
-            <div class="cursor-pointer" (click)="modalSelecEquipo('visitante')">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24">
-                    <path fill="#22c55e" d="M14 12v7.88c.04.3-.06.62-.29.83a.996.996 0 0 1-1.41 0l-2.01-2.01a.99.99 0 0 1-.29-.83V12h-.03L4.21 4.62a1 1 0 0 1 .17-1.4c.19-.14.4-.22.62-.22h14c.22 0 .43.08.62.22a1 1 0 0 1 .17 1.4L14.03 12z"/>
-                </svg>
-            </div>
+            <input type="text" id="visitante" list="equipo-visitante" class="w-48 border rounded-md px-2 rm-datalist-arrow" [ngClass]="{'outline outline-2 -outline-offset-2 outline-red-500' : !equipoVisitante}" [(ngModel)]="equipoVisitante" (blur)="seleccionarEquipo($event, 'visitante')">
+            <datalist id="equipo-visitante">
+                @for (equipo of listaEquipos; track equipo) {
+                    <option value="{{equipo.equipo}}">{{equipo.equipo}}</option>
+                }
+            </datalist>
         </div>
 
         <div class="border-b h-1 w-full mb-[3px]"></div>
 
-        <div class="text-xl w-full flex gap-2">
+        <div class="text-xl w-full flex gap-4">
             <label for="minutos" class="w-36">Minutos</label>
-            <select name="minutos" id="minutos" class="w-40 text-end pr-2 border rounded-md bg-white" [(ngModel)]="minutos">
+            <select name="minutos" id="minutos" class="w-48 text-end px-2 border rounded-md bg-white" [(ngModel)]="minutos">
                 <option value="25">25</option>
                 <option value="20">20</option>
             </select>
         </div>
 
-        <div class="text-xl w-full flex gap-2">
+        <div class="text-xl w-full flex gap-4">
             <label for="tiempo" class="w-36">Tiempo</label>
-            <select name="tiempo" id="tiempo" class="w-40 text-end pr-2 border rounded-md bg-white" [(ngModel)]="modoTiempo">
+            <select name="tiempo" id="tiempo" class="w-48 text-end px-2 border rounded-md bg-white" [(ngModel)]="modoTiempo">
                 <option value="ascendente">Ascendente</option>
                 <option value="descendente">Descendente</option>
             </select>
@@ -48,28 +48,5 @@
         </div>
 
     </div>
-
-    @if (selecEquipo) {
-        <div class="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-96 h-96 max-h-screen flex flex-col justify-between p-4 bg-white rounded-md">
-                
-            <input type="text" placeholder="Buscar" id="selec-equipo" #selecEquipo class="text-xl w-40 flex px-1 mx-auto mb-2 border rounded-md" [(ngModel)]="buscarEquipo" (keyup)="filtrar()">
-            
-            <div class="max-h-56 grid gap-2 overflow-auto">
-                @for (equipo of listaEquiposFiltrada; track equipo) {
-                    <div class="text-xl flex justify-center gap-4 cursor-pointer" (click)="seleccionarEquipo(equipo)">
-                        <span class="w-60">{{equipo.equipo}}</span>
-                        <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24">
-                                <path fill="#22c55e" d="m9.55 15.15l8.475-8.475q.3-.3.7-.3t.7.3t.3.713t-.3.712l-9.175 9.2q-.3.3-.7.3t-.7-.3L4.55 13q-.3-.3-.288-.712t.313-.713t.713-.3t.712.3z"/>
-                            </svg>
-                        </div>
-                    </div>
-                }
-            </div>
-    
-            <button class="text-xl font-medium w-32 bg-gray-300 px-5 py-2 rounded-md mx-auto mt-2" (click)="cancelarSelecEquipo()">Cancelar</button>
-    
-        </div>
-    }
 
 </div>

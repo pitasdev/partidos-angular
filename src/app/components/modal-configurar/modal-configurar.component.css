@@ -1,0 +1,4 @@
+.rm-datalist-arrow::-webkit-calendar-picker-indicator,
+.rm-datalist-arrow::-webkit-list-button {
+    display: none !important;
+}
