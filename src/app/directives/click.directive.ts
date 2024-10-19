@@ -1,6 +1,5 @@
 import { AnimationBuilder, animate, style } from '@angular/animations';
 import { Directive, ElementRef, HostListener, inject } from '@angular/core';
-import { transform } from 'html2canvas/dist/types/css/property-descriptors/transform';
 
 @Directive({
   selector: '[clickAnimation]',
