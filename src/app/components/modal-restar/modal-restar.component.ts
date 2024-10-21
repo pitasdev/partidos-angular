@@ -78,8 +78,9 @@ export class ModalRestarComponent implements OnInit {
     this.openModalConfirmacion = true;
     if (this.tipoDato == 'gol') {
       this.mensajeConfirmacion = `¿Está seguro/a que quiere eliminar el <b>${splitID[1]}</b> del <b>${this.nombreEquipo}</b> en el <b>minuto ${splitID[2]}</b>`;
-  
-      if (splitID[3] != 'undefined' && this.jugadores.length > 0) this.mensajeConfirmacion += ` de <b>${this.obtenerNombreJugador(Number(splitID[3]))}`;
+      
+      if (splitID[3] == 'pp') this.mensajeConfirmacion += ` en <b>propia puerta</b>`;
+      else if (splitID[3] != 'undefined' && this.jugadores.length > 0) this.mensajeConfirmacion += ` de <b>${this.obtenerNombreJugador(Number(splitID[3]))}`;
       else if (splitID[3] != 'undefined') this.mensajeConfirmacion += ` del <b>jugador ${splitID[3]}</b>`;
 
       this.mensajeConfirmacion += '?';

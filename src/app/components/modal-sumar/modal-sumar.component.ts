@@ -28,6 +28,7 @@ export class ModalSumarComponent implements OnInit {
   minutosParte!: number;
   modoTiempo!: ModoTiempo;
   dataService!: any;
+  golEnPropia: boolean = false;
   autocalcularMinuto: boolean = true;
   jugador!: number;
   jugadores!: Jugador[];
@@ -64,6 +65,8 @@ export class ModalSumarComponent implements OnInit {
   }
 
   guardar(): void {
+    if (this.tipoDato == 'gol' && !this.minuto) return;
+
     const datos: Datos = {
       id: `${this.tipoEquipo}-${this.tipoDato}-${this.minuto}-${this.dorsal ?? this.jugador}`,
       tipoEquipo: this.tipoEquipo,
@@ -72,7 +75,10 @@ export class ModalSumarComponent implements OnInit {
       dorsal: this.dorsal ?? this.jugador
     }
 
-    if (this.tipoDato == 'gol' && !this.minuto) return;
+    if (this.golEnPropia){
+      datos.id = `${this.tipoEquipo}-${this.tipoDato}-${this.minuto}-pp`;
+      datos.dorsal = 'pp';
+    } 
 
     if (this.tipoDato == 'tarjeta') {
       if (!this.minuto || (!this.dorsal && !this.jugador && this.personaTarjeta == 'J')) return;

@@ -26,7 +26,7 @@
             <div class="text-xl flex gap-2">
                 @if (jugadores.length > 0) {
                     <label for="jugador" class="w-20">Jugador</label>
-                    <select id="jugador" class="w-40 border rounded-md px-1 bg-white" [ngClass]="{'outline outline-2 -outline-offset-2 outline-red-500' : !jugador && tipoDato == 'tarjeta'}" [(ngModel)]="jugador">
+                    <select id="jugador" class="w-40 border rounded-md px-1 bg-white" [ngClass]="{'outline outline-2 -outline-offset-2 outline-red-500' : !jugador && tipoDato == 'tarjeta', 'bg-gray-100' : golEnPropia}" [(ngModel)]="jugador" [disabled]="golEnPropia">
                         <option value=""></option>
                         @for (jugador of jugadores; track jugador) {
                             <option value="{{jugador.dorsal}}">{{jugador.dorsal}} - {{jugador.nombre}}</option>
@@ -34,7 +34,7 @@
                     </select>
                 } @else {
                     <label for="dorsal" class="w-20">Dorsal</label>
-                    <input type="number" inputmode="numeric" min="1" max="99" id="dorsal" class="w-40 border rounded-md px-1" [ngClass]="{'outline outline-2 -outline-offset-2 outline-red-500' : !dorsal && tipoDato == 'tarjeta'}" [(ngModel)]="dorsal" (keyup)="validarInput('dorsal')">
+                    <input type="number" inputmode="numeric" min="1" max="99" id="dorsal" class="w-40 border rounded-md px-1" [ngClass]="{'outline outline-2 -outline-offset-2 outline-red-500' : !dorsal && tipoDato == 'tarjeta', 'bg-gray-100' : golEnPropia}" [(ngModel)]="dorsal" [disabled]="golEnPropia" (keyup)="validarInput('dorsal')">
                 }
             </div>
         }
@@ -46,6 +46,13 @@
                     <option value="amarilla">Amarilla</option>
                     <option value="roja">Roja</option>
                 </select>
+            </div>
+        }
+
+        @if (tipoDato == 'gol') {
+            <div class="text-sm font-semibold flex gap-2 mt-2">
+                <input type="checkbox" id="gol-pp" [(ngModel)]="golEnPropia">
+                <label for="gol-pp">Gol en propia puerta (pp)</label>
             </div>
         }
 
