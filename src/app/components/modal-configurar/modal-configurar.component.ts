@@ -1,10 +1,10 @@
-import { Component, ElementRef, EventEmitter, inject, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Equipo } from '../../interfaces/Equipo';
 import { TipoEquipo } from '../../interfaces/TipoEquipo';
 import { CommonModule } from '@angular/common';
 import { ModoTiempo } from '../../interfaces/ModoTiempo';
-import { EquiposService } from '../../services/equipos.service';
+import equipos from '../../../assets/equipos.json';
 
 @Component({
   selector: 'app-modal-configurar',
@@ -22,22 +22,18 @@ export class ModalConfigurarComponent implements OnInit {
   minutos: number = 25;
   modoTiempo: ModoTiempo = 'ascendente';
 
-  equiposService = inject(EquiposService);
-
   @Output() eventoGuardar = new EventEmitter();
 
   @ViewChild('selecEquipo') inputSelecEquipo!: ElementRef;
 
   ngOnInit(): void {
-    this.equiposService.getEquipos().subscribe(equipos => {
-      this.listaEquipos = equipos;
+    this.listaEquipos = equipos;
 
-      this.listaEquipos.sort((a, b) => {
-        if (a.equipo > b.equipo) return 1;
-        else if (a.equipo < b.equipo) return -1;
-        else return 0;
-      })
-    });
+    this.listaEquipos.sort((a, b) => {
+      if (a.equipo > b.equipo) return 1;
+      else if (a.equipo < b.equipo) return -1;
+      else return 0;
+    })
   }
 
   seleccionarEquipo(event: Event, tipoEquipo: TipoEquipo): void {
